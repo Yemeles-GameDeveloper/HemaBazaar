@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class AuditLog : BaseEntity
+    public class AuditLog : BaseEntity
     {
         public int AppUserId { get; set; }
         public string Action { get; set; }

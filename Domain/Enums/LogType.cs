@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Enums
 {
-    internal enum LogType
+    public enum LogType
     {
         Insert,
         Update,

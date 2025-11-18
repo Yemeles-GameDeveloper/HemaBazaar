@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Payment : BaseEntity
+    public class Payment : BaseEntity
     {
         public decimal Amount { get; set; }
         public int TransactionId { get; set; }

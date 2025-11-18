@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Cart : BaseEntity
+    public class Cart : BaseEntity
     {
         public int AppUserId { get; set; }
         public int ItemId { get; set; }

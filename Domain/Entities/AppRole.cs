@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class AppRole : IdentityRole<int>
+    public class AppRole : IdentityRole<int>
     {
         
     }

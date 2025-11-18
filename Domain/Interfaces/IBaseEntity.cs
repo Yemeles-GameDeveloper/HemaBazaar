@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Domain.Interfaces
 {
-    public enum PaymentStatus
+    public interface IBaseEntity
     {
-        Pending = 1,
-        Completed,
-        Failed,
-        Refunded
     }
 }

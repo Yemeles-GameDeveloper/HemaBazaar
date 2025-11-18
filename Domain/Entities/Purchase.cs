@@ -14,5 +14,11 @@ namespace Domain.Entities
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
 
 
+        public AppUser AppUser { get; set; }
+        public Item Item { get; set; }
+        public Payment Payment { get; set; }
+
+
+
     }
 }

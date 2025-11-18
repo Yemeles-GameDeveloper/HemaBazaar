@@ -9,6 +9,6 @@ namespace Domain.Entities
 {
     internal class AppRole : IdentityRole<int>
     {
-        //İlişkilerde devam et
+        
     }
 }

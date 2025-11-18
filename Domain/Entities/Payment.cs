@@ -13,5 +13,8 @@ namespace Domain.Entities
         public int TransactionId { get; set; }
         public DateTime PaymentDay { get; set; }
         public PaymentStatus Status { get; set; }
+
+
+        public ICollection<Purchase> Purchases { get; set; }
     }
 }

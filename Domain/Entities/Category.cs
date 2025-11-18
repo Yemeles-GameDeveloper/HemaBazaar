@@ -10,5 +10,8 @@ namespace Domain.Entities
     {
         public string CategoryName { get; set; }
 
+
+        public ICollection<Item> Items { get; set; }
+
     }
 }

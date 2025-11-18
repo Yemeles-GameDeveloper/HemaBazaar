@@ -13,5 +13,11 @@ namespace Domain.Entities
         public int Price { get; set; }
         public int CategoryId { get; set; }
 
+
+        public ICollection<Cart> Carts { get; set; }
+        public ICollection<Favourite> Favourites { get; set; }
+        public Category Category { get; set; }
+        public ICollection<Purchase> Purchases { get; set; }
+
     }
 }

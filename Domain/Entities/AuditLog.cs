@@ -18,5 +18,9 @@ namespace Domain.Entities
         public string NewValues { get; set; }
         public string? IpAdress { get; set; }
 
+
+
+        public AppUser AppUser { get; set; }
+
     }
 }

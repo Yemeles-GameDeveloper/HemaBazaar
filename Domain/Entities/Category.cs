@@ -12,6 +12,7 @@ namespace Domain.Entities
 
 
         public ICollection<Item> Items { get; set; }
+        public ICollection<CustomOrder> CustomOrders { get; set; }
 
     }
 }

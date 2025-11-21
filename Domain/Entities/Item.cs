@@ -8,6 +8,7 @@ namespace Domain.Entities
 {
     public class Item : BaseEntity
     {
+        //Spesifik zırh ve silahları ekle
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
@@ -18,6 +19,8 @@ namespace Domain.Entities
         public ICollection<Favourite> Favourites { get; set; }
         public Category Category { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails  { get; set; }
 
     }
 }

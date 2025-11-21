@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Cart : BaseEntity
+    public class OrderDetail : BaseEntity
     {
-        public int AppUserId { get; set; }
+        
+        public int OrderId { get; set; }
         public int ItemId { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
 
 
-        
-        public AppUser AppUser { get; set; }
+        public Order Order { get; set; }
         public Item Item { get; set; }
+        
+
+
     }
 }

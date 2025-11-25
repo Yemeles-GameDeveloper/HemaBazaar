@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,12 @@ namespace Infrastructure.Data
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            var configurationAssembly = Assembly.GetExecutingAssembly();
+            builder.ApplyConfigurationsFromAssembly(configurationAssembly);
+
+
+
+
             var entities = builder.Model.GetEntityTypes().Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType)); 
             base.OnModelCreating(builder);
             foreach (var entity in entities)

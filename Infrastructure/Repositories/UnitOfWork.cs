@@ -11,13 +11,14 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork<TDbContext> : IUnitOfWork
+        where TDbContext : DbContext
     {
 
 
 
-        readonly HemaBazaarDBContext dbContext;
-        readonly HemaBazaarLogDBContext logContext;
+        readonly DbContext dbContext;
+        
         IDbContextTransaction transaction;
 
         public IRepository<Cart>? carts;
@@ -41,31 +42,31 @@ namespace Infrastructure.Repositories
         public IRepository<AuditLog>? auditLogs;
 
        
-        public UnitOfWork(HemaBazaarDBContext dbContext, HemaBazaarLogDBContext logDBContext)
+        public UnitOfWork(DbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.logContext = logDBContext;
+            
         }
 
-        public IRepository<Cart> Carts => carts ??= new Repository<Cart>(dbContext);
+        public IRepository<Cart> Carts => carts ??= new Repository<Cart,DbContext>(dbContext);
 
-        public IRepository<Category> Categories => categories ??= new Repository<Category>(dbContext);
+        public IRepository<Category> Categories => categories ??= new Repository<Category, DbContext>(dbContext);
 
-        public IRepository<CustomOrder> CustomOrders => customOrders ??= new Repository<CustomOrder>(dbContext);
+        public IRepository<CustomOrder> CustomOrders => customOrders ??= new Repository<CustomOrder, DbContext>(dbContext);
 
-        public IRepository<Favourite> Favourites => favourites ??= new Repository<Favourite>(dbContext);
+        public IRepository<Favourite> Favourites => favourites ??= new Repository<Favourite, DbContext>(dbContext);
 
-        public IRepository<Item> Items => items ??= new Repository<Item>(dbContext);
+        public IRepository<Item> Items => items ??= new Repository<Item, DbContext>(dbContext);
 
-        public IRepository<Order> Orders => orders ??= new Repository<Order>(dbContext);
+        public IRepository<Order> Orders => orders ??= new Repository<Order, DbContext>(dbContext);
 
-        public IRepository<OrderDetail> OrderDetails => orderDetails ??= new Repository<OrderDetail>(dbContext);
+        public IRepository<OrderDetail> OrderDetails => orderDetails ??= new Repository<OrderDetail, DbContext>(dbContext);
 
-        public IRepository<Payment> Payments => payments ??= new Repository<Payment>(dbContext);
+        public IRepository<Payment> Payments => payments ??= new Repository<Payment, DbContext>(dbContext);
 
-        public IRepository<Purchase> Purchases => purchases ??= new Repository<Purchase>(dbContext);
+        public IRepository<Purchase> Purchases => purchases ??= new Repository<Purchase, DbContext>(dbContext);
 
-        public IRepository<AuditLog> AuditLogs => auditLogs ??= new Repository<AuditLog>(logContext);
+        public IRepository<AuditLog> AuditLogs => auditLogs ??= new Repository<AuditLog, DbContext>(dbContext);
 
 
 
@@ -91,7 +92,7 @@ namespace Infrastructure.Repositories
         {
             transaction?.Dispose();
             dbContext.Dispose();
-            logContext.Dispose();
+            dbContext.Dispose();
         }
 
         public async Task RollbackTransactionAsync()

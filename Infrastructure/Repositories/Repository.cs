@@ -13,22 +13,23 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories
 {
-    public class Repository<T> : IRepository<T>
-        where T : class, IBaseEntity, new()
+    public class Repository<TEntity,TDbContext> : IRepository<TEntity>
+        where TEntity : class, IBaseEntity, new()
+        where TDbContext : DbContext
     {
-        readonly HemaBazaarDBContext dBContext;
-        readonly DbSet<T> dbSet;
+        readonly TDbContext dBContext;
+        readonly DbSet<TEntity> dbSet;
 
-        public Repository(HemaBazaarDBContext hemaBazaarDBContext)
+        public Repository(TDbContext dbContext)
         {
-            dBContext = hemaBazaarDBContext;
-            dbSet = dBContext.Set<T>();
+            this.dBContext = dbContext;
+            dbSet = dBContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
         {
 
-            IQueryable<T> query = dbSet.AsQueryable();
+            IQueryable<TEntity> query = dbSet.AsQueryable();
             query = query.Where(filter);
 
             if (includes != null)
@@ -44,9 +45,9 @@ namespace Infrastructure.Repositories
 
         
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
         {
-            IQueryable<T> query = dbSet.AsQueryable();
+            IQueryable<TEntity> query = dbSet.AsQueryable();
 
             if (filter!=null)
                 query = query.Where(filter);
@@ -64,13 +65,13 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task AddAsync(T entity) => await dbSet.AddAsync(entity);
+        public async Task AddAsync(TEntity entity) => await dbSet.AddAsync(entity);
 
-        public async Task AddRangeAsync(IEnumerable<T> entities) => await dbSet.AddRangeAsync(entities);
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities) => await dbSet.AddRangeAsync(entities);
 
-        public async Task<T> GetByIdAsync(int id) => await dbSet.FindAsync(id);
+        public async Task<TEntity> GetByIdAsync(int id) => await dbSet.FindAsync(id);
         
-        public void Remove(T entity)
+        public void Remove(TEntity entity)
         {
            var result = dbSet.Find(entity.Id);
             if (result != null)
@@ -78,7 +79,7 @@ namespace Infrastructure.Repositories
             dbSet.Update(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
            var result = dbSet.Where(x=>entities.Any(e=>e.Id == x.Id)).ToList();
             foreach (var item in result)
@@ -89,12 +90,12 @@ namespace Infrastructure.Repositories
         }
         
 
-        public void Update(T entity)
+        public void Update(TEntity entity)
         {
             dbSet.Update(entity);
         }
 
-        public void UpdateRange(IEnumerable<T> entities)
+        public void UpdateRange(IEnumerable<TEntity> entities)
         {
             foreach(var entity in entities)
             {

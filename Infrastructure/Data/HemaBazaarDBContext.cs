@@ -35,9 +35,22 @@ namespace Infrastructure.Data
             }
         }
 
-        //Kasım 12 3:05 den devam et.
+        
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
+            var entities = ChangeTracker.Entries<BaseEntity>();
+            foreach (var e in entities)
+            {
+                if (e.State == EntityState.Added)
+                {
+                    e.Entity.IsActive = true;
+                    e.Entity.CreatedDate = DateTime.Now;
+                }
+                if (e.State == EntityState.Modified)
+                {
+                    e.Entity.UpdatedDate = DateTime.Now;
+                }
+            }
             return base.SaveChangesAsync(cancellationToken);
         }
 

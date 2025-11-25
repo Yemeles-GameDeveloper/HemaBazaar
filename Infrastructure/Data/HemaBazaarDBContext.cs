@@ -19,6 +19,8 @@ namespace Infrastructure.Data
                 ("Server=.;Database=HemaBazaarDB;Trusted_Connection=True;TrustServerCertificate=true;");
             base.OnConfiguring(optionsBuilder);
         }
+
+        //17 Kasımdan devam et.
         protected override void OnModelCreating(ModelBuilder builder)
         {
             var configurationAssembly = Assembly.GetExecutingAssembly();

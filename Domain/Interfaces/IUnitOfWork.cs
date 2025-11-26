@@ -24,7 +24,7 @@ namespace Domain.Interfaces
 
         Task<int> CompleteAsync();
         Task BeginTransactionAsync();
-        Task CommitTransactionAsync();
+        Task<int> CommitTransactionAsync();
         Task RollbackTransactionAsync();
 
 

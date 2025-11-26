@@ -19,7 +19,7 @@ namespace Domain.Interfaces
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
 
-        Task<T> GetByIdAsync(int id);
+        Task<T?> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter=null,OrderType orderType = OrderType.ASC, params string[] includes);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes);
 

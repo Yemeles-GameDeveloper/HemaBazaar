@@ -69,7 +69,7 @@ namespace Infrastructure.Repositories
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities) => await dbSet.AddRangeAsync(entities);
 
-        public async Task<TEntity> GetByIdAsync(int id) => await dbSet.FindAsync(id);
+        public async Task<TEntity?> GetByIdAsync(int id) => await dbSet.FindAsync(id);
         
         public void Remove(TEntity entity)
         {

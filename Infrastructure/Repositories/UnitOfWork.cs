@@ -74,19 +74,43 @@ namespace Infrastructure.Repositories
         public async Task BeginTransactionAsync() => transaction = await dbContext.Database.BeginTransactionAsync();
         
 
-        public async Task CommitTransactionAsync()
+        public async Task<int> CommitTransactionAsync()
         {
-            if (transaction == null) return;
+            try
+            {
+                if (transaction == null) return 0;
 
-            await dbContext.SaveChangesAsync();
-            await transaction.CommitAsync();
-            await dbContext.DisposeAsync();
-            transaction = null;
+                int result = await dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                await dbContext.DisposeAsync();
+                transaction = null;
+                return result;
+            }
+            catch (Exception) 
+            {
+                await RollbackTransactionAsync();
+                return 0;
+            }
+            
 
         }
 
-        public async Task<int> CompleteAsync() => await dbContext.SaveChangesAsync();
-        
+
+        public async Task<int> CompleteAsync()
+        {
+            try
+            {
+                await BeginTransactionAsync();
+                return await CommitTransactionAsync();
+            }
+            catch (Exception)
+            {
+                await RollbackTransactionAsync();
+                return 0;
+            }
+            
+            
+        }
 
         public void Dispose()
         {

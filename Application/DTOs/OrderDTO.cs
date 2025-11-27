@@ -8,6 +8,7 @@ namespace Application.DTOs
 {
     public class OrderDTO
     {
+        public int AppUserId { get; set; }
         public string UserName { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.Now;
         public string Address { get; set; }

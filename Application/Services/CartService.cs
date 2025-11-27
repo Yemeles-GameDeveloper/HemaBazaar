@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-     //17 Kasım 2:05:21 den devam et.
+     
     internal class CartService : ICartService
     {
         IUnitOfWork _unitOfWork;

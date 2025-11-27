@@ -8,6 +8,7 @@ namespace Application.DTOs
 {
     internal class FavouriteDTO
     {
+        public int AppUserId { get; set; }
         public string UserName { get; set; }
         public string ItemTitle { get; set; }
     }

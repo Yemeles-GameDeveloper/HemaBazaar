@@ -11,7 +11,7 @@ namespace Application.Mappings
 {
     internal class AutoMapperProfile: Profile
     {
-        public AutoMapperProfile(IMapper mapper)
+        public AutoMapperProfile()
         {
             CreateMap<Cart,CartDTO>()
                 .ForMember(x=>x.ItemTitle, opt=>opt.MapFrom(x=>x.Item.Title))

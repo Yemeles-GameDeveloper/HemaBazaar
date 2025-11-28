@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,27 @@ namespace Application.Services
         IUnitOfWork _unitOfWork;
         IMapper _mapper;
         IAuditLogService _auditLogService;
+        IValidator<OrderDetailDTO> _validator;
 
-        public OrderDetailService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService)
+        public OrderDetailService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService, IValidator<OrderDetailDTO> validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _auditLogService = auditLogService;
+            _validator = validator;
         }
 
         public async Task<Result<OrderDetailDTO>> AddAsync(OrderDetailDTO entity)
         {
             try
             {
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
+
                 OrderDetail orderDetail = _mapper.Map<OrderDetail>(entity);
                 await _unitOfWork.OrderDetails.AddAsync(orderDetail);
                 await _unitOfWork.CompleteAsync();
@@ -49,6 +59,16 @@ namespace Application.Services
         {
             try
             {
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
+
                 IEnumerable<OrderDetail> orderDetails = _mapper.Map<IEnumerable<OrderDetail>>(entities);
 
                 await _unitOfWork.OrderDetails.AddRangeAsync(orderDetails);
@@ -181,7 +201,12 @@ namespace Application.Services
         {
             try
             {
-
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
 
                 OrderDetail orderDetail = _mapper.Map<OrderDetail>(entity);
 
@@ -203,7 +228,15 @@ namespace Application.Services
         {
             try
             {
-
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
 
                 IEnumerable<OrderDetail> orderDetails = _mapper.Map<IEnumerable<OrderDetail>>(entities);
 

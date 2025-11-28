@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,26 @@ namespace Application.Services
         IUnitOfWork _unitOfWork;
         IMapper _mapper;
         IAuditLogService _auditLogService;
+        IValidator<FavouriteDTO> _validator;
 
-        public FavouriteService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService)
+        public FavouriteService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService, IValidator<FavouriteDTO> validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _auditLogService = auditLogService;
+            _validator = validator;
         }
 
         public async Task<Result<FavouriteDTO>> AddAsync(FavouriteDTO entity)
         {
             try
             {
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
                 Favourite favourite = _mapper.Map<Favourite>(entity);
                 await _unitOfWork.Favourites.AddAsync(favourite);
                 await _unitOfWork.CompleteAsync();
@@ -49,6 +58,15 @@ namespace Application.Services
         {
             try
             {
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
                 IEnumerable<Favourite> favourites = _mapper.Map<IEnumerable<Favourite>>(entities);
 
                 await _unitOfWork.Favourites.AddRangeAsync(favourites);
@@ -181,6 +199,12 @@ namespace Application.Services
         {
             try
             {
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
 
 
                 Favourite favourite = _mapper.Map<Favourite>(entity);
@@ -203,7 +227,15 @@ namespace Application.Services
         {
             try
             {
-
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
 
                 IEnumerable<Favourite> favourites = _mapper.Map<IEnumerable<Favourite>>(entities);
 

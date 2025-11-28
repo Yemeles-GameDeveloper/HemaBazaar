@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,27 @@ namespace Application.Services
         IUnitOfWork _unitOfWork;
         IMapper _mapper;
         IAuditLogService _auditLogService;
+        IValidator<CategoryDTO> _validator;
 
-        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService)
+        public CategoryService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService, IValidator<CategoryDTO> validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _auditLogService = auditLogService;
+            _validator = validator;
         }
 
         public async Task<Result<CategoryDTO>> AddAsync(CategoryDTO entity)
         {
             try
             {
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
+
                 Category category = _mapper.Map<Category>(entity);
                 await _unitOfWork.Categories.AddAsync(category);
                 await _unitOfWork.CompleteAsync();
@@ -49,6 +59,16 @@ namespace Application.Services
         {
             try
             {
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
+
                 IEnumerable<Category> categories = _mapper.Map<IEnumerable<Category>>(entities);
 
                 await _unitOfWork.Categories.AddRangeAsync(categories);
@@ -181,7 +201,12 @@ namespace Application.Services
         {
             try
             {
-
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
 
                 Category category = _mapper.Map<Category>(entity);
 
@@ -203,7 +228,15 @@ namespace Application.Services
         {
             try
             {
-
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
 
                 IEnumerable<Category> categories = _mapper.Map<IEnumerable<Category>>(entities);
 

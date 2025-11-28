@@ -5,6 +5,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Enums;
 using Domain.Interfaces;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +20,27 @@ namespace Application.Services
         IUnitOfWork _unitOfWork;
         IMapper _mapper;
         IAuditLogService _auditLogService;
+        IValidator<PaymentDTO> _validator;
 
-        public PaymentService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService)
+        public PaymentService(IUnitOfWork unitOfWork, IMapper mapper, IAuditLogService auditLogService, IValidator<PaymentDTO> validator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _auditLogService = auditLogService;
+            _validator = validator;
         }
 
         public async Task<Result<PaymentDTO>> AddAsync(PaymentDTO entity)
         {
             try
             {
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
+
                 Payment payment = _mapper.Map<Payment>(entity);
                 await _unitOfWork.Payments.AddAsync(payment);
                 await _unitOfWork.CompleteAsync();
@@ -49,6 +59,16 @@ namespace Application.Services
         {
             try
             {
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
+
                 IEnumerable<Payment> payments = _mapper.Map<IEnumerable<Payment>>(entities);
 
                 await _unitOfWork.Payments.AddRangeAsync(payments);
@@ -179,9 +199,15 @@ namespace Application.Services
 
         public async Task<Result<PaymentDTO>> Update(PaymentDTO entity)
         {
+
             try
             {
-
+                FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                if (!result.IsValid)
+                {
+                    string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                    throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                }
 
                 Payment payment = _mapper.Map<Payment>(entity);
 
@@ -199,12 +225,23 @@ namespace Application.Services
             }
         }
 
+
+        
         public async Task<Result<IEnumerable<PaymentDTO>>> UpdateRange(IEnumerable<PaymentDTO> entities)
         {
             try
             {
-
-
+                
+                foreach (var entity in entities)
+                {
+                    FluentValidation.Results.ValidationResult result = await _validator.ValidateAsync(entity);
+                    if (!result.IsValid)
+                    {
+                        string errorMessages = string.Join(',', result.Errors.Select(x => x.ErrorMessage));
+                        throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
+                    }
+                }
+                
                 IEnumerable<Payment> payments = _mapper.Map<IEnumerable<Payment>>(entities);
 
                 _unitOfWork.Payments.UpdateRange(payments);

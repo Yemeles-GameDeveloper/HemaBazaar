@@ -10,7 +10,7 @@ namespace Application.DTOs
     public class PaymentDTO
     {
         public decimal Amount { get; set; }
-        public int TransactionId { get; set; }
+        public string TransactionId { get; set; }
         public DateTime PaymentDay { get; set; }
         public PaymentStatus Status { get; set; }
 

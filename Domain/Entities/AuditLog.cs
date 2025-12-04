@@ -20,7 +20,6 @@ namespace Domain.Entities
 
 
 
-        //public AppUser AppUser { get; set; }
 
     }
 }

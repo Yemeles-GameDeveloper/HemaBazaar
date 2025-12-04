@@ -1,88 +1,63 @@
-﻿@{
-    Layout = null;
+﻿@model HemaBazaar.MVC.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Register - HemaMarket</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/slick.css" />
-    <link rel="stylesheet" href="~/css/slick-theme.css" />
-    <link rel="stylesheet" href="~/css/nouislider.min.css" />
-    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="~/css/style.css" />
-</head>
-<body>
+<div class="section">
+    <div class="container">
+        <div class="row">
 
-    <!-- HEADER -->
-    <header id="header">
-        <div class="container text-center" style="padding:20px;">
-            <a href="/"><img src="~/img/logo.png" style="height:70px;" /></a>
-        </div>
-    </header>
-    <!-- /HEADER -->
-    <!-- REGISTER SECTION -->
-    <div class="section">
-        <div class="container">
-            <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="billing-details">
+                    <div class="section-title text-center">
+                        <h3 class="title">Create Your Account</h3>
+                    </div>
 
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="billing-details">
-                        <div class="section-title text-center">
-                            <h3 class="title">Create Your Account</h3>
+                    <!-- HATA MESAJLARI BURAYA DÜŞECEK -->
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <form asp-controller="Account" asp-action="Register" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <input asp-for="FullName" class="input" placeholder="Fullname" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
                         </div>
 
-                        <form method="post" action="/Account/Register">
-                            <div class="form-group">
-                                <input class="input" type="text" name="FirstName" placeholder="First Name" required>
-                            </div>
+                        <div class="form-group">
+                            <input asp-for="UserName" class="input" placeholder="UserName" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
 
-                            <div class="form-group">
-                                <input class="input" type="text" name="LastName" placeholder="Last Name" required>
-                            </div>
+                        <div class="form-group">
+                            <input asp-for="Email" class="input" type="email" placeholder="Email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
 
-                            <div class="form-group">
-                                <input class="input" type="email" name="Email" placeholder="Email" required>
-                            </div>
+                        <div class="form-group">
+                            <input asp-for="Password" class="input" type="password" placeholder="Password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
-                            <div class="form-group">
-                                <input class="input" type="password" name="Password" placeholder="Password" required>
-                            </div>
+                        <button type="submit" class="primary-btn btn-block">Register</button>
 
-                            <div class="form-group">
-                                <input class="input" type="password" name="ConfirmPassword" placeholder="Confirm Password" required>
-                            </div>
-
-                            <div class="form-group">
-                                <input class="input" type="tel" name="Phone" placeholder="Phone (optional)">
-                            </div>
-
-                            <button type="submit" class="primary-btn btn-block">Register</button>
-
-                            <div class="text-center" style="margin-top:20px;">
-                                Already have an account?
-                                <a href="/Account/Login">Login here</a>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="text-center" style="margin-top:20px;">
+                            Already have an account?
+                            <a asp-controller="Account" asp-action="Login">Login here</a>
+                        </div>
+                    </form>
                 </div>
-
             </div>
+
         </div>
     </div>
-    <!-- /REGISTER SECTION -->
-    <!-- JS -->
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/slick.min.js"></script>
-    <script src="~/js/nouislider.min.js"></script>
-    <script src="~/js/jquery.zoom.min.js"></script>
-    <script src="~/js/main.js"></script>
+</div>
 
-</body>
-</html>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
 

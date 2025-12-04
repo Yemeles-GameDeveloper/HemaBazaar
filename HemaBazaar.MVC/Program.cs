@@ -1,7 +1,37 @@
+using Domain.Entities;
+using Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<HemaBazaarDBContext>( options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarDB"));
+});
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services
+    .AddIdentity<AppUser, AppRole>(opt=>
+    {
+        opt.Password.RequireDigit = true;
+        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequiredLength = 6;
+        opt.Password.RequireUppercase = true;
+
+
+        opt.SignIn.RequireConfirmedEmail = true;
+
+
+        opt.Lockout.MaxFailedAccessAttempts = 5;
+        opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+        opt.Lockout.AllowedForNewUsers = true;
+
+    }
+    )
+    .AddEntityFrameworkStores<HemaBazaarDBContext>().AddDefaultTokenProviders();
 
 var app = builder.Build();
 

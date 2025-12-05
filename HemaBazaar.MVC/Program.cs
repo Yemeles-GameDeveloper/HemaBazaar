@@ -17,6 +17,8 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<AutoMapperProfile>();
 });
+
+//builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -29,7 +31,7 @@ builder.Services
         opt.Password.RequireUppercase = true;
 
 
-        opt.SignIn.RequireConfirmedEmail = false;
+        opt.SignIn.RequireConfirmedEmail = true;
 
 
         opt.Lockout.MaxFailedAccessAttempts = 5;

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Application.Helpers;
+using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
 using Microsoft.AspNetCore.Identity;
@@ -12,13 +13,15 @@ namespace HemaBazaar.MVC.Controllers
         UserManager<AppUser> _userManager;
         SignInManager<AppUser> _signInManager;
         IMapper _mapper;
+        IConfiguration _config;
 
 
-        public AccountController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, IConfiguration config)
         {
             _userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
+            _config = config;
         }
 
         [HttpGet]
@@ -34,8 +37,8 @@ namespace HemaBazaar.MVC.Controllers
 
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
-            
 
+            ModelState.AddModelError("", "Username or password is wrong");
             return View(model);
         }
 
@@ -75,8 +78,14 @@ namespace HemaBazaar.MVC.Controllers
 
             if (result.Succeeded)
             {
+
+               var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var verificationLink = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, token = token }, Request.Scheme);
+
+                await new EmailProcess(_config).SendEmail("Email Verification", $"To verify your account <a href='{verificationLink}'> click here.</a> ", emailAddresses:user.Email);
                 // ileride email onay vs yaparsın
-                return RedirectToAction("Login");
+                return RedirectToAction("EmailVerification",new {enail = user.Email});
             }
 
             // 4) Identity’den gelen hataları göster
@@ -88,6 +97,30 @@ namespace HemaBazaar.MVC.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult EmailVerification(string email)
+        {
+            return View(model: email);
+        }
+
+
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+           AppUser user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return BadRequest();
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+
+            if (result.Succeeded)
+                return View("EmailConfirmed");
+
+            return BadRequest();
+            
+        }
+
         public  async Task<IActionResult> Logout()
         {
            await _signInManager.SignOutAsync();
@@ -97,7 +130,7 @@ namespace HemaBazaar.MVC.Controllers
     }
 
 
-
+    //19 Kasım 02:58:00 Register iki kez girildiğinde hata ekranına yolluyor bunu düzelt ve Login sayfasından sonra emailConfiguration sayfası oluşturup oraya yönlendirsin ve login olduğu zaman üstteki şeyler değişsin.
 
 }
 

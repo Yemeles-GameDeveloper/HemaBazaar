@@ -1,0 +1,58 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Email Verification";
+    var email = !string.IsNullOrEmpty(Model) ? Model : (ViewBag.Email as string);
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-md-offset-2">
+                <div class="billing-details" style="text-align:center;">
+
+                    <div class="section-title text-center">
+                        <h3 class="title">Verify Your Email</h3>
+                    </div>
+
+                    <div style="font-size:80px; margin-bottom:20px; color:#D10024;">
+                        <i class="fa fa-envelope-o"></i>
+                    </div>
+
+                    <p style="font-size:16px; margin-bottom:10px;">
+                        We have sent a verification link to
+                        <strong>@email</strong>.
+                    </p>
+
+                    <p style="color:#8D99AE; margin-bottom:25px;">
+                        Please check your inbox (and spam folder) and click on the link
+                        to activate your account.
+                    </p>
+
+                    <!-- Resend email button -->
+                    <form asp-controller="Account"
+                          asp-action="ResendEmailConfirmation"
+                          method="post"
+                          style="margin-bottom:15px;">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="email" value="@email" />
+                        <button type="submit" class="primary-btn">
+                            Resend verification email
+                        </button>
+                    </form>
+
+                    <!-- Back to login -->
+                    <div style="margin-top:10px;">
+                        <a asp-controller="Account" asp-action="Login">
+                            Back to Login
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

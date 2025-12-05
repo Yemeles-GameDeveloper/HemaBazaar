@@ -30,6 +30,90 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .account-dropdown {
+            position: relative;
+        }
+
+            .account-dropdown > a {
+                cursor: pointer;
+            }
+
+        /* Başta kapalı */
+        .account-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 4px;
+            background: #1E1F29;
+            padding: 10px 0;
+            border: 1px solid #E4E7ED;
+            border-radius: 4px;
+            min-width: 180px;
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+        }
+
+            .account-menu.open {
+                /* JS bu sınıfı verince açılacak */
+                display: flex;
+            }
+
+            .account-menu li {
+                display: block !important;
+                margin: 0;
+            }
+
+                .account-menu li a,
+                .logout-btn {
+                    display: block;
+                    padding: 8px 18px;
+                    color: #ffffff;
+                    text-decoration: none;
+                    background: transparent;
+                    border: none;
+                    width: 100%;
+                    text-align: left;
+                    font-size: 13px;
+                }
+
+                    .account-menu li a:hover,
+                    .logout-btn:hover {
+                        background: #D10024;
+                        color: #fff;
+                    }
+
+        .logout-btn {
+            cursor: pointer;
+        }
+
+
+
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var dropdown = document.querySelector('.account-dropdown');
+            if (!dropdown) return;
+
+            var menu = dropdown.querySelector('.account-menu');
+            var hideTimeout;
+
+            // Üst user'a gelince aç
+            dropdown.addEventListener('mouseenter', function () {
+                clearTimeout(hideTimeout);
+                menu.classList.add('open');
+            });
+
+            // Hem user alanından hem menüden çıkınca bir süre sonra kapat
+            dropdown.addEventListener('mouseleave', function () {
+                hideTimeout = setTimeout(function () {
+                    menu.classList.remove('open');
+                }, 150); // 150ms tolerans; gap olsa bile kapanmıyor
+            });
+        });
+    </script>
+
 </head>
 <body>
     <!-- HEADER -->
@@ -41,11 +125,71 @@
                     <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
                     <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
                     <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                  
                 </ul>
-                <ul class="header-links pull-right">
-                    <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                    <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
-                </ul>
+
+                @*
+                    My account notification login ve register kısmını aşağı al. Login olmamışsan Cart ve Wishlist görünmesin.
+                *@
+
+                @if(User.Identity.IsAuthenticated)
+                {
+
+                    <ul class="header-links pull-right">
+                        <!-- Notifications -->
+                        <li>
+                            <a asp-controller="Account" asp-action="Notifications">
+                                <i class="fa fa-bell-o"></i> Notifications
+                            </a>
+                        </li>
+
+                        <!-- Account dropdown -->
+                        <li class="account-dropdown">
+                            <a href="#">
+                                <i class="fa fa-user-o"></i> @User.Identity.Name
+                            </a>
+
+                            <!-- DİKKAT: Alt menü BURADA nested UL olarak -->
+                            <ul class="account-menu">
+                                <li>
+                                    <a asp-controller="Account" asp-action="Profile">Profile</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Account" asp-action="Settings">Settings</a>
+                                </li>
+                                <li>
+                                    <a asp-controller="Purchase" asp-action="Index">Purchases</a>
+                                </li>
+                                <li>
+                                    <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">
+                                        <button type="submit" class="logout-btn">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                }
+                else
+                {
+                    <ul class="header-links pull-right">
+                        <li>
+                            <a asp-controller="Account" asp-action="Register">
+                                <i class="fa fa-user-o"></i> Register
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Account" asp-action="Login">
+                                <i class="fa fa-user-o"></i> Login
+                            </a>
+                        </li>
+                      
+                    </ul>
+                }
             </div>
         </div>
         <!-- /TOP HEADER -->
@@ -77,7 +221,14 @@
                         </div>
                     </div>
                     <!-- /SEARCH BAR -->
+
+                    
+
                     <!-- ACCOUNT -->
+                    @*
+                        LOGIN REGISTER ACCOUNT NOTIFICATION KISMI BURAYA EKLENECEK.
+                    *@
+
                     <div class="col-md-3 clearfix">
                         <div class="header-ctn">
                             <!-- Wishlist -->

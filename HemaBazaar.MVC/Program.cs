@@ -1,7 +1,9 @@
+using Application.Mappings;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<HemaBazaarDBContext>( options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarDB"));
+});
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<AutoMapperProfile>();
 });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -22,7 +29,7 @@ builder.Services
         opt.Password.RequireUppercase = true;
 
 
-        opt.SignIn.RequireConfirmedEmail = true;
+        opt.SignIn.RequireConfirmedEmail = false;
 
 
         opt.Lockout.MaxFailedAccessAttempts = 5;
@@ -47,8 +54,10 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllerRoute(
     name: "default",

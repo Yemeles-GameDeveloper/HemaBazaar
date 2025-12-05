@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using AutoMapper;
 using Domain.Entities;
+using HemaBazaar.MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Mappings
 {
-    internal class AutoMapperProfile: Profile
+    public class AutoMapperProfile: Profile
     {
         public AutoMapperProfile()
         {
@@ -46,6 +47,9 @@ namespace Application.Mappings
                 .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title))
                 .ReverseMap();
 
+
+            CreateMap<AppUser, RegisterViewModel>().ReverseMap();
+            CreateMap<AppUser, LoginViewModel>().ReverseMap();
         }
     }
 }

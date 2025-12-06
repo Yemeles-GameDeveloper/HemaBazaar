@@ -1,0 +1,47 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Email Verification";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-md-offset-2">
+                <div class="billing-details text-center">
+
+                    <div style="font-size:80px; color:#D10024; margin-bottom:20px;">
+                        <i class="fa fa-envelope-o"></i>
+                    </div>
+
+                    <h3 class="title">Verify Your Email</h3>
+
+                    <p style="font-size:16px;">
+                        We have sent a verification link to:
+                        <br />
+                        <strong>@Model</strong>
+                    </p>
+
+                    <p style="color:#8D99AE;">
+                        Please check your inbox (and spam folder).
+                    </p>
+
+                    <form asp-controller="Account" asp-action="ResendEmailConfirmation" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="email" value="@Model" />
+
+                        <button type="submit" class="primary-btn" style="margin-top:15px;">
+                            Resend Verification Email
+                        </button>
+                    </form>
+
+                    <div style="margin-top:20px;">
+                        <a asp-controller="Account" asp-action="Login">Back to Login</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

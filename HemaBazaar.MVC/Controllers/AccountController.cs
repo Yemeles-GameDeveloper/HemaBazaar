@@ -1,4 +1,4 @@
-﻿using Application.Helpers;
+﻿
 using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
@@ -31,16 +31,43 @@ namespace HemaBazaar.MVC.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var result = await _signInManager.PasswordSignInAsync(
+                model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
 
             if (result.Succeeded)
                 return RedirectToAction("Index", "Home");
 
-            ModelState.AddModelError("", "Username or password is wrong");
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError("", "Hesap çok fazla hatalı denemeden dolayı kilitlendi.");
+                return View(model);
+            }
+
+            if (result.IsNotAllowed)
+            {
+                // Kullanıcıyı bulalım ki email’i view’e gönderebilelim
+                var user = await _userManager.FindByNameAsync(model.UserName);
+
+                // Email doğrulaması tamamlanmamış → yeni view’e yönlendir
+                return RedirectToAction("EmailVerifyRequired", new { email = user?.Email });
+            }
+
+            if (result.RequiresTwoFactor)
+            {
+                ModelState.AddModelError("", "Bu hesap için iki faktörlü doğrulama gerekiyor.");
+                return View(model);
+            }
+
+            ModelState.AddModelError("", "Kullanıcı adı veya şifre hatalı.");
             return View(model);
         }
+
 
         [HttpGet]
         public IActionResult Register()
@@ -127,10 +154,39 @@ namespace HemaBazaar.MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public IActionResult EmailVerifyRequired(string email)
+        {
+            return View(model: email);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResendEmailConfirmation(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return RedirectToAction("Login");
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var link = Url.Action("ConfirmEmail", "Account",
+                new { userId = user.Id, token = token }, Request.Scheme);
+
+            await new EmailProcess(_config).SendEmail(
+                "Email Verification",
+                $"Please verify your email <a href='{link}'>by clicking here</a>.",
+                emailAddresses: user.Email
+            );
+
+            TempData["Message"] = "Verification email resent.";
+            return RedirectToAction("EmailVerifyRequired", new { email });
+        }
+
+
     }
 
-
-    //19 Kasım 02:58:00 Register iki kez girildiğinde hata ekranına yolluyor bunu düzelt ve Login sayfasından sonra emailConfiguration sayfası oluşturup oraya yönlendirsin ve login olduğu zaman üstteki şeyler değişsin.
+   //20 Kasım'dan devam et.
 
 }
 

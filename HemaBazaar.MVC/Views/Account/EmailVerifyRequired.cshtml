@@ -1,0 +1,47 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "Email Verification Required";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 col-md-offset-2">
+                <div class="billing-details text-center">
+
+                    <div style="font-size:80px; color:#D10024; margin-bottom:20px;">
+                        <i class="fa fa-exclamation-circle"></i>
+                    </div>
+
+                    <h3 class="title">Email Verification Required</h3>
+
+                    <p style="font-size:16px; margin-top:10px;">
+                        Your account has been created, but you must verify your email before signing in.
+                    </p>
+
+                    <p style="font-size:16px; color:#8D99AE;">
+                        Verification link was sent to:
+                        <strong>@Model</strong>
+                    </p>
+
+                    <p>If you did not receive the email, click below to resend it.</p>
+
+                    <!-- Resend Email Form -->
+                    <form asp-controller="Account" asp-action="ResendEmailConfirmation" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="email" value="@Model" />
+                        <button type="submit" class="primary-btn">Resend Verification Email</button>
+                    </form>
+
+                    <div style="margin-top:25px;">
+                        <a asp-controller="Account" asp-action="Login">Back to Login</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

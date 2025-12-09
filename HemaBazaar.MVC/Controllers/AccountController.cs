@@ -186,7 +186,7 @@ namespace HemaBazaar.MVC.Controllers
 
     }
 
-   //20 Kasım'dan devam et.
+  
 
 }
 

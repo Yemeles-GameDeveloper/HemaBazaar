@@ -1,8 +1,12 @@
+using Application.Extentions;
 using Application.Mappings;
 using Domain.Entities;
+using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 
 
@@ -17,6 +21,10 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<AutoMapperProfile>();
 });
+
+builder.Services.AddServices();
+
+
 
 //builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Add services to the container.

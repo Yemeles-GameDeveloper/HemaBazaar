@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
-    public class UnitOfWork<TDbContext> : IUnitOfWork
-        where TDbContext : DbContext
+    public class UnitOfWork : IUnitOfWork
+        //where TDbContext : DbContext
     {
-
+        readonly HemaBazaarDBContext dBContext;
+        readonly HemaBazaarLogDBContext logDbContext;
 
 
         readonly DbContext dbContext;
@@ -42,9 +43,10 @@ namespace Infrastructure.Repositories
         public IRepository<AuditLog>? auditLogs;
 
        
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWork(HemaBazaarDBContext dbContext, HemaBazaarLogDBContext logDbContext)
         {
             this.dbContext = dbContext;
+            this.logDbContext = logDbContext;
             
         }
 
@@ -66,7 +68,7 @@ namespace Infrastructure.Repositories
 
         public IRepository<Purchase> Purchases => purchases ??= new Repository<Purchase, DbContext>(dbContext);
 
-        public IRepository<AuditLog> AuditLogs => auditLogs ??= new Repository<AuditLog, DbContext>(dbContext);
+        public IRepository<AuditLog> AuditLogs => auditLogs ??= new Repository<AuditLog, DbContext>(logDbContext);
 
 
 

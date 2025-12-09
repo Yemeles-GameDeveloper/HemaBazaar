@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
+        
     {
         IRepository<Cart> Carts { get; }
         IRepository<Category> Categories { get; }

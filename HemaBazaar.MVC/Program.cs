@@ -1,11 +1,17 @@
+using Application.ErrorDescribers;
 using Application.Extentions;
 using Application.Mappings;
+using Application.ValidationRules;
 using Domain.Entities;
 using Domain.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+
 
 
 
@@ -17,6 +23,12 @@ builder.Services.AddDbContext<HemaBazaarDBContext>( options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarDB"));
 });
 
+builder.Services.AddDbContext<HemaBazaarLogDBContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarLogDB"));
+});
+
+
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<AutoMapperProfile>();
@@ -24,19 +36,32 @@ builder.Services.AddAutoMapper(cfg =>
 
 builder.Services.AddServices();
 
-
+builder.Services.AddAuthentication();
 
 //builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
+{
+    fv.RegisterValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
+    fv.RegisterValidatorsFromAssemblyContaining<LoginViewModelValidator>();
+    fv.AutomaticValidationEnabled = true;
+});
+
+
+     
+
 
 builder.Services
-    .AddIdentity<AppUser, AppRole>(opt=>
+    .AddIdentity<AppUser, AppRole>(opt =>
     {
         opt.Password.RequireDigit = true;
-        opt.Password.RequireNonAlphanumeric = false;
+        opt.Password.RequireNonAlphanumeric = true;
+        opt.Password.RequireDigit = true;
         opt.Password.RequiredLength = 6;
         opt.Password.RequireUppercase = true;
+
+        //Register'da bu kontrolleri eklemeyi unutma.
 
 
         opt.SignIn.RequireConfirmedEmail = true;
@@ -48,7 +73,19 @@ builder.Services
 
     }
     )
-    .AddEntityFrameworkStores<HemaBazaarDBContext>().AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<HemaBazaarDBContext>()
+    .AddErrorDescriber<EnglishIdentityErrorDescriber>()
+    .AddDefaultTokenProviders();
+
+    builder.Services.AddControllersWithViews();
+
+    builder.Services.AddFluentValidationAutoValidation()
+                .AddFluentValidationClientsideAdapters();
+
+    builder.Services.AddValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
+
+
+
 
 var app = builder.Build();
 

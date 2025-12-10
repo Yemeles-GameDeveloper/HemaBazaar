@@ -1,6 +1,10 @@
-﻿using Application.Interfaces;
+﻿using Application.DTOs;
+using Application.Interfaces;
 using Application.Services;
+using Application.ValidationRules;
 using Domain.Interfaces;
+using FluentValidation;
+using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,6 +19,32 @@ namespace Application.Extentions
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            //services.AddValidatorsFromAssembly(typeof(ItemDTOValidator).Assembly);
+
+            //services.AddValidatorsFromAssemblyContaining<CartValidator>();
+            //services.AddValidatorsFromAssemblyContaining<CategoryValidator>();
+            //services.AddValidatorsFromAssemblyContaining<CustomOrderValidator>();
+            //services.AddValidatorsFromAssemblyContaining<FavouriteValidator>();
+            //services.AddValidatorsFromAssemblyContaining<ItemListValidator>();
+            //services.AddValidatorsFromAssemblyContaining<ItemValidator>();
+            //services.AddValidatorsFromAssemblyContaining<OrderDetailValidator>();
+            //services.AddValidatorsFromAssemblyContaining<OrderValidator>();
+            //services.AddValidatorsFromAssemblyContaining<PaymentValidator>();
+            //services.AddValidatorsFromAssemblyContaining<PurchaseValidator>();
+            //services.AddValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
+            //services.AddScoped<IValidator<IEnumerable<ItemDTO>>,ItemListValidator>();
+
+
+            services.AddScoped<IValidator<CartDTO>, CartDTOValidator>();
+            services.AddScoped<IValidator<CategoryDTO>, CategoryDTOValidator>();
+            services.AddScoped<IValidator<CustomOrderDTO>, CustomOrderDTOValidator>();
+            services.AddScoped<IValidator<FavouriteDTO>, FavouriteDTOValidator>();
+            services.AddScoped<IValidator<ItemDTO>, ItemDTOValidator>();
+            services.AddScoped<IValidator<OrderDTO>, OrderDTOValidator>();
+            services.AddScoped<IValidator<OrderDetailDTO>, OrderDetailDTOValidatior>();
+            services.AddScoped<IValidator<PaymentDTO>, PaymentDTOValidator>();
+
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IAuditLogService, AuditLogService>();
@@ -28,7 +58,7 @@ namespace Application.Extentions
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IPurchaseService, PurchaseService>();
 
-            // 20 Kasım 1:25:00dan devam et. 
+        
 
 
             return services;

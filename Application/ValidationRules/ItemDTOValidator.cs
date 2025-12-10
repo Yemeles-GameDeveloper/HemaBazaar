@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.ValidationRules
 {
-    internal class ItemDTOValidator : AbstractValidator<ItemDTO>
+    public class ItemDTOValidator : AbstractValidator<ItemDTO>
     {
         public ItemDTOValidator()
         {

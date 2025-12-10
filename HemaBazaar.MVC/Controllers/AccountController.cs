@@ -164,9 +164,18 @@ namespace HemaBazaar.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResendEmailConfirmation(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                TempData["Message"] = "Email address is required to resend verification.";
+                return RedirectToAction("Login");
+            }
+
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
+            {
+                TempData["Message"] = "No account found for that email.";
                 return RedirectToAction("Login");
+            }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 

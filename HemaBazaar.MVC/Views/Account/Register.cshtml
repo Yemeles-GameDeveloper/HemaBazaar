@@ -13,7 +13,7 @@
                     </div>
 
                     <!-- HATA MESAJLARI BURAYA DÜŞECEK -->
-                    <div asp-validation-summary="All" class="text-danger"></div>
+                   @*  <div asp-validation-summary="All" class="text-danger"></div> *@
 
                     <form asp-controller="Account" asp-action="Register" method="post">
                         @Html.AntiForgeryToken()

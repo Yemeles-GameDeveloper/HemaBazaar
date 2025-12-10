@@ -10,6 +10,15 @@ namespace Infrastructure.Data
 {
     public class HemaBazaarLogDBContext : DbContext
     {
+
+        public HemaBazaarLogDBContext() : base()
+        {
+            
+        }
+        public HemaBazaarLogDBContext(DbContextOptions<HemaBazaarLogDBContext> options) : base(options)
+        {
+            
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=HemaBazaarLogDB;Trusted_Connection=True;TrustServerCertificate=true;");

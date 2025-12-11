@@ -88,7 +88,7 @@
             cursor: pointer;
         }
 
-
+        
 
     </style>
     <script>
@@ -125,9 +125,13 @@
                     <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
                     <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
                     <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
-                  
+                    <li>
+                        <div style="color: white">
+                            Live Visitors: <a id="visitor-count">0</a>
+                        </div>
+                    </li>
                 </ul>
-
+                
                 @*
                     My account notification login ve register kısmını aşağı al. Login olmamışsan Cart ve Wishlist görünmesin.
                 *@
@@ -190,6 +194,9 @@
                       
                     </ul>
                 }
+
+                
+
             </div>
         </div>
         <!-- /TOP HEADER -->
@@ -386,6 +393,21 @@
     <script src="~/js/slick.min.js"></script>
     <script src="~/js/nouislider.min.js"></script>
     <script src="~/js/main.js"></script>
+
+    <script src="~/signalr.js/jquery.signalR.min.js"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder().withUrl("/visitorHub").build();
+
+        connection.on("ReceiveVisitorCount", function(count){
+            debugger
+         document.getElementById('visitor-count').innerText = count;
+        })
+
+        connection.start().catch(err => console.log('There is an error:', err))
+    </script>
+
+
 
     @RenderSection("Scripts", required: false)
 </body>

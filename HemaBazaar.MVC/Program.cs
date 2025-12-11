@@ -6,6 +6,7 @@ using Domain.Entities;
 using Domain.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using HemaBazaar.MVC.Hubs;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -85,7 +86,7 @@ builder.Services
     builder.Services.AddValidatorsFromAssemblyContaining<RegisterViewModelValidator>();
 
 
-
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -104,6 +105,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<VisitorHub>("/visitorHub");
 
 
 app.MapControllerRoute(

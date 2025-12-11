@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\hubs\\visitorhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\hubs\\visitorhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\hemabazaar.mvc.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\hemabazaar.mvc.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\application\\viewmodels\\resetpasswordviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -49,10 +65,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\application\\validationrules\\loginviewmodelvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|solutionrelative:application\\validationrules\\loginviewmodelvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(2. proje)\\hemabazaar\\hemabazaar.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,7 +90,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Shared\\_Layout.cshtml*",
+              "RelativeToolTip": "HemaBazaar.MVC\\Views\\Shared\\_Layout.cshtml*",
+              "ViewState": "AgIAAHoBAAAAAAAAAAAAAJIBAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-11T11:50:52.621Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "VisitorHub.cs",
+              "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Hubs\\VisitorHub.cs",
+              "RelativeDocumentMoniker": "HemaBazaar.MVC\\Hubs\\VisitorHub.cs",
+              "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Hubs\\VisitorHub.cs",
+              "RelativeToolTip": "HemaBazaar.MVC\\Hubs\\VisitorHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T11:42:18.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HemaBazaar.MVC.csproj",
+              "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\HemaBazaar.MVC.csproj",
+              "RelativeDocumentMoniker": "HemaBazaar.MVC\\HemaBazaar.MVC.csproj",
+              "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\HemaBazaar.MVC.csproj",
+              "RelativeToolTip": "HemaBazaar.MVC\\HemaBazaar.MVC.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-11T11:34:50.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "ResetPasswordConfirmation.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\ResetPasswordConfirmation.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\ResetPasswordConfirmation.cshtml",
@@ -86,25 +135,23 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\ResetPasswordConfirmation.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-11T08:54:06.605Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:54:06.605Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "RegisterViewModel.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\Application\\ViewModels\\RegisterViewModel.cs",
               "RelativeDocumentMoniker": "Application\\ViewModels\\RegisterViewModel.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\Application\\ViewModels\\RegisterViewModel.cs",
               "RelativeToolTip": "Application\\ViewModels\\RegisterViewModel.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBoAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T08:40:26.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:40:26.874Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ResetPasswordViewModel.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\Application\\ViewModels\\ResetPasswordViewModel.cs",
               "RelativeDocumentMoniker": "Application\\ViewModels\\ResetPasswordViewModel.cs",
@@ -112,12 +159,11 @@
               "RelativeToolTip": "Application\\ViewModels\\ResetPasswordViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T08:37:24.16Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:37:24.16Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "ResetPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\ResetPassword.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\ResetPassword.cshtml",
@@ -125,12 +171,11 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\ResetPassword.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-11T08:29:21.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:29:21.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "ForgotPasswordConfirmation.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\ForgotPasswordConfirmation.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\ForgotPasswordConfirmation.cshtml",
@@ -138,25 +183,23 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\ForgotPasswordConfirmation.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-11T08:23:31.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:23:31.906Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Controllers\\AccountController.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Controllers\\AccountController.cs",
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAMgAAAAAAAAAAAAAwN4AAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T08:06:20.986Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:06:20.986Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\_ViewImports.cshtml",
@@ -164,12 +207,11 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\_ViewImports.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-11T08:02:48.262Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:02:48.262Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "ForgotPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\ForgotPassword.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\ForgotPassword.cshtml",
@@ -177,12 +219,11 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\ForgotPassword.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-11T08:00:46.938Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T08:00:46.938Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "ForgotPasswordViewModel.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\Application\\ViewModels\\ForgotPasswordViewModel.cs",
               "RelativeDocumentMoniker": "Application\\ViewModels\\ForgotPasswordViewModel.cs",
@@ -190,38 +231,35 @@
               "RelativeToolTip": "Application\\ViewModels\\ForgotPasswordViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T07:52:15.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-11T07:52:15.748Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 11,
               "Title": "Register.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\Register.cshtml",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\Register.cshtml",
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\Register.cshtml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABEAAABHAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwBEAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-10T18:03:06.117Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-10T18:03:06.117Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "Login.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Account\\Login.cshtml",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Views\\Account\\Login.cshtml",
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Account\\Login.cshtml",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAACoAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAIBJwCoAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-10T17:56:49.252Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-10T17:56:49.252Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "LoginViewModelValidator.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\Application\\ValidationRules\\LoginViewModelValidator.cs",
               "RelativeDocumentMoniker": "Application\\ValidationRules\\LoginViewModelValidator.cs",
@@ -233,13 +271,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Program.cs",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Program.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(2. Proje)\\HemaBazaar\\HemaBazaar.MVC\\Program.cs",
               "RelativeToolTip": "HemaBazaar.MVC\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAAAGsAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-10T17:37:38.32Z"
             }

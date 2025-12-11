@@ -1,4 +1,5 @@
 ﻿
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
@@ -190,6 +191,52 @@ namespace HemaBazaar.MVC.Controllers
 
             TempData["Message"] = "Verification email resent.";
             return RedirectToAction("EmailVerifyRequired", new { email });
+        }
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if(user == null)
+                return View(model);
+
+           string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+           string resetLink =  Url.Action("ResetPasswprd","Account", new {token = token, email=model.Email}, Request.Scheme);
+
+           await new EmailProcess(_config).SendEmail("Password Reset Link", $"<a href='{resetLink}'>Click to reset the password.</a>", emailAddresses: user.Email);
+
+            return View("ForgotPasswordConfirmation");
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if(!ModelState.IsValid)
+                return View(model);
+
+            AppUser user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user == null)
+                return View(model);
+
+           var result = await _userManager.ResetPasswordAsync(user,model.Token,model.NewPassword);
+            if (result.Succeeded)
+                return View("ResetPasswordConfirmation");
+
+            return View();
         }
 
 

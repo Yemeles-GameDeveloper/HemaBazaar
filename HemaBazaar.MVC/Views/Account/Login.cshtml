@@ -1,12 +1,5 @@
 ﻿@model LoginViewModel;
 
-@*
-    Yanlış şifre girildiğinde altta hata görünsün.
-
-
-    19 Kasım 02:13:00 den devam et.
-*@
-
     <!-- LOGIN SECTION -->
     <div class="section">
         <div class="container">
@@ -44,7 +37,13 @@
                         </div>
 
                         <button type="submit" class="primary-btn btn-block">Login</button>
+
+                        <div class="form-group text-right" style="margin-top:10px;">
+                            <a asp-controller="Account" asp-action="ForgotPassword">Forgot your password?</a>
+                        </div>
                     </form>
+
+                      
 
                     </div>
                 </div>

@@ -9,6 +9,7 @@ using FluentValidation.AspNetCore;
 using HemaBazaar.MVC.Hubs;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -89,6 +90,8 @@ builder.Services
 builder.Services.AddSignalR();
 
 var app = builder.Build();
+
+await DataSeed.SeedAsync(app.Services);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

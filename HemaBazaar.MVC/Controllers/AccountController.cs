@@ -243,7 +243,7 @@ namespace HemaBazaar.MVC.Controllers
         
     }
 
-  //24 Kasım 1:38:00 dan devam et. Bu sefer Product sayfasını yapacağız.
+  
 
 }
 

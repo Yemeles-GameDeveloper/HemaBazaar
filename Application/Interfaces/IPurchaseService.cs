@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IPurchaseService : IGenericService<Purchase, PurchaseDTO>
+    public interface IPurchaseService : IGenericService<Purchase, PurchaseDTO>
     {
     }
 }

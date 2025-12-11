@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Application.DTOs
 {
-    internal class FavouriteDTO
+    public class FavouriteDTO
     {
         public int AppUserId { get; set; }
         public string UserName { get; set; }

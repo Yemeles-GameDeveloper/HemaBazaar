@@ -31,8 +31,12 @@ namespace Application.Mappings
                 .ReverseMap();
 
             CreateMap<Item, ItemDTO>()
-                .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Category.CategoryName))
-                .ReverseMap();
+            .ForMember(x => x.CategoryName,
+            opt => opt.MapFrom(src => src.Category != null
+                ? src.Category.CategoryName
+                : string.Empty)) // veya "Unknown", artık ne istersen
+             .ReverseMap();
+
 
             CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
 

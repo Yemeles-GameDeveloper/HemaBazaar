@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IGenericService<T,TDTO>
+    public interface IGenericService<T,TDTO>
         where T : class, IBaseEntity, new()
         where TDTO : class, new()
         

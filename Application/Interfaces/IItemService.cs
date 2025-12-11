@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IItemService : IGenericService<Item, ItemDTO>
+    public interface IItemService : IGenericService<Item, ItemDTO>
     {
        
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface ICategoryService : IGenericService<Category, CategoryDTO>
+    public interface ICategoryService : IGenericService<Category, CategoryDTO>
     {
     }
 }

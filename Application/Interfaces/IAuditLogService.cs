@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IAuditLogService 
+    public interface IAuditLogService 
     {
         Task<Result<AuditLog>> AddAsync(AuditLog entity);
         Task<Result<IEnumerable<AuditLog>>> AddRangeAsync(IEnumerable<AuditLog> entities);

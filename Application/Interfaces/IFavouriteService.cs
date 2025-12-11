@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IFavouriteService : IGenericService<Favourite, FavouriteDTO>
+    public interface IFavouriteService : IGenericService<Favourite, FavouriteDTO>
     {
     }
 }

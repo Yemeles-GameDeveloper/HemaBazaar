@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface ICartService : IGenericService<Cart,CartDTO>
+    public interface ICartService : IGenericService<Cart,CartDTO>
 
     {
     }

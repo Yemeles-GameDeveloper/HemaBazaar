@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IOrderService : IGenericService<Order, OrderDTO>
+    public interface IOrderService : IGenericService<Order, OrderDTO>
     {
     }
 }

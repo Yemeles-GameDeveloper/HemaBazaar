@@ -79,3 +79,122 @@
 </body>
 </html>
 
+
+@* The other items *@
+<!-- Item 2 -->
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="product">
+        <div class="product-img fixed-img">
+            <img src="~/img/fencingmask.png" alt="HEMA Mask">
+            <div class="product-label">
+                <span class="new">NEW</span>
+            </div>
+        </div>
+        <div class="product-body">
+            <p class="product-category">Armor</p>
+            <h3 class="product-name">
+                <a href="#">HEMA Fencing Mask</a>
+            </h3>
+            <h4 class="product-price">$120.00</h4>
+            <div class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+
+        <div class="add-to-cart" style="text-align:center;">
+            <button class="add-to-cart-btn">
+                <i class="fa fa-shopping-cart"></i> add to cart
+            </button>
+
+            <a asp-controller="Item" asp-action="Details"
+               class="primary-btn"
+               style="margin-top:8px; display:inline-block; padding:6px 15px;">
+                Show Details
+            </a>
+        </div>
+    </div>
+</div>
+<!-- /Item 2 -->
+<!-- Item 3 -->
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="product">
+        <div class="product-img fixed-img">
+            <img src="~/img/paddedgambeson.png" alt="Padded Gambeson">
+            <div class="product-label">
+                <span class="sale">-10%</span>
+            </div>
+        </div>
+        <div class="product-body">
+            <p class="product-category">Armor</p>
+            <h3 class="product-name">
+                <a href="#">Padded Gambeson</a>
+            </h3>
+            <h4 class="product-price">
+                $200.00 <del class="product-old-price">$220.00</del>
+            </h4>
+            <div class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+
+        <div class="add-to-cart" style="text-align:center;">
+            <button class="add-to-cart-btn">
+                <i class="fa fa-shopping-cart"></i> add to cart
+            </button>
+
+            <a asp-controller="Item" asp-action="Details"
+               class="primary-btn"
+               style="margin-top:8px; display:inline-block; padding:6px 15px;">
+                Show Details
+            </a>
+        </div>
+    </div>
+</div>
+<!-- /Item 3 -->
+<!-- Item 4 -->
+<div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="product">
+        <div class="product-img fixed-img">
+            <img src="~/img/traininggloves.png" alt="HEMA Training Gloves">
+        </div>
+        <div class="product-body">
+            <p class="product-category">Accessory</p>
+            <h3 class="product-name">
+                <a href="#">HEMA Training Gloves</a>
+            </h3>
+            <h4 class="product-price">$90.00</h4>
+            <div class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+
+        <div class="add-to-cart" style="text-align:center;">
+            <button class="add-to-cart-btn">
+                <i class="fa fa-shopping-cart"></i> add to cart
+            </button>
+
+            <a asp-controller="Item" asp-action="Details"
+               class="primary-btn"
+               style="margin-top:8px; display:inline-block; padding:6px 15px;">
+                Show Details
+            </a>
+        </div>
+    </div>
+</div>
+
+@* old price yazma *@
+
+<del class="product-old-price">$180.00</del>
+

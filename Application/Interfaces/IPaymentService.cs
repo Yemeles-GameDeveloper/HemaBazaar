@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IPaymentService : IGenericService<Payment, PaymentDTO>
+    public interface IPaymentService : IGenericService<Payment, PaymentDTO>
     {
     }
 }

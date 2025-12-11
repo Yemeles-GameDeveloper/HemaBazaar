@@ -20,7 +20,7 @@ namespace Application.ViewModels
         public string NewPassword { get; set; }
         [Required(ErrorMessage = "Password confirmation is required.")]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Passwords are not matching.")]
+        [Compare("NewPassword", ErrorMessage = "Passwords are not matching.")]
         public string ConfirmPassword { get; set; }
 
 

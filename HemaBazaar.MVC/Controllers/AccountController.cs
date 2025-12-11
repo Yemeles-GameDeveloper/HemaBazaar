@@ -209,7 +209,7 @@ namespace HemaBazaar.MVC.Controllers
 
            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-           string resetLink =  Url.Action("ResetPasswprd","Account", new {token = token, email=model.Email}, Request.Scheme);
+           string resetLink =  Url.Action("ResetPassword","Account", new {token = token, email=model.Email}, Request.Scheme);
 
            await new EmailProcess(_config).SendEmail("Password Reset Link", $"<a href='{resetLink}'>Click to reset the password.</a>", emailAddresses: user.Email);
 
@@ -217,9 +217,10 @@ namespace HemaBazaar.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetPassword()
+        public IActionResult ResetPassword(string token, string email)
         {
-            return View();
+            var model = new ResetPasswordViewModel { Email = email, Token = token };
+            return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)

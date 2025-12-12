@@ -14,22 +14,22 @@ namespace Application.ViewModels
         [Required(ErrorMessage = "Fullname is required.")]
         public string UserName { get; set; }
 
-        public string PhoneNumber { get; set; }
-        public string Address { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Address { get; set; }
         [EmailAddress(ErrorMessage ="Enter a valid email address.")]
         [Required(ErrorMessage = "Fullname is required.")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [DataType(DataType.Password)]
-        public string CurrentPassword { get; set; }
+        public string? CurrentPassword { get; set; }
 
         [DataType(DataType.Password)]
-        public string NewPassword { get; set; }
+        public string? NewPassword { get; set; }
 
         
         [DataType(DataType.Password)]
         
-        public string ConfirmPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

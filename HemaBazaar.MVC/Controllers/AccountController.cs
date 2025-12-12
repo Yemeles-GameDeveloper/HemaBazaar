@@ -242,7 +242,7 @@ namespace HemaBazaar.MVC.Controllers
         }
         [Authorize]
         [HttpGet]
-        [ValidateAntiForgeryToken]
+       
         public async Task<IActionResult> Profile()
         {
             AppUser user = await _userManager.GetUserAsync(User);

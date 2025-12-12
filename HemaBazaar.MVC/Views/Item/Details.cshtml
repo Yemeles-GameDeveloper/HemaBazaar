@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ItemDTO
+@{
     ViewData["Title"] = "Item Details";
 }
 
@@ -18,7 +19,7 @@
             <!-- ÜRÜN BİLGİLERİ -->
             <div class="col-md-7">
                 <div class="product-details">
-                    <h2 class="product-name">Steel Longsword</h2>
+                    <h2 class="product-name">@Model.Title</h2>
 
                     <div>
                         <div class="product-rating">
@@ -32,15 +33,14 @@
 
                     <div>
                         <h3 class="product-price">
-                            $150.00
-                            <del class="product-old-price">$180.00</del>
+                            @Model.Price
+                            
                         </h3>
                         <span class="product-available">In stock</span>
                     </div>
 
                     <p>
-                        Well-balanced steel longsword suitable for HEMA training and light sparring.
-                        Made from high quality steel with reinforced tip and comfortable grip.
+                        @Model.Description
                     </p>
 
                     <div class="product-options">
@@ -72,7 +72,7 @@
 
                     <ul class="product-links">
                         <li>Category:</li>
-                        <li><a href="#">Weapon</a></li>
+                        <li><a href="#">@Model.CategoryName</a></li>
                     </ul>
 
                     <div style="margin-top:20px;">

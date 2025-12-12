@@ -240,7 +240,20 @@ namespace HemaBazaar.MVC.Controllers
             return View();
         }
 
-        
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            ProfileUpdateViewModel model = _mapper.Map<ProfileUpdateViewModel>(user);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Profile(ProfileUpdateViewModel model)
+        {
+            
+            return View();
+        }
+
     }
 
   

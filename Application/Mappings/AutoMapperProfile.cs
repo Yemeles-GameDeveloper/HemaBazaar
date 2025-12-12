@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
@@ -54,6 +55,7 @@ namespace Application.Mappings
 
             CreateMap<AppUser, RegisterViewModel>().ReverseMap();
             CreateMap<AppUser, LoginViewModel>().ReverseMap();
+            CreateMap<AppUser, ProfileUpdateViewModel>().ReverseMap();
         }
     }
 }

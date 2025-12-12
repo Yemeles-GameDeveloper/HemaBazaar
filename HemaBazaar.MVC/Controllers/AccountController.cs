@@ -3,6 +3,7 @@ using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -239,22 +240,98 @@ namespace HemaBazaar.MVC.Controllers
 
             return View();
         }
-
+        [Authorize]
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile()
         {
-            AppUser user = await _userManager.FindByEmailAsync(User.Identity.Name);
+            AppUser user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+                return RedirectToAction("Login");
             ProfileUpdateViewModel model = _mapper.Map<ProfileUpdateViewModel>(user);
             return View(model);
         }
+        [Authorize]
         [HttpPost]
-        public IActionResult Profile(ProfileUpdateViewModel model)
+        public async Task<IActionResult> Profile(ProfileUpdateViewModel model)
         {
+
+            AppUser user = await _userManager.GetUserAsync(User);
             
-            return View();
+
+            if (user == null)
+            {
+                await _signInManager.SignOutAsync();
+                return RedirectToAction("Login");
+            }
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            user.FullName = model.FullName;
+            user.Address = model.Address;
+            user.PhoneNumber = model.PhoneNumber;
+
+            IdentityResult setUserNameResult = await _userManager.SetUserNameAsync(user, model.UserName);
+            AddErrors(setUserNameResult);
+
+            IdentityResult setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
+            AddErrors(setEmailResult);
+
+            if (!setUserNameResult.Succeeded || !setEmailResult.Succeeded)
+            {
+                ProfileUpdateViewModel erroredModel = _mapper.Map<ProfileUpdateViewModel>(user);
+                return View(erroredModel);
+            }
+
+            IdentityResult updateResult = await _userManager.UpdateAsync(user);
+            AddErrors(updateResult);
+
+            if (!updateResult.Succeeded)
+            {
+                ProfileUpdateViewModel erroredModel = _mapper.Map<ProfileUpdateViewModel>(user);
+                return View(erroredModel);
+            }
+
+            bool wantsToChangePassword =
+                !string.IsNullOrWhiteSpace(model.CurrentPassword) ||
+                !string.IsNullOrWhiteSpace(model.NewPassword) ||
+                !string.IsNullOrWhiteSpace(model.ConfirmPassword);
+
+            if (wantsToChangePassword)
+            {
+                IdentityResult passwordResult = await _userManager.ChangePasswordAsync(
+                    user,
+                    model.CurrentPassword,
+                    model.NewPassword);
+
+                AddErrors(passwordResult);
+
+                if (!passwordResult.Succeeded)
+                {
+                    ProfileUpdateViewModel erroredModel = _mapper.Map<ProfileUpdateViewModel>(user);
+                    return View(erroredModel);
+                }
+            }
+
+            ViewData["Message"] = "Profile updated successfully.";
+            ModelState.Clear();
+
+            ProfileUpdateViewModel updatedModel = _mapper.Map<ProfileUpdateViewModel>(user);
+            return View(updatedModel);
         }
 
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
     }
+
+    
 
   
 

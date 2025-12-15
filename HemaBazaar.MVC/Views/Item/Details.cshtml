@@ -65,7 +65,7 @@
                         </div>
 
                         <button type="button" class="add-to-cart-btn">
-                            <i class="fa fa-shopping-cart"></i> add to cart
+                            <i id="btnAddCart" data-id="@Model.Id" class="fa fa-shopping-cart"></i> add to cart
                         </button>
                     </div>
                     <!-- /ADD TO CART -->
@@ -86,3 +86,37 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).on("click","#btnAddCart",function(){
+           let iid = $(this).data("id");
+
+           $.ajax({
+               url:"/Cart/AddCart",
+               type:"POST",
+               data:{itemId: iid},
+               success: function(res){
+
+                 Swal.fire({
+                     position: "top-center",
+                     icon: "success",
+                     title: res,
+                     showConfirmButton: false,
+                     timer: 1500
+                 });
+
+               },
+               error: function(er){
+                   Swal.fire({
+                     position: "top-center",
+                     icon: "error",
+                     title: er,
+                     showConfirmButton: false,
+                     timer: 1500
+                 });
+               }
+           })
+        })
+    </script>
+}

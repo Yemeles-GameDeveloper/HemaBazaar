@@ -10,8 +10,9 @@ namespace Application.DTOs
     {
         public int AppUserId { get; set; }
         public string ItemTitle { get; set; }
-        public string UserName { get; set; }
+        //public string UserName { get; set; }
         public int Quantity { get; set; }
+        public int ItemId { get; set; }
 
     }
 }

@@ -15,10 +15,11 @@ namespace Application.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<Cart,CartDTO>()
-                .ForMember(x=>x.ItemTitle, opt=>opt.MapFrom(x=>x.Item.Title))
-                .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
-                .ReverseMap();
+            CreateMap<Cart, CartDTO>()
+                .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title));
+            //.ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
+            CreateMap<CartDTO, Cart>();
+
 
             CreateMap<Category, CategoryDTO>().ReverseMap();
 

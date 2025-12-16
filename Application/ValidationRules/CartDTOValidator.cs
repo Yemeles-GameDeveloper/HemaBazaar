@@ -22,6 +22,8 @@ namespace Application.ValidationRules
             RuleFor(x => x.ItemTitle)
                 .MinimumLength(0).WithMessage("Eşya isminin karakter sayısı sıfırdan büyük olmalıdır.")
                 .MaximumLength(40).WithMessage("Eşya isminin karakter sayısı 40'dan küçük olmalıdır.");
+            RuleFor(x => x.ItemId)
+              .GreaterThan(0).WithMessage("Eşya Id sıfırdan büyük olmalıdır.");
 
 
         }

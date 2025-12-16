@@ -214,6 +214,8 @@ namespace Application.Services
 
                 _unitOfWork.Carts.Update(cart);
 
+                cart.IsActive = true;
+
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Update });
 
                 return Result<CartDTO>.Ok(entity, "Cart updated successfully.");
@@ -244,6 +246,8 @@ namespace Application.Services
                 IEnumerable<Cart> carts = _mapper.Map<IEnumerable<Cart>>(entities);
 
                 _unitOfWork.Carts.UpdateRange(carts);
+
+                //carts.IsActive = true;
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Update });
 

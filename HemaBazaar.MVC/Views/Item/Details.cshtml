@@ -58,15 +58,14 @@
                         <div class="qty-label">
                             Qty
                             <div class="input-number">
-                                <input type="number" value="1" min="1" />
+                                <input id="cartQty" type="number" value="1" min="1" />
                                 <span class="qty-up">+</span>
                                 <span class="qty-down">-</span>
                             </div>
                         </div>
 
-                        <button type="button" class="add-to-cart-btn">
-                            <i class="fa fa-shopping-cart"></i>
-                            <i id="btnAddCart" data-id="@Model.Id" class="fa fa-shopping-cart"></i> add to cart
+                        <button id="btnAddCart" type="button" class="add-to-cart-btn" data-id="@Model.Id">
+                            <i class="fa fa-shopping-cart"></i> add to cart
                         </button>
                     </div>
                     <!-- /ADD TO CART -->
@@ -91,33 +90,33 @@
 @section Scripts{
     <script>
         $(document).on("click","#btnAddCart",function(){
-           let iid = $(this).data("id");
+         const iid = $(this).data("id");
+            const qty = parseInt($("#cartQty").val()) || 1;
 
-           $.ajax({
-               url:"/Cart/AddCart",
-               type:"POST",
-               data:{itemId: iid},
-               success: function(res){
-
-                 Swal.fire({
-                     position: "top-center",
-                     icon: "success",
-                     title: res,
-                     showConfirmButton: false,
-                     timer: 1500
-                 });
-
-               },
-               error: function(er){
-                   Swal.fire({
-                     position: "top-center",
-                     icon: "error",
-                     title: er,
-                     showConfirmButton: false,
-                     timer: 1500
-                 });
-               }
-           })
-        })
+            $.ajax({
+                url:"/Cart/AddCart",
+                type:"POST",
+                data:{itemId: iid, quantity: qty},
+                success: function(res){
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: res,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                },
+                error: function(er){
+                    const message = er?.responseText || "Item could not be added to cart.";
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "error",
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        });
     </script>
 }

@@ -2,6 +2,7 @@
 using Application.DTOs;
 using Application.Interfaces;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,21 +23,49 @@ namespace HemaBazaar.MVC.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddCart(int itemId)
+        public async Task<IActionResult> AddCart(int itemId, int quantity)
         {
+            if (!(User?.Identity?.IsAuthenticated ?? false))
+            {
+                return Unauthorized("Please log in to add items to your cart.");
+            }
+
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-            CartDTO cartDTO = new CartDTO();
-            cartDTO.AppUserId = user.Id;
-            cartDTO.ItemId = itemId;
-            cartDTO.Quantity = 1;
-           Result<CartDTO> result = await _cartService.AddAsync(cartDTO);
-            if (result.Success)
+            if (user == null)
+            {
+                return Unauthorized("User account could not be found.");
+            }
+
+            if (quantity < 1)
+            {
+                return BadRequest("Quantity must be at least 1.");
+            }
+
+            Result<IEnumerable<CartDTO>> result = await _cartService.FindAsync(x => x.AppUser.Id == user.Id && x.ItemId == itemId && x.IsActive);
+            Result<CartDTO> cartResult = new();
+            if (result.Data.Any())
+            {
+               CartDTO cart = result.Data.FirstOrDefault();
+                cart.Quantity++;
+               cartResult = await _cartService.Update(cart);
+
+            }
+            else
+            {
+                CartDTO cartDTO = new CartDTO();
+                cartDTO.AppUserId = user.Id;
+                cartDTO.ItemId = itemId;
+                cartDTO.Quantity = quantity;
+                 cartResult = await _cartService.AddAsync(cartDTO);
+            }
+           
+            if (cartResult.Success)
                 return Ok("Item added to cart successfully.");
             else
-                return BadRequest("Item could not added to cart");
+                return BadRequest("Item could not be added to cart");
             
         }
 
-        //25 Kasım 00:47:00. Cart Çalışmıyor.
+        
     }
 }

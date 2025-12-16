@@ -84,8 +84,8 @@ namespace Infrastructure.Repositories
 
                 int result = await dbContext.SaveChangesAsync();
                 await transaction.CommitAsync();
-                await dbContext.DisposeAsync();
-                transaction = null;
+                //await dbContext.DisposeAsync();
+                //transaction = null;
                 return result;
             }
             catch (Exception) 
@@ -116,9 +116,9 @@ namespace Infrastructure.Repositories
 
         public void Dispose()
         {
-            transaction?.Dispose();
-            dbContext.Dispose();
-            dbContext.Dispose();
+            //transaction?.Dispose();
+            //dbContext.Dispose();
+            //dbContext.Dispose();
         }
 
         public async Task RollbackTransactionAsync()
@@ -126,7 +126,7 @@ namespace Infrastructure.Repositories
             if (transaction == null) return;
             await transaction.RollbackAsync();
             await dbContext.DisposeAsync();
-            transaction = null;
+            //transaction = null;
 
         }
     }

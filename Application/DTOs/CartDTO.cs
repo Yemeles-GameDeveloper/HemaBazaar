@@ -8,11 +8,13 @@ namespace Application.DTOs
 {
     public class CartDTO
     {
+        public int Id { get; set; }
         public int AppUserId { get; set; }
         public string ItemTitle { get; set; }
         //public string UserName { get; set; }
         public int Quantity { get; set; }
         public int ItemId { get; set; }
+        public bool IsActive { get; set; }
 
     }
 }

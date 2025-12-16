@@ -30,6 +30,8 @@ namespace Infrastructure.Repositories
         {
 
             IQueryable<TEntity> query = dbSet.AsQueryable();
+
+            query = query.AsNoTracking();
             query = query.Where(filter);
 
             if (includes != null)
@@ -48,6 +50,9 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
         {
             IQueryable<TEntity> query = dbSet.AsQueryable();
+
+            query = query.AsNoTracking();
+
 
             if (filter!=null)
                 query = query.Where(filter);

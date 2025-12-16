@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\item\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\item\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\application\\mappings\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|solutionrelative:application\\mappings\\automapperprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{486829B1-5787-47BB-840F-D3911733ECD0}|Domain\\Domain.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{486829B1-5787-47BB-840F-D3911733ECD0}|Domain\\Domain.csproj|solutionrelative:domain\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\item\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\item\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -50,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,7 +62,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Cart.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Domain\\Entities\\Cart.cs",
               "RelativeDocumentMoniker": "Domain\\Entities\\Cart.cs",
@@ -70,12 +70,11 @@
               "RelativeToolTip": "Domain\\Entities\\Cart.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T09:47:42.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T09:47:42.528Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "CartDTO.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Application\\DTOs\\CartDTO.cs",
               "RelativeDocumentMoniker": "Application\\DTOs\\CartDTO.cs",
@@ -83,18 +82,17 @@
               "RelativeToolTip": "Application\\DTOs\\CartDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-15T09:36:20.66Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-15T09:36:20.66Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "CartController.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Controllers\\CartController.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\CartController.cs",
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\CartController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA9wCMAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAowCcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-15T09:30:45.23Z",
               "EditorCaption": ""
@@ -113,28 +111,27 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Item\\Details.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Item\\Details.cshtml",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Item\\Details.cshtml",
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Item\\Details.cshtml",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAuwHAAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAuwEMAAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-15T08:50:16.048Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "AutoMapperProfile.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Application\\Mappings\\AutoMapperProfile.cs",
               "RelativeDocumentMoniker": "Application\\Mappings\\AutoMapperProfile.cs",
-              "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Application\\Mappings\\AutoMapperProfile.cs*",
-              "RelativeToolTip": "Application\\Mappings\\AutoMapperProfile.cs*",
+              "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Application\\Mappings\\AutoMapperProfile.cs",
+              "RelativeToolTip": "Application\\Mappings\\AutoMapperProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-12T10:57:16.274Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-12T10:57:16.274Z"
             },
             {
               "$type": "Document",

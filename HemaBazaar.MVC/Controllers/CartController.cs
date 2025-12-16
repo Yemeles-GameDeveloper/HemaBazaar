@@ -36,5 +36,7 @@ namespace HemaBazaar.MVC.Controllers
                 return BadRequest("Item could not added to cart");
             
         }
+
+        //25 Kasım 00:47:00. Cart Çalışmıyor.
     }
 }

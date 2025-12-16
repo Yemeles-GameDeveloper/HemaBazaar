@@ -16,8 +16,14 @@ namespace Application.Mappings
         public AutoMapperProfile()
         {
             CreateMap<Cart, CartDTO>()
-                .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title));
-            //.ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
+                .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Item.Title))
+                .ForMember(x => x.Description, opt => opt.MapFrom(x => x.Item.Description))
+                .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Item.Category.CategoryName))
+                .ForMember(x => x.Price, opt => opt.MapFrom(x => x.Item.Price));
+
+
+
+
             CreateMap<CartDTO, Cart>();
 
 

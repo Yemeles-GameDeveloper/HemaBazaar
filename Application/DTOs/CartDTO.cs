@@ -10,11 +10,15 @@ namespace Application.DTOs
     {
         public int Id { get; set; }
         public int AppUserId { get; set; }
-        public string ItemTitle { get; set; }
-        //public string UserName { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string CategoryName { get; set; }
         public int Quantity { get; set; }
         public int ItemId { get; set; }
         public bool IsActive { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalPrice { get => Price * Quantity; }
+
 
     }
 }

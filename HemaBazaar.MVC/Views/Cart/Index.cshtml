@@ -1,9 +1,36 @@
-﻿@{
+﻿@model IEnumerable<CartDTO>
+@{
     ViewData["Title"] = "Cart";
     // Layout'u _ViewStart.cshtml'de ayarladıysan burada tekrar yazmana gerek yok.
     // Yoksa:
     // Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .order-total-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 20px; /* büyük */
+        font-weight: 400;
+        color: #D10024;
+        margin-top: 20px;
+        border-top: 2px solid #eee;
+        padding-top: 15px;
+    }
+
+    .order-total-amount {
+        font-size: 20px; /* rakamı daha da büyük */
+    }
+
+    .order-col {
+        display: flex;
+        justify-content: space-between;
+    }
+
+        .order-col div:last-child {
+            text-align: right;
+        }
+</style>
 
 <div class="section">
     <div class="container">
@@ -17,69 +44,39 @@
 
                 <div class="cart-list">
 
-                    <!-- Cart Item 1 -->
-                    <div class="product-widget">
-                        <div class="product-img">
-                            <img src="~/img/product01.png" alt="Steel Longsword">
+                    
+                    @foreach (var cart in Model)
+                    {
+                        <!-- Cart Item 1 -->
+                        <div class="product-widget">
+                            <div class="product-img">
+                                @* <img src="~/img/product01.png" alt="Steel Longsword"> *@
+                            </div>
+                            <div class="product-body">
+                                <p class="product-category">@cart.CategoryName</p>
+                                <h3 class="product-name">
+                                    <a href="#">@cart.Title</a>
+                                </h3>
+                                <h4 class="product-price">
+                                    $@cart.Price
+                                    <small class="qty">x @cart.Quantity</small>
+                                </h4>
+
+                                <!-- REMOVE BUTTON -->
+                                <form asp-action="RemoveCart" asp-controller="Cart" method="post" style="margin-top:10px;">
+                                 <input type="hidden" name="cartId" value="@cart.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm" href=".removeCart" data.id="@cart.Id">
+                                 <i class="fa fa-trash"></i> Remove
+                                </button>
+                                </form>
+                            </div>
+                            @* <div class="cart-controls">
+                                <input type="number" class="input" value="" min="1" style="width:70px;">
+                                <button class="delete"><i class="fa fa-close"></i></button>
+                            </div> *@
                         </div>
-                        <div class="product-body">
-                            <p class="product-category">Weapon</p>
-                            <h3 class="product-name">
-                                <a href="#">Steel Longsword</a>
-                            </h3>
-                            <h4 class="product-price">
-                                $150.00
-                                <small class="qty"> x 2</small>
-                            </h4>
-                        </div>
-                        <div class="cart-controls">
-                            <input type="number" class="input" value="2" min="1" style="width:70px;">
-                            <button class="delete"><i class="fa fa-close"></i></button>
-                        </div>
-                    </div>
-                    <!-- /Cart Item 1 -->
-                    <!-- Cart Item 2 -->
-                    <div class="product-widget">
-                        <div class="product-img">
-                            <img src="~/img/product02.png" alt="HEMA Mask">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-category">Armor</p>
-                            <h3 class="product-name">
-                                <a href="#">HEMA Fencing Mask</a>
-                            </h3>
-                            <h4 class="product-price">
-                                $120.00
-                                <small class="qty"> x 1</small>
-                            </h4>
-                        </div>
-                        <div class="cart-controls">
-                            <input type="number" class="input" value="1" min="1" style="width:70px;">
-                            <button class="delete"><i class="fa fa-close"></i></button>
-                        </div>
-                    </div>
-                    <!-- /Cart Item 2 -->
-                    <!-- Cart Item 3 -->
-                    <div class="product-widget">
-                        <div class="product-img">
-                            <img src="~/img/product03.png" alt="Padded Gambeson">
-                        </div>
-                        <div class="product-body">
-                            <p class="product-category">Armor</p>
-                            <h3 class="product-name">
-                                <a href="#">Padded Gambeson</a>
-                            </h3>
-                            <h4 class="product-price">
-                                $200.00
-                                <small class="qty"> x 1</small>
-                            </h4>
-                        </div>
-                        <div class="cart-controls">
-                            <input type="number" class="input" value="1" min="1" style="width:70px;">
-                            <button class="delete"><i class="fa fa-close"></i></button>
-                        </div>
-                    </div>
-                    <!-- /Cart Item 3 -->
+                        <!-- /Cart Item 1 -->
+                    }
 
                 </div>
             </div>
@@ -97,31 +94,35 @@
                             <div><strong>SUBTOTAL</strong></div>
                         </div>
 
-                        <div class="order-products">
-                            <div class="order-col">
-                                <div>2x Steel Longsword</div>
-                                <div>$300.00</div>
+                        
+                            @foreach(var cart in Model)
+                        {
+                            <div class="order-products">
+                                <div class="order-col">
+                                    <div>x @cart.Quantity</div>
+                                    <div>@cart.Title</div>                                  
+                                    <div>$@cart.Price</div>
+
+                                </div>
+                                <div class="order-col">
+                                    <div>Shipping</div>
+                                    <div><strong>FREE</strong></div>
+                                </div>
+
+                                <div class="order-col">
+                                    <div><strong>TOTAL</strong></div>
+                                    <div><strong>$@(cart.Price * cart.Quantity)</strong></div>
+                                </div>
                             </div>
-                            <div class="order-col">
-                                <div>1x HEMA Fencing Mask</div>
-                                <div>$120.00</div>
-                            </div>
-                            <div class="order-col">
-                                <div>1x Padded Gambeson</div>
-                                <div>$200.00</div>
-                            </div>
+                        }
+                        <div class="order-total-wrapper">
+                            TOTAL PRICE:
+                            <span class="order-total-amount">
+                                $@Model.Sum(x => x.TotalPrice)
+                            </span>
                         </div>
 
-                        <div class="order-col">
-                            <div>Shipping</div>
-                            <div><strong>FREE</strong></div>
-                        </div>
-
-                        <div class="order-col">
-                            <div><strong>TOTAL</strong></div>
-                            <div><strong class="order-total">$620.00</strong></div>
-                        </div>
-                    </div>
+                        
 
                     <a href="/Checkout" class="primary-btn order-submit">Proceed to Checkout</a>
                     <a href="/" class="primary-btn" style="margin-top:10px; background:#fff; color:#D10024; border:1px solid #D10024;">
@@ -134,4 +135,38 @@
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).on("click",".removeCart",function(){
+         const cid = $(this).data("id");
+            
+
+            $.ajax({
+                url:"/Cart/RemoveCart",
+                type:"POST",
+                data:{cartid: cid},
+                success: function(res){
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: res,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                },
+                error: function(er){
+                    const message = er?.responseText || "Item could not be added to cart.";
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "error",
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        });
+    </script>
+    }
 

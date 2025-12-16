@@ -260,5 +260,7 @@ namespace Application.Services
                 return Result<IEnumerable<CartDTO>>.Failure("Carts could not be deleted.");
             }
         }
+
+        //25 Kasım 1:14:00dan devam et.
     }
 }

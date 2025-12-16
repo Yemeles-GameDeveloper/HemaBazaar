@@ -18,9 +18,12 @@ namespace HemaBazaar.MVC.Controllers
             _cartService = cartService;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+          Result<IEnumerable<CartDTO>> carts = await _cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes:["Item","Item.Category"]);
+            return View(carts.Data);
+            // 25 Kasım 1:29:00 dan devam et.
         }
         [HttpPost]
         public async Task<IActionResult> AddCart(int itemId, int quantity)
@@ -64,6 +67,22 @@ namespace HemaBazaar.MVC.Controllers
             else
                 return BadRequest("Item could not be added to cart");
             
+        }
+        [HttpPost]
+       public async Task<IActionResult> RemoveCart (int cartid)
+       {
+           Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid);
+           Result<CartDTO> removeResult = await _cartService.Remove(cart.Data);
+
+            if (removeResult.Success)
+            {
+                return Ok("Item removed from the cart successfully.");
+            }
+            else
+            {
+                return BadRequest("Item could not be removed from the cart");
+            }
+
         }
 
         

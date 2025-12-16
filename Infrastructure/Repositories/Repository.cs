@@ -74,11 +74,16 @@ namespace Infrastructure.Repositories
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities) => await dbSet.AddRangeAsync(entities);
 
-        public async Task<TEntity?> GetByIdAsync(int id) => await dbSet.FindAsync(id);
+        public async Task<TEntity?> GetByIdAsync(int id)
+        {
+            
+           return  dbSet.AsNoTracking().FirstOrDefault(x=>x.Id == id);
+        }
         
         public void Remove(TEntity entity)
         {
-           var result = dbSet.Find(entity.Id);
+            
+           var result = dbSet.AsNoTracking().FirstOrDefault(x=>x.Id == entity.Id);
             if (result != null)
                 result.IsActive = false;
             dbSet.Update(entity);

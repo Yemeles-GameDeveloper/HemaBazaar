@@ -85,6 +85,6 @@ namespace HemaBazaar.MVC.Controllers
 
         }
 
-        
+        // 25 Kasım 1:57:00 itemlar carttan silinmiyor.
     }
 }

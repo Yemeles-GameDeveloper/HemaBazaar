@@ -65,7 +65,7 @@
                                 <!-- REMOVE BUTTON -->
                                 <form asp-action="RemoveCart" asp-controller="Cart" method="post" style="margin-top:10px;">
                                  <input type="hidden" name="cartId" value="@cart.Id" />
-                                    <button type="button" class="btn btn-danger btn-sm removeCart" data.id="@cart.Id">
+                                    <button type="button" class="btn btn-danger btn-sm removeCart" data-id="@cart.Id">
                                  <i class="fa fa-trash"></i> Remove
                                 </button>
                                 </form>
@@ -82,54 +82,63 @@
             </div>
             <!-- /CART ITEMS -->
             <!-- CART SUMMARY -->
-            <div class="col-md-4">
-                <div class="order-details">
-                    <div class="section-title text-center">
-                        <h3 class="title">Order Summary</h3>
-                    </div>
-
-                    <div class="order-summary">
-                        <div class="order-col">
-                            <div><strong>PRODUCT</strong></div>
-                            <div><strong>SUBTOTAL</strong></div>
+            @if (Model.Any())
+            {
+                <div class="col-md-4">
+                    <div class="order-details">
+                        <div class="section-title text-center">
+                            <h3 class="title">Order Summary</h3>
                         </div>
 
-                        
-                            @foreach(var cart in Model)
-                        {
-                            <div class="order-products">
-                                <div class="order-col">
-                                    <div>x @cart.Quantity</div>
-                                    <div>@cart.Title</div>                                  
-                                    <div>$@cart.Price</div>
-
-                                </div>
-                                <div class="order-col">
-                                    <div>Shipping</div>
-                                    <div><strong>FREE</strong></div>
-                                </div>
-
-                                <div class="order-col">
-                                    <div><strong>TOTAL</strong></div>
-                                    <div><strong>$@(cart.Price * cart.Quantity)</strong></div>
-                                </div>
+                        <div class="order-summary">
+                            <div class="order-col">
+                                <div><strong>PRODUCT</strong></div>
+                                <div><strong>SUBTOTAL</strong></div>
                             </div>
-                        }
-                        <div class="order-total-wrapper">
-                            TOTAL PRICE:
-                            <span class="order-total-amount">
-                                $@Model.Sum(x => x.TotalPrice)
-                            </span>
+
+                            <div class="order-products">
+                                @foreach (var cart in Model)
+                                {
+                                    <div class="order-col">
+                                        <div>@cart.Title <span style="opacity:.7;">x @cart.Quantity</span></div>
+                                        <div>$@(cart.Price* cart.Quantity)</div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="order-col">
+                                <div>Shipping</div>
+                                <div><strong>FREE</strong></div>
+                            </div>
+
+                            <div class="order-col">
+                                <div><strong>TOTAL</strong></div>
+                                <div><strong>$@Model.Sum(x => x.Price * x.Quantity)</strong></div>
+                            </div>
+
+                            <a href="/Checkout" class="primary-btn order-submit">Proceed to Checkout</a>
+                            <a href="/" class="primary-btn" style="margin-top:10px; background:#fff; color:#D10024; border:1px solid #D10024;">
+                                Continue Shopping
+                            </a>
                         </div>
-
-                        
-
-                    <a href="/Checkout" class="primary-btn order-submit">Proceed to Checkout</a>
-                    <a href="/" class="primary-btn" style="margin-top:10px; background:#fff; color:#D10024; border:1px solid #D10024;">
-                        Continue Shopping
-                    </a>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="col-md-12">
+                    <div class="empty-cart text-center" style="padding:40px 0;">
+                        <h3>Your cart is empty 🛒</h3>
+                        <p style="opacity:.7; margin-top:10px;">
+                            Looks like you haven’t added anything to your cart yet.
+                        </p>
+
+                        <a href="/" class="primary-btn" style="margin-top:20px;">
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            }
             <!-- /CART SUMMARY -->
 
         </div>
@@ -155,8 +164,12 @@
                         icon: "success",
                         title: res,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1000
                     });
+
+                    setTimeout(()=>{
+                            location.reload();
+                    },1000)
                 },
                 error: function(er){
                     const message = er?.responseText || "Item could not be added to cart.";
@@ -172,4 +185,8 @@
         });
     </script>
     }
+
+
+
+    @* 25 Kasım 02:04:00 dan devam et.*@
 

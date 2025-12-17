@@ -82,20 +82,21 @@ namespace Infrastructure.Repositories
         
         public void Remove(TEntity entity)
         {
-            
-           var result = dbSet.AsNoTracking().FirstOrDefault(x=>x.Id == entity.Id);
-            if (result != null)
-                result.IsActive = false;
+
+            if (entity == null) return;
+
+            entity.IsActive = false;
             dbSet.Update(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> entities)
         {
-           var result = dbSet.Where(x=>entities.Any(e=>e.Id == x.Id)).ToList();
-            foreach (var item in result)
+            if (entities == null) return;
+
+            foreach (var entity in entities)
             {
-                item.IsActive = false;
-                dbSet.Update(item);
+                entity.IsActive = false;
+                
             }
         }
         

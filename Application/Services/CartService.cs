@@ -165,6 +165,8 @@ namespace Application.Services
 
                  _unitOfWork.Carts.Remove(cart);
 
+                await _unitOfWork.CompleteAsync();
+
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Delete });
 
                 return Result<CartDTO>.Ok(entity, "Cart deleted successfully.");
@@ -186,6 +188,8 @@ namespace Application.Services
                 IEnumerable<Cart> carts = _mapper.Map<IEnumerable< Cart>>(entities);
 
                 _unitOfWork.Carts.RemoveRange(carts);
+
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Delete });
 
@@ -215,6 +219,8 @@ namespace Application.Services
                 _unitOfWork.Carts.Update(cart);
 
                 cart.IsActive = true;
+
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Update });
 
@@ -248,6 +254,8 @@ namespace Application.Services
                 _unitOfWork.Carts.UpdateRange(carts);
 
                 //carts.IsActive = true;
+
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Carts", Type = LogType.Update });
 

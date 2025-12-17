@@ -65,7 +65,7 @@
                                 <!-- REMOVE BUTTON -->
                                 <form asp-action="RemoveCart" asp-controller="Cart" method="post" style="margin-top:10px;">
                                  <input type="hidden" name="cartId" value="@cart.Id" />
-                                    <button type="button" class="btn btn-danger btn-sm" href=".removeCart" data.id="@cart.Id">
+                                    <button type="button" class="btn btn-danger btn-sm removeCart" data.id="@cart.Id">
                                  <i class="fa fa-trash"></i> Remove
                                 </button>
                                 </form>
@@ -139,7 +139,9 @@
 @section Scripts{
     <script>
         $(document).on("click",".removeCart",function(){
-         const cid = $(this).data("id");
+             const $button = $(this);
+             const cid = $button.data("id");
+             const $cartItem = $button.closest(".product-widget");
             
 
             $.ajax({
@@ -147,6 +149,7 @@
                 type:"POST",
                 data:{cartid: cid},
                 success: function(res){
+                         $cartItem.remove();
                     Swal.fire({
                         position: "top-center",
                         icon: "success",

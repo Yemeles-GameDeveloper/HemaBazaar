@@ -68,11 +68,15 @@ namespace HemaBazaar.MVC.Controllers
                 return BadRequest("Item could not be added to cart");
             
         }
-        [HttpPost]
+       [HttpPost]
        public async Task<IActionResult> RemoveCart (int cartid)
        {
            Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid);
            Result<CartDTO> removeResult = await _cartService.Remove(cart.Data);
+            if (!cart.Success || cart.Data == null)
+            {
+                return NotFound("Cart item could not be found.");
+            }
 
             if (removeResult.Success)
             {

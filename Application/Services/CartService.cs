@@ -139,7 +139,15 @@ namespace Application.Services
             {
 
 
-                CartDTO cart = _mapper.Map<CartDTO>(await _unitOfWork.Carts.GetByIdAsync(id));
+                Cart? cartEntity = (await _unitOfWork.Carts.FindAsync(x => x.Id == id, OrderType.ASC, "Item", "Item.Category"))
+                    .FirstOrDefault();
+
+                if (cartEntity == null)
+                {
+                    return Result<CartDTO?>.Failure("Cart not found.");
+                }
+
+                CartDTO cart = _mapper.Map<CartDTO>(cartEntity);
 
 
 

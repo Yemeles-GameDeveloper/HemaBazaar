@@ -98,6 +98,7 @@ namespace Infrastructure.Repositories
                 entity.IsActive = false;
                 
             }
+            dbSet.UpdateRange(entities);
         }
         
 

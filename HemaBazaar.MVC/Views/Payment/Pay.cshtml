@@ -14,7 +14,7 @@
                     </div>
                     <input type="hidden" asp-for="Price" value="@Model.Price" />
                     <input type="hidden" asp-for="PaidPrice" value="@Model.PaidPrice" />
-                    <form asp-controller="Payment" asp-action="Pay" class="checkout-form" novalidate>
+                    <form id="checkoutForm" asp-controller="Payment" asp-action="Pay" method="post" class="checkout-form" novalidate>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -125,7 +125,7 @@
                     </form>
                 </div>
             </div>
-            @Html.Raw(ViewBag.CheckoutFormContent);
+            @Html.Raw(ViewBag.CheckoutFormContent)
             <div class="col-md-4">
                 <div class="order-details">
                     <div class="section-title text-center">
@@ -162,11 +162,11 @@
                         </div>
                     </div>
 
-                    <button type="button" class="primary-btn order-submit" style="width:100%; margin-top:10px;">Confirm Order</button>
+                    <button type="submit" form="checkoutForm" class="primary-btn order-submit" style="width:100%; margin-top:10px;">Confirm Order</button>
                     <p style="font-size:12px; text-align:center; margin-top:10px; opacity:.8;">By placing your order you agree to our Terms &amp; Conditions.</p>
                 </div>
             </div>
-            }
+            
         </div>
     </div>
 </div>

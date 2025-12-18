@@ -121,7 +121,7 @@ namespace HemaBazaar.MVC.Controllers
 
              var checkoutInitialize = await CheckoutFormInitialize.Create(request,options);
 
-            if(checkoutInitialize.Status == "Success")
+            if (string.Equals(checkoutInitialize.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
                 ViewBag.CheckoutFormContent = checkoutInitialize.CheckoutFormContent;
 
@@ -150,7 +150,7 @@ namespace HemaBazaar.MVC.Controllers
 
             var checkoutFrom = await CheckoutForm.Retrieve(request, options);
 
-            if (checkoutFrom.Status == "success" && checkoutFrom.Status == "SUCCESS")
+            if (string.Equals(checkoutFrom.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
                 return RedirectToAction("SuccessPayment");
             }

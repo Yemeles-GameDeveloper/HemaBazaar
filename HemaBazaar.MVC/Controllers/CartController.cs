@@ -23,7 +23,7 @@ namespace HemaBazaar.MVC.Controllers
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
           Result<IEnumerable<CartDTO>> carts = await _cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes:["Item","Item.Category"]);
             return View(carts.Data);
-            // 25 Kasım 1:29:00 dan devam et.
+            
         }
         [HttpPost]
         public async Task<IActionResult> AddCart(int itemId, int quantity)
@@ -90,6 +90,6 @@ namespace HemaBazaar.MVC.Controllers
 
         }
 
-        // 25 Kasım 1:57:00 itemlar carttan silinmiyor.
+        
     }
 }

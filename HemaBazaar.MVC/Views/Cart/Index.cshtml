@@ -116,8 +116,8 @@
                                 <div><strong>$@Model.Sum(x => x.Price * x.Quantity)</strong></div>
                             </div>
 
-                            <a href="/Checkout" class="primary-btn order-submit">Proceed to Checkout</a>
-                            <a href="/" class="primary-btn" style="margin-top:10px; background:#fff; color:#D10024; border:1px solid #D10024;">
+                            <a asp-controller="Payment" asp-action="Pay" class="primary-btn order-submit">Proceed to Checkout</a>
+                            <a asp-controller="Home" asp-action="Index" class="primary-btn" style="margin-top:10px; background:#fff; color:#D10024; border:1px solid #D10024;">
                                 Continue Shopping
                             </a>
                         </div>
@@ -188,5 +188,5 @@
 
 
 
-    @* 25 Kasım 02:04:00 dan devam et.*@
+   
 

@@ -1,4 +1,4 @@
-using Application.ErrorDescribers;
+﻿using Application.ErrorDescribers;
 using Application.Extentions;
 using Application.Mappings;
 using Application.ValidationRules;
@@ -7,6 +7,7 @@ using Domain.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HemaBazaar.MVC.Hubs;
+using HemaBazaar.MVC.Models;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Seed;
@@ -89,6 +90,12 @@ builder.Services
 
 builder.Services.AddSignalR();
 
+
+builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection("IyzicoOptions"));
+
+
+
+
 var app = builder.Build();
 
 await DataSeed.SeedAsync(app.Services);
@@ -117,5 +124,5 @@ app.MapControllerRoute(
 
 app.Run();
 
-
+// 25 Kasım 2:35:00 dan devam et.
 

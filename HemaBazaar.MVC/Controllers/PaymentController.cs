@@ -44,13 +44,19 @@ namespace HemaBazaar.MVC.Controllers
             CheckoutViewModel model = new CheckoutViewModel();
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
             model.Price = carts.Data.Sum(x => x.TotalPrice);
-           
 
+            model.CartItems = carts.Data;
             return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Pay(CheckoutViewModel model)
         {
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item"]);
+            model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
+            model.Price = carts.Data.Sum(x => x.TotalPrice);
+            model.CartItems = carts.Data;
+
             var options = new Options()
             {
                 ApiKey = _iyzicoOptions.Value.ApiKey,
@@ -101,19 +107,18 @@ namespace HemaBazaar.MVC.Controllers
                 Description = "Delivery Address"
             };
 
-            request.BasketItems = new List<BasketItem>
+            request.BasketItems = carts.Data.Select(cart => new BasketItem
             {
-                new BasketItem
-                {
-                    Id = cartDTO.Id.ToString(),
-                    Name = cartDTO.Title,
-                    Category1 = cartDTO.CategoryName,
-                    ItemType = BasketItemType.PHYSICAL.ToString(),
-                    Price = model.Price.ToString("0.00"),
-                }
-            };
+                Id = cart.Id.ToString(),
+                Name = cart.Title,
+                Category1 = cart.CategoryName,
+                ItemType = BasketItemType.PHYSICAL.ToString(),
+                Price = cart.TotalPrice.ToString("0.00"),
+            }).ToList();
+        
+ 
 
-            var checkoutInitialize = await CheckoutFormInitialize.Create(request,options);
+             var checkoutInitialize = await CheckoutFormInitialize.Create(request,options);
 
             if(checkoutInitialize.Status == "Success")
             {

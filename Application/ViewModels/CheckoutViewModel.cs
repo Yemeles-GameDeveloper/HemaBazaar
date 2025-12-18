@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Application.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace Application.ViewModels
         public decimal Price { get; set; }
         public decimal PaidPrice { get; set; }
 
-        public string Items { get; set; }
+        public IEnumerable<CartDTO> CartItems { get; set; } = Enumerable.Empty<CartDTO>();
 
     }
 }

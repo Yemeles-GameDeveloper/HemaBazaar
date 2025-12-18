@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Payment Failed";
+}
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <div class="section-title">
+                    <h3 class="title">Payment could not be completed</h3>
+                    <p style="margin-top:10px; opacity:.8;">We’re sorry, but your transaction was not successful. Please review your payment details and try again.</p>
+                </div>
+                <div class="order-summary">
+                    <div class="order-col">
+                        <div><strong>Status</strong></div>
+                        <div><strong>Failed</strong></div>
+                    </div>
+                    <div class="order-col">
+                        <div>Need help?</div>
+                        <div>Contact support or retry the payment.</div>
+                    </div>
+                </div>
+                <div style="margin-top:20px;">
+                    <a class="primary-btn" href="@Url.Action("Pay", "Payment")" style="margin-right:10px;">Retry Payment</a>
+                    <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -40,7 +40,7 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Pay()
         {
            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-          Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes: ["Item"] );
+          Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes: ["Item", "Item.Category"] );
 
             CheckoutViewModel model = new CheckoutViewModel();
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
@@ -53,7 +53,7 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Pay(CheckoutViewModel model)
         {
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-            Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item"]);
+            Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item", "Item.Category"]);
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
             model.Price = carts.Data.Sum(x => x.TotalPrice);
             model.CartItems = carts.Data;
@@ -71,7 +71,7 @@ namespace HemaBazaar.MVC.Controllers
                 ConversationId = Guid.NewGuid().ToString(),
                 Price = model.Price.ToString("0.00", CultureInfo.InvariantCulture),
                 PaidPrice = model.PaidPrice.ToString("0.00", CultureInfo.InvariantCulture),
-                Currency = Currency.USD.ToString(),
+                Currency = Currency.TRY.ToString(),
                 BasketId = Guid.NewGuid().ToString(),
                 CallbackUrl = _iyzicoOptions.Value.CallbackUrl,
                 PaymentGroup = PaymentGroup.PRODUCT.ToString()
@@ -110,10 +110,10 @@ namespace HemaBazaar.MVC.Controllers
 
             request.BasketItems = carts.Data.Select(cart => new BasketItem
             {
-                Id = "P1",
-                Name = "Asian Sword",
-                Category1 = "Sword",
-                Category2 = "Long Sword",
+                Id = cart.ItemId.ToString(),
+                Name = cart.Title?? string.Empty,
+                Category1 = cart.CategoryName ?? string.Empty,
+                Category2 = cart.CategoryName ?? string.Empty,
                 ItemType = BasketItemType.PHYSICAL.ToString(),
                 Price = cart.TotalPrice.ToString("0.00", CultureInfo.InvariantCulture),
             }).ToList();
@@ -169,7 +169,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
 
-        //25 kasım 3:17:00dan devam et. Iyzico ekranı çıkmıyor.
+        //26 Kasımdan devam et.
     }
 
 }

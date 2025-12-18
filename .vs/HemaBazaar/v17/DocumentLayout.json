@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\home\\note.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\home\\note.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\payment\\pay.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\payment\\pay.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\paymentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\home\\note.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\home\\note.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\application\\viewmodels\\checkoutviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\views\\cart\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0EDD62F1-21C0-4042-852C-533F6D548EA0}|HemaBazaar.MVC\\HemaBazaar.MVC.csproj|solutionrelative:hemabazaar.mvc\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9E9E8D3A-4C93-457D-86CF-379B81AFA229}|Application\\Application.csproj|c:\\users\\dinoz\\onedrive\\masa\u00FCst\u00FC\\yaz\u0131l\u0131mproje\\hemabazaar(eski)\\application\\dtos\\cartdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -66,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 14,
           "Children": [
             {
               "$type": "Bookmark",
@@ -78,20 +78,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Note.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Home\\Note.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Home\\Note.cshtml",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Home\\Note.cshtml",
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Home\\Note.cshtml",
-              "ViewState": "AgIAANUAAAAAAAAAAAAswAEBAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAswAEBAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-18T10:33:32.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T10:33:32.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "CartController.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\CartController.cs",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Controllers\\CartController.cs",
@@ -99,12 +98,11 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\CartController.cs",
               "ViewState": "AgIAADwAAAAAAAAAAAAgwFwAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T09:09:18.192Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T09:09:18.192Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Cart\\Index.cshtml",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Cart\\Index.cshtml",
@@ -112,8 +110,7 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Cart\\Index.cshtml",
               "ViewState": "AgIAAFMAAAAAAAAAAAAAAHcAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-18T08:22:00.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:22:00.852Z"
             },
             {
               "$type": "Document",
@@ -125,8 +122,7 @@
               "RelativeToolTip": "Application\\DTOs\\CartDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:21:40.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:21:40.08Z"
             },
             {
               "$type": "Document",
@@ -138,12 +134,11 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\ItemController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T08:18:52.672Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T08:18:52.672Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "CheckoutViewModel.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\Application\\ViewModels\\CheckoutViewModel.cs",
               "RelativeDocumentMoniker": "Application\\ViewModels\\CheckoutViewModel.cs",
@@ -151,8 +146,7 @@
               "RelativeToolTip": "Application\\ViewModels\\CheckoutViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T07:05:12.241Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T07:05:12.241Z"
             },
             {
               "$type": "Document",
@@ -164,8 +158,7 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Payment\\Pay.cshtml",
               "ViewState": "AgIAAC8AAAAAAAAAAAAswEQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-12-18T07:01:33.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T07:01:33.082Z"
             },
             {
               "$type": "Document",
@@ -177,8 +170,7 @@
               "RelativeToolTip": "HemaBazaar.MVC\\Program.cs",
               "ViewState": "AgIAAGQAAAAAAAAAAAAAAH4AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T12:59:56.259Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T12:59:56.259Z"
             },
             {
               "$type": "Document",
@@ -214,8 +206,7 @@
               "RelativeToolTip": "Application\\DTOs\\PaymentRequestDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T12:56:25.179Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T12:56:25.179Z"
             },
             {
               "$type": "Document",
@@ -227,18 +218,17 @@
               "RelativeToolTip": "HemaBazaar.MVC\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-12-17T12:46:46.864Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T12:46:46.864Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "PaymentController.cs",
               "DocumentMoniker": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\PaymentController.cs",
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Controllers\\PaymentController.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\PaymentController.cs",
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\PaymentController.cs",
-              "ViewState": "AgIAAIMAAAAAAAAAAAAkwKoAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAkwHMAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-17T12:44:05.118Z",
               "EditorCaption": ""
@@ -253,8 +243,7 @@
               "RelativeToolTip": "HemaBazaar.MVC\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-12-17T12:35:14.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-17T12:35:14.816Z"
             }
           ]
         }

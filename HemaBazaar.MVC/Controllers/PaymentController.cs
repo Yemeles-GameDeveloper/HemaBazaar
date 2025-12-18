@@ -110,11 +110,12 @@ namespace HemaBazaar.MVC.Controllers
 
             request.BasketItems = carts.Data.Select(cart => new BasketItem
             {
-                Id = cart.Id.ToString(),
-                Name = cart.Title,
-                Category1 = cart.CategoryName,
+                Id = "P1",
+                Name = "Asian Sword",
+                Category1 = "Sword",
+                Category2 = "Long Sword",
                 ItemType = BasketItemType.PHYSICAL.ToString(),
-                Price = cart.TotalPrice.ToString("0.00",CultureInfo.InvariantCulture),
+                Price = cart.TotalPrice.ToString("0.00", CultureInfo.InvariantCulture),
             }).ToList();
         
  
@@ -168,7 +169,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
 
-        //25 kasım 3:17:00dan devam et.
+        //25 kasım 3:17:00dan devam et. Iyzico ekranı çıkmıyor.
     }
 
 }

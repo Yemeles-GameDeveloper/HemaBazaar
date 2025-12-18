@@ -62,16 +62,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
@@ -145,7 +137,7 @@
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Views\\Payment\\Pay.cshtml",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Views\\Payment\\Pay.cshtml",
               "RelativeToolTip": "HemaBazaar.MVC\\Views\\Payment\\Pay.cshtml",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAAAJUAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAJEAAAAAAAAAAAAAAKsAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-12-18T07:01:33.082Z",
               "EditorCaption": ""
@@ -221,7 +213,7 @@
               "RelativeDocumentMoniker": "HemaBazaar.MVC\\Controllers\\PaymentController.cs",
               "ToolTip": "C:\\Users\\dinoz\\OneDrive\\Masa\u00FCst\u00FC\\Yaz\u0131l\u0131mProje\\HemaBazaar(Eski)\\HemaBazaar.MVC\\Controllers\\PaymentController.cs",
               "RelativeToolTip": "HemaBazaar.MVC\\Controllers\\PaymentController.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAqwHQAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAowIIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-17T12:44:05.118Z",
               "EditorCaption": ""

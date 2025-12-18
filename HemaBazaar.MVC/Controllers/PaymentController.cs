@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
 using Application.Interfaces;
 using Application.Common;
+using System.Globalization;
 
 namespace HemaBazaar.MVC.Controllers
 {
@@ -22,13 +23,13 @@ namespace HemaBazaar.MVC.Controllers
         ICartService cartService;
         UserManager<AppUser> _userManager;
         CartDTO cartDTO;
-        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, CartDTO cartDTO)
+        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService)
         {
             _iyzicoOptions = iyzicoOptions;
 
             _userManager = userManager;
             this.cartService = cartService;
-            this.cartDTO = cartDTO;
+            
         }
         public IActionResult Index()
         {
@@ -68,8 +69,8 @@ namespace HemaBazaar.MVC.Controllers
             {
                 Locale = Locale.TR.ToString(),
                 ConversationId = Guid.NewGuid().ToString(),
-                Price = model.Price.ToString("0.00"),
-                PaidPrice = model.PaidPrice.ToString("0.00"),
+                Price = model.Price.ToString("0.00", CultureInfo.InvariantCulture),
+                PaidPrice = model.PaidPrice.ToString("0.00", CultureInfo.InvariantCulture),
                 Currency = Currency.USD.ToString(),
                 BasketId = Guid.NewGuid().ToString(),
                 CallbackUrl = _iyzicoOptions.Value.CallbackUrl,
@@ -113,7 +114,7 @@ namespace HemaBazaar.MVC.Controllers
                 Name = cart.Title,
                 Category1 = cart.CategoryName,
                 ItemType = BasketItemType.PHYSICAL.ToString(),
-                Price = cart.TotalPrice.ToString("0.00"),
+                Price = cart.TotalPrice.ToString("0.00",CultureInfo.InvariantCulture),
             }).ToList();
         
  
@@ -124,10 +125,10 @@ namespace HemaBazaar.MVC.Controllers
             {
                 ViewBag.CheckoutFormContent = checkoutInitialize.CheckoutFormContent;
 
-                return View();
+                return View(model);
             }
             ViewBag.Error = checkoutInitialize.ErrorMessage;
-            return View();
+            return View(model);
         }
 
         [HttpPost]

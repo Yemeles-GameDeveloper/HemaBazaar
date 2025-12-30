@@ -183,9 +183,16 @@ namespace HemaBazaar.MVC.Controllers
                 foreach (var cart in carts)
                 {
                     cart.IsActive = false;
-                    cartService.Update(cart);
-                    purchaseService.AddAsync(new PurchaseDTO { AppUserId = int.Parse(id), ItemId = cart.ItemId, PurchaseDate = DateTime.Now, PaymentId = payment.Id });
+                    await cartService.Update(cart);
+                    await purchaseService.AddAsync(new PurchaseDTO
+                    {
+                        AppUserId = int.Parse(id),
+                        ItemId = cart.ItemId,
+                        PurchaseDate = DateTime.Now,
+                        PaymentId = payment.Id
+                    });
                 }
+                await paymentService.Update(payment);
                 return RedirectToAction("SuccessPayment");
             }
             else

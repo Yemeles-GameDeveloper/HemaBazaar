@@ -25,6 +25,6 @@ namespace HemaBazaar.MVC.Controllers
         }
     }
 
-    //2:08 den devam et. Siparişleri göstermiyor.
+    
 }
 

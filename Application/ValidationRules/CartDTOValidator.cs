@@ -20,8 +20,9 @@ namespace Application.ValidationRules
             RuleFor(x => x.AppUserId)
                 .GreaterThan(0).WithMessage("KullanıcıId sıfırdan büyük olmalıdır.");
             RuleFor(x => x.Title)
-                .MinimumLength(0).WithMessage("Eşya isminin karakter sayısı sıfırdan büyük olmalıdır.")
-                .MaximumLength(40).WithMessage("Eşya isminin karakter sayısı 40'dan küçük olmalıdır.");
+                 .MaximumLength(40)
+                .WithMessage("Eşya isminin karakter sayısı 40'dan küçük olmalıdır.")
+                .When(x => !string.IsNullOrWhiteSpace(x.Title));
             RuleFor(x => x.ItemId)
               .GreaterThan(0).WithMessage("Eşya Id sıfırdan büyük olmalıdır.");
 

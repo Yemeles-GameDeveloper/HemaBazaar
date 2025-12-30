@@ -5,6 +5,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HemaBazaar.MVC.Controllers
@@ -44,10 +45,13 @@ namespace HemaBazaar.MVC.Controllers
                 return BadRequest("Quantity must be at least 1.");
             }
 
-            Result<IEnumerable<CartDTO>> result = await _cartService.FindAsync(x => x.AppUser.Id == user.Id && x.ItemId == itemId && x.IsActive);
+            
+               Result < IEnumerable < CartDTO >> result = await _cartService.FindAsync(
+                x => x.AppUserId == user.Id && x.ItemId == itemId && x.IsActive,
+                includes: ["Item", "Item.Category"]);
             Result<CartDTO> cartResult = new();
-            if (result.Data.Any())
-            {
+            if (result.Success && result.Data != null && result.Data.Any())
+                {
                CartDTO cart = result.Data.FirstOrDefault();
                 cart.Quantity++;
                cartResult = await _cartService.Update(cart);

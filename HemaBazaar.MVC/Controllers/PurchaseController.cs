@@ -24,4 +24,7 @@ namespace HemaBazaar.MVC.Controllers
             return View(items.Data);
         }
     }
+
+    //2:08 den devam et. Siparişleri göstermiyor.
 }
+

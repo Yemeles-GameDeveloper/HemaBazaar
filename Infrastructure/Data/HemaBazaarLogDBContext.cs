@@ -21,7 +21,9 @@ namespace Infrastructure.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=HemaBazaarLogDB;Trusted_Connection=True;TrustServerCertificate=true;");
+            optionsBuilder.UseSqlServer(
+                "Server=.;Database=HemaBazaarLogDB;Trusted_Connection=True;TrustServerCertificate=true;",
+                sqlOptions => sqlOptions.EnableRetryOnFailure());
             base.OnConfiguring(optionsBuilder);
         }
 

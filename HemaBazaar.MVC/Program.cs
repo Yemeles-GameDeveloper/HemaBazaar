@@ -21,14 +21,20 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<HemaBazaarDBContext>( options =>
+builder.Services.AddDbContext<HemaBazaarDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarDB"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("HemaBazaarDB"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure());
 });
 
 builder.Services.AddDbContext<HemaBazaarLogDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarLogDB"));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("HemaBazaarLogDB"),
+        sqlOptions => sqlOptions.EnableRetryOnFailure());
 });
 
 
@@ -124,5 +130,4 @@ app.MapControllerRoute(
 
 app.Run();
 
-// 25 Kasım 2:35:00 dan devam et.
 

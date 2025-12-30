@@ -1,0 +1,147 @@
+﻿@model IEnumerable<PurchaseDTO>
+@{
+    decimal total = 0;
+}
+
+@* 02:06 ya geri dön. *@
+    
+<style>
+    .purchase-card {
+        border: 1px solid #e4e7ed;
+        border-radius: 6px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background: #fff;
+    }
+
+    .purchase-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        color: #8d99ae;
+        font-size: 13px;
+    }
+
+    .purchase-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .purchase-status.delivered {
+        background: rgba(0, 166, 81, 0.1);
+        color: #00a651;
+    }
+
+    .purchase-status.processing {
+        background: rgba(255, 169, 0, 0.12);
+        color: #ff9900;
+    }
+
+    .purchase-items {
+        margin-top: 16px;
+        border-top: 1px dashed #e4e7ed;
+        padding-top: 16px;
+    }
+
+    .purchase-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .purchase-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .purchase-total {
+        margin-top: 16px;
+        padding-top: 12px;
+        border-top: 1px solid #e4e7ed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    .purchase-actions {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .purchase-actions .secondary-btn {
+        background: #fff;
+        color: #d10024;
+        border: 1px solid #d10024;
+    }
+</style>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Your Purchases</h3>
+                </div>
+                <p style="margin-bottom: 30px; color:#8d99ae;">
+                    Track past orders, review items, and quickly reorder your favorites.
+                </p>
+            </div>
+        </div>
+
+         
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-12">
+                    <div class="purchase-card">
+                    <div class="purchase-meta">
+                        <span><strong>Order:</strong> #HB-2024-0912</span>
+                        <span><strong>Date:</strong> Sep 12, 2024</span>
+                        <span><strong>Payment:</strong> Visa •••• 3201</span>
+                        <span class="purchase-status delivered"><i class="fa fa-check-circle"></i> Delivered</span>
+                    </div>
+
+                    
+
+                    <div class="purchase-items">
+                       
+                            total += item.Price;
+
+                            <div class="purchase-item">
+                                <div>
+                                    <strong>@item.ItemTitle</strong>
+                                    <div style="color:#8d99ae; font-size: 13px;">@item.CategoryName</div>
+                                </div>
+                                <div>$@item.Price</div>
+
+                               
+                            </div>                                                                     
+                    </div>
+
+                    <div class="purchase-total">
+                        <span>Total</span>
+                        <span>$@total</span>
+                    </div>
+
+                    <div class="purchase-actions">
+                        <a href="#" class="primary-btn">View Receipt</a>
+                        <a href="#" class="primary-btn secondary-btn">Reorder Items</a>
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+
+            }
+        </div>
+    </div>
+</div>

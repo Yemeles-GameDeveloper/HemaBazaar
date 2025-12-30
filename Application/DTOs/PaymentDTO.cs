@@ -9,9 +9,12 @@ namespace Application.DTOs
 {
     public class PaymentDTO
     {
+        public int Id { get; set; }
         public decimal Amount { get; set; }
         public string TransactionId { get; set; }
-        public DateTime PaymentDay { get; set; }
+        public int AppUserId { get; set; }
+        public bool IsActive { get; set; }
+        public DateTime PaymentDate { get; set; }
         public PaymentStatus Status { get; set; }
 
 

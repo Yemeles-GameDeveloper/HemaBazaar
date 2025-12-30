@@ -42,7 +42,7 @@ namespace Application.Mappings
             .ForMember(x => x.CategoryName,
             opt => opt.MapFrom(src => src.Category != null
                 ? src.Category.CategoryName
-                : string.Empty)) // veya "Unknown", artık ne istersen
+                : string.Empty)) 
              .ReverseMap();
 
 
@@ -57,6 +57,8 @@ namespace Application.Mappings
             CreateMap<Purchase, PurchaseDTO>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
                 .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title))
+                .ForMember(x => x.Price, opt => opt.MapFrom(x => x.Item.Price))
+                .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Item.Category.CategoryName))
                 .ReverseMap();
 
 

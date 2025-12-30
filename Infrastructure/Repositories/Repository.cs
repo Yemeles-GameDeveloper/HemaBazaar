@@ -26,7 +26,7 @@ namespace Infrastructure.Repositories
             dbSet = dBContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
 
             IQueryable<TEntity> query = dbSet.AsQueryable();

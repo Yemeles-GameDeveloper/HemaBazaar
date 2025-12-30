@@ -1,35 +1,40 @@
-﻿using Application.ViewModels;
+﻿using Application.Common;
+using Application.DTOs;
+using Application.Interfaces;
+using Application.ViewModels;
+using Domain.Entities;
+using Domain.Enums;
 using HemaBazaar.MVC.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
-using Options = Iyzipay.Options;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Application.DTOs;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Domain.Entities;
-using Application.Interfaces;
-using Application.Common;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.Threading.Tasks;
+using Options = Iyzipay.Options;
 
 namespace HemaBazaar.MVC.Controllers
 {
     public class PaymentController : Controller
     {
+        IPaymentService paymentService;
+        IPurchaseService purchaseService;
         IOptions<IyzicoOptions> _iyzicoOptions;
         ICartService cartService;
         UserManager<AppUser> _userManager;
         CartDTO cartDTO;
-        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService)
+
+        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, IPurchaseService purchaseService, IPaymentService paymentService)
         {
             _iyzicoOptions = iyzicoOptions;
 
             _userManager = userManager;
             this.cartService = cartService;
-            
+            this.purchaseService = purchaseService;
+            this.paymentService = paymentService;
         }
         public IActionResult Index()
         {
@@ -53,6 +58,8 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Pay(CheckoutViewModel model)
         {
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var conversationId = Guid.NewGuid().ToString();
+
             Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item", "Item.Category"]);
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
             model.Price = carts.Data.Sum(x => x.TotalPrice);
@@ -73,10 +80,23 @@ namespace HemaBazaar.MVC.Controllers
                 PaidPrice = model.PaidPrice.ToString("0.00", CultureInfo.InvariantCulture),
                 Currency = Currency.TRY.ToString(),
                 BasketId = Guid.NewGuid().ToString(),
-                CallbackUrl = _iyzicoOptions.Value.CallbackUrl,
+                CallbackUrl = Url.Action("Callback", "Payment", new { id = user.Id.ToString(), transactionId = conversationId }, Request.Scheme),
                 PaymentGroup = PaymentGroup.PRODUCT.ToString()
 
             };
+
+
+
+            PaymentDTO payment = new PaymentDTO
+            {
+                AppUserId = user.Id,
+                Amount = model.Price,
+                PaymentDate = DateTime.Now,
+                Status = PaymentStatus.Pending,
+                TransactionId = conversationId,
+            };
+
+            await paymentService.AddAsync(payment);
 
             request.Buyer = new Buyer
             {
@@ -133,7 +153,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Callback()
+        public async Task<IActionResult> Callback(string id, string transactionId)
         {
             var token = Request.Form["token"].ToString();
 
@@ -149,10 +169,16 @@ namespace HemaBazaar.MVC.Controllers
                 Token = token,
             };
 
+            IEnumerable<CartDTO> carts = (await cartService.GetAllAsync(x => x.AppUserId == int.Parse(id) && x.IsActive)).Data;
+
+            PaymentDTO payment = (await paymentService.FindAsync(x => x.TransactionId == transactionId && x.IsActive, tracking: false)).Data.FirstOrDefault();
+
+
             var checkoutFrom = await CheckoutForm.Retrieve(request, options);
 
             if (string.Equals(checkoutFrom.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
+                
                 return RedirectToAction("SuccessPayment");
             }
             return RedirectToAction("FailPayment");
@@ -168,8 +194,8 @@ namespace HemaBazaar.MVC.Controllers
             return View();
         }
 
-
-        //26 Kasımdan devam et.
+        // 26 Kasım 1:04:00
+        
     }
 
 }

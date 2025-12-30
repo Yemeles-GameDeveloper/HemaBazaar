@@ -171,15 +171,27 @@ namespace HemaBazaar.MVC.Controllers
 
             IEnumerable<CartDTO> carts = (await cartService.GetAllAsync(x => x.AppUserId == int.Parse(id) && x.IsActive)).Data;
 
-            PaymentDTO payment = (await paymentService.FindAsync(x => x.TransactionId == transactionId && x.IsActive, tracking: false)).Data.FirstOrDefault();
+            PaymentDTO payment = (await paymentService.FindAsync(x => x.TransactionId == transactionId && x.IsActive)).Data.FirstOrDefault();
 
 
             var checkoutFrom = await CheckoutForm.Retrieve(request, options);
 
             if (string.Equals(checkoutFrom.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
-                
+                payment.Status = PaymentStatus.Completed;
+
+                foreach (var cart in carts)
+                {
+                    cart.IsActive = false;
+                    cartService.Update(cart);
+                    purchaseService.AddAsync(new PurchaseDTO { AppUserId = int.Parse(id), ItemId = cart.ItemId, PurchaseDate = DateTime.Now, PaymentId = payment.Id });
+                }
                 return RedirectToAction("SuccessPayment");
+            }
+            else
+            {
+                payment.Status = PaymentStatus.Failed;
+                await paymentService.Update(payment);
             }
             return RedirectToAction("FailPayment");
 

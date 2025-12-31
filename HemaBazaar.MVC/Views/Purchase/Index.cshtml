@@ -1,0 +1,49 @@
+﻿@model HemaBazaar.MVC.Models.PurchaseViewModel
+
+@{
+    ViewData["Title"] = "Purchases";
+}
+
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-6">Your Purchases</h1>
+            <p class="text-muted mb-0">Review your previous orders and purchase dates.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            @if (Model.Purchases.Count == 0)
+            {
+                <div class="text-center py-5">
+                    <p class="mb-2 fw-semibold">No purchases yet</p>
+                    <p class="text-muted">Browse the marketplace to find your next favorite item.</p>
+                    <a class="btn btn-primary" asp-controller="Item" asp-action="Index">Browse Items</a>
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Purchased On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var purchase in Model.Purchases)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">@purchase.ItemTitle</td>
+                                    <td>@purchase.PurchaseDate.ToString("MMM dd, yyyy")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>

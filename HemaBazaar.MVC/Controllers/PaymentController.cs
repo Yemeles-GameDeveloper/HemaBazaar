@@ -1,19 +1,20 @@
-﻿using Application.ViewModels;
+﻿using Application.Common;
+using Application.DTOs;
+using Application.Interfaces;
+using Application.ViewModels;
+using Domain.Entities;
+using Domain.Enums;
 using HemaBazaar.MVC.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
-using Options = Iyzipay.Options;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Application.DTOs;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using Domain.Entities;
-using Application.Interfaces;
-using Application.Common;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 using System.Globalization;
+using System.Threading.Tasks;
+using Options = Iyzipay.Options;
 
 namespace HemaBazaar.MVC.Controllers
 {
@@ -23,13 +24,16 @@ namespace HemaBazaar.MVC.Controllers
         ICartService cartService;
         UserManager<AppUser> _userManager;
         CartDTO cartDTO;
-        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService)
+        IPaymentService paymentService;
+        IPurchaseService purchaseService;
+        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, IPaymentService paymentService, IPurchaseService purchaseService)
         {
             _iyzicoOptions = iyzicoOptions;
 
             _userManager = userManager;
             this.cartService = cartService;
-            
+            this.paymentService = paymentService;
+            this.purchaseService = purchaseService;
         }
         public IActionResult Index()
         {
@@ -153,6 +157,53 @@ namespace HemaBazaar.MVC.Controllers
 
             if (string.Equals(checkoutFrom.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+                    if (user != null)
+                    {
+                        Result<IEnumerable<CartDTO>> cartsResult = await cartService.FindAsync(
+                            x => x.AppUserId == user.Id && x.IsActive,
+                            includes: ["Item", "Item.Category"]);
+
+                        var carts = cartsResult.Data?.ToList() ?? new List<CartDTO>();
+                        if (carts.Any() && !string.IsNullOrWhiteSpace(token))
+                        {
+                            var paymentResult = await paymentService.AddAsync(new PaymentDTO
+                            {
+                                Amount = carts.Sum(x => x.TotalPrice),
+                                TransactionId = token,
+                                PaymentDay = DateTime.Now,
+                                Status = PaymentStatus.Completed
+                            });
+
+                            if (paymentResult.Success && paymentResult.Data != null)
+                            {
+                                int paymentId = paymentResult.Data.Id;
+                                var purchases = carts.Select(cart => new PurchaseDTO
+                                {
+                                    AppUserId = user.Id,
+                                    UserName = user.UserName,
+                                    ItemTitle = cart.Title ?? string.Empty,
+                                    ItemId = cart.ItemId,
+                                    PaymentId = paymentId,
+                                    PurchaseDate = DateTime.Now
+                                }).ToList();
+
+                                await purchaseService.AddRangeAsync(purchases);
+
+                                foreach (var cart in carts)
+                                {
+                                    cart.IsActive = false;
+                                }
+
+                                await cartService.UpdateRange(carts);
+                            }
+                        }
+                    }
+                }
+
+
                 return RedirectToAction("SuccessPayment");
             }
             return RedirectToAction("FailPayment");
@@ -169,7 +220,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
 
-        //26 Kasımdan devam et.
+       
     }
 
 }

@@ -21,7 +21,7 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Index()
         {
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-          Result<IEnumerable<CartDTO>> carts = await _cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes:["Item","Item.Category"]);
+          Result<IEnumerable<CartDTO>> carts = await _cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive,tracking:false, includes:["Item","Item.Category"]);
             return View(carts.Data);
             
         }
@@ -44,7 +44,7 @@ namespace HemaBazaar.MVC.Controllers
                 return BadRequest("Quantity must be at least 1.");
             }
 
-            Result<IEnumerable<CartDTO>> result = await _cartService.FindAsync(x => x.AppUser.Id == user.Id && x.ItemId == itemId && x.IsActive);
+            Result<IEnumerable<CartDTO>> result = await _cartService.FindAsync(x => x.AppUser.Id == user.Id && x.ItemId == itemId && x.IsActive,tracking:false);
             Result<CartDTO> cartResult = new();
             if (result.Data.Any())
             {

@@ -40,7 +40,7 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Pay()
         {
            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-          Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive, includes: ["Item", "Item.Category"] );
+          Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive,tracking:false, includes: ["Item", "Item.Category"] );
 
             CheckoutViewModel model = new CheckoutViewModel();
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
@@ -169,7 +169,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
 
-        //26 Kasımdan devam et.
+        
     }
 
 }

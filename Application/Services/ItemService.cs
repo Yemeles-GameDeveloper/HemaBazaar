@@ -88,13 +88,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<ItemDTO>>> FindAsync(Expression<Func<Item, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<ItemDTO>>> FindAsync(Expression<Func<Item, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<ItemDTO> items = _mapper.Map<IEnumerable<ItemDTO>>(await _unitOfWork.Items.FindAsync(filter, orderType, includes));
+                IEnumerable<ItemDTO> items = _mapper.Map<IEnumerable<ItemDTO>>(await _unitOfWork.Items.FindAsync(filter, orderType,tracking, includes));
 
 
 
@@ -110,13 +110,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<ItemDTO>>> GetAllAsync(Expression<Func<Item, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<ItemDTO>>> GetAllAsync(Expression<Func<Item, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<ItemDTO> items = _mapper.Map<IEnumerable<ItemDTO>>(await _unitOfWork.Items.GetAllAsync(filter, orderType, includes));
+                IEnumerable<ItemDTO> items = _mapper.Map<IEnumerable<ItemDTO>>(await _unitOfWork.Items.GetAllAsync(filter, orderType, tracking, includes));
 
 
 

@@ -87,13 +87,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<OrderDetailDTO>>> FindAsync(Expression<Func<OrderDetail, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<OrderDetailDTO>>> FindAsync(Expression<Func<OrderDetail, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<OrderDetailDTO> orderDetails = _mapper.Map<IEnumerable<OrderDetailDTO>>(await _unitOfWork.OrderDetails.FindAsync(filter, orderType, includes));
+                IEnumerable<OrderDetailDTO> orderDetails = _mapper.Map<IEnumerable<OrderDetailDTO>>(await _unitOfWork.OrderDetails.FindAsync(filter, orderType, tracking, includes));
 
 
 
@@ -109,13 +109,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<OrderDetailDTO>>> GetAllAsync(Expression<Func<OrderDetail, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<OrderDetailDTO>>> GetAllAsync(Expression<Func<OrderDetail, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<OrderDetailDTO> orderDetails = _mapper.Map<IEnumerable<OrderDetailDTO>>(await _unitOfWork.OrderDetails.GetAllAsync(filter, orderType, includes));
+                IEnumerable<OrderDetailDTO> orderDetails = _mapper.Map<IEnumerable<OrderDetailDTO>>(await _unitOfWork.OrderDetails.GetAllAsync(filter, orderType, tracking, includes));
 
 
 

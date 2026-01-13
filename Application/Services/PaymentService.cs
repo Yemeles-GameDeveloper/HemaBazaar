@@ -87,13 +87,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<PaymentDTO>>> FindAsync(Expression<Func<Payment, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<PaymentDTO>>> FindAsync(Expression<Func<Payment, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<PaymentDTO> payments = _mapper.Map<IEnumerable<PaymentDTO>>(await _unitOfWork.Payments.FindAsync(filter, orderType, includes));
+                IEnumerable<PaymentDTO> payments = _mapper.Map<IEnumerable<PaymentDTO>>(await _unitOfWork.Payments.FindAsync(filter, orderType, tracking, includes));
 
 
 
@@ -109,13 +109,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<PaymentDTO>>> GetAllAsync(Expression<Func<Payment, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<PaymentDTO>>> GetAllAsync(Expression<Func<Payment, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<PaymentDTO> payments = _mapper.Map<IEnumerable<PaymentDTO>>(await _unitOfWork.Payments.GetAllAsync(filter, orderType, includes));
+                IEnumerable<PaymentDTO> payments = _mapper.Map<IEnumerable<PaymentDTO>>(await _unitOfWork.Payments.GetAllAsync(filter, orderType,tracking, includes));
 
 
 

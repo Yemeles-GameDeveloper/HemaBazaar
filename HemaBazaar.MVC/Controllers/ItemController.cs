@@ -23,7 +23,7 @@ namespace HemaBazaar.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result = await _itemService.GetAllAsync(null, OrderType.ASC, "Category");
+            var result = await _itemService.GetAllAsync(null, OrderType.ASC,true, "Category");
             var items = result.Data ?? Enumerable.Empty<ItemDTO>();
 
             return View(items);

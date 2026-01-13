@@ -37,7 +37,7 @@ namespace HemaBazaar.MVC.Controllers
                 Response.Cookies.Append("userName", User.Identity.Name, cookieOptions);
             }
 
-            var result = await itemService.GetAllAsync(null, OrderType.ASC, "Category");
+            var result = await itemService.GetAllAsync(null, OrderType.ASC,true, "Category");
 
             // BURAYA BREAKPOINT KOY
             var list = (result.Data ?? Enumerable.Empty<ItemDTO>()).ToList();

@@ -85,13 +85,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<FavouriteDTO>>> FindAsync(Expression<Func<Favourite, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<FavouriteDTO>>> FindAsync(Expression<Func<Favourite, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<FavouriteDTO> favourites = _mapper.Map<IEnumerable<FavouriteDTO>>(await _unitOfWork.Favourites.FindAsync(filter, orderType, includes));
+                IEnumerable<FavouriteDTO> favourites = _mapper.Map<IEnumerable<FavouriteDTO>>(await _unitOfWork.Favourites.FindAsync(filter, orderType,tracking, includes));
 
 
 
@@ -107,13 +107,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<FavouriteDTO>>> GetAllAsync(Expression<Func<Favourite, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<FavouriteDTO>>> GetAllAsync(Expression<Func<Favourite, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
 
 
-                IEnumerable<FavouriteDTO> favourites = _mapper.Map<IEnumerable<FavouriteDTO>>(await _unitOfWork.Favourites.GetAllAsync(filter, orderType, includes));
+                IEnumerable<FavouriteDTO> favourites = _mapper.Map<IEnumerable<FavouriteDTO>>(await _unitOfWork.Favourites.GetAllAsync(filter, orderType, tracking, includes));
 
 
 

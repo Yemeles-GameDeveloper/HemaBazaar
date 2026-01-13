@@ -139,7 +139,7 @@ namespace Application.Services
             {
 
 
-                Cart? cartEntity = (await _unitOfWork.Carts.FindAsync(x => x.Id == id, OrderType.ASC, "Item", "Item.Category"))
+                Cart? cartEntity = (await _unitOfWork.Carts.FindAsync(x => x.Id == id, OrderType.ASC,true, "Item", "Item.Category"))
                     .FirstOrDefault();
 
                 if (cartEntity == null)

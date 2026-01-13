@@ -24,8 +24,8 @@ namespace Application.Interfaces
         Task<Result <IEnumerable <TDTO>>> RemoveRange(IEnumerable<TDTO> entities);
 
         Task<Result<TDTO?>> GetByIdAsync(int id);
-        Task<Result<IEnumerable<TDTO>>> GetAllAsync(Expression<Func<T, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes);
-        Task<Result<IEnumerable<TDTO>>> FindAsync(Expression<Func<T, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes);
+        Task<Result<IEnumerable<TDTO>>> GetAllAsync(Expression<Func<T, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes);
+        Task<Result<IEnumerable<TDTO>>> FindAsync(Expression<Func<T, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes);
 
     }
 }

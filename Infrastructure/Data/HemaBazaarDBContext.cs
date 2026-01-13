@@ -31,31 +31,40 @@ namespace Infrastructure.Data
             base.OnConfiguring(optionsBuilder);
         }
 
-        //17 Kasımdan devam et.
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder); // <-- en üste al (Identity için)
+
+            // Konfigürasyonları uygula
             var configurationAssembly = Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(configurationAssembly);
 
+            // ---- BURAYA EKLE ----
+            builder.Entity<Payment>()
+                .HasOne(p => p.AppUser)
+                .WithMany(u => u.Payments)
+                .HasForeignKey(p => p.AppUserId)
+                .OnDelete(DeleteBehavior.NoAction); // SQL Server için en sağlıklısı
+                                                    // ----------------------
 
+            // Global query filter (IsActive)
+            var entities = builder.Model.GetEntityTypes()
+                .Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType));
 
-
-            var entities = builder.Model.GetEntityTypes().Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType)); 
-            base.OnModelCreating(builder);
             foreach (var entity in entities)
             {
                 var parameter = Expression.Parameter(entity.ClrType, "e");
                 var prop = Expression.Property(parameter, nameof(BaseEntity.IsActive));
                 var condition = Expression.Equal(prop, Expression.Constant(true));
-                var lampa = Expression.Lambda(condition, parameter);
+                var lambda = Expression.Lambda(condition, parameter);
 
-                builder.Entity(entity.ClrType).HasQueryFilter(lampa);
-
-                
+                builder.Entity(entity.ClrType).HasQueryFilter(lambda);
             }
         }
 
-        
+
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var entities = ChangeTracker.Entries<BaseEntity>();

@@ -13,6 +13,7 @@ namespace Application.DTOs
         public string TransactionId { get; set; }
         public DateTime PaymentDay { get; set; }
         public PaymentStatus Status { get; set; }
+        public int AppUserId { get; set; }
 
 
     }

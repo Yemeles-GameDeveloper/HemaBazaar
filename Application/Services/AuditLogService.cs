@@ -51,11 +51,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<AuditLog>>> FindAsync(Expression<Func<AuditLog, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<AuditLog>>> FindAsync(Expression<Func<AuditLog, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
-                IEnumerable<AuditLog> result = await _unitOfWork.AuditLogs.FindAsync(filter,orderType,includes);
+                IEnumerable<AuditLog> result = await _unitOfWork.AuditLogs.FindAsync(filter,orderType,tracking,includes);
                 
                 return Result<IEnumerable<AuditLog>>.Ok(result);
 
@@ -66,11 +66,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<IEnumerable<AuditLog>>> GetAllAsync(Expression<Func<AuditLog, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<Result<IEnumerable<AuditLog>>> GetAllAsync(Expression<Func<AuditLog, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             try
             {
-                IEnumerable<AuditLog> result = await _unitOfWork.AuditLogs.GetAllAsync(filter, orderType, includes);
+                IEnumerable<AuditLog> result = await _unitOfWork.AuditLogs.GetAllAsync(filter, orderType,tracking, includes);
 
                 return Result<IEnumerable<AuditLog>>.Ok(result);
 

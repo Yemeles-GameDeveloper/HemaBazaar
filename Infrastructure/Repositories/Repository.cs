@@ -26,12 +26,14 @@ namespace Infrastructure.Repositories
             dbSet = dBContext.Set<TEntity>();
         }
 
-        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> filter, OrderType orderType = OrderType.ASC,bool tracking = true ,params string[] includes)
         {
 
             IQueryable<TEntity> query = dbSet.AsQueryable();
+            if(!tracking)
+                query = query.AsNoTracking();
 
-            query = query.AsNoTracking();
+
             query = query.Where(filter);
 
             if (includes != null)
@@ -47,11 +49,11 @@ namespace Infrastructure.Repositories
 
         
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, OrderType orderType = OrderType.ASC, params string[] includes)
+        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes)
         {
             IQueryable<TEntity> query = dbSet.AsQueryable();
-
-            query = query.AsNoTracking();
+            if(!tracking)
+                query = query.AsNoTracking();
 
 
             if (filter!=null)

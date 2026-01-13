@@ -17,7 +17,7 @@ namespace Domain.Entities
         public ICollection<Favourite> Favourites { get; set; }
         public ICollection<Purchase> Purchases { get; set; }
         public ICollection<Order> Orders { get; set; }
-        
+        public ICollection<Payment> Payments { get; set; }
 
 
 

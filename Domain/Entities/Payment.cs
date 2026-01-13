@@ -13,8 +13,13 @@ namespace Domain.Entities
         public string TransactionId { get; set; }
         public DateTime PaymentDay { get; set; }
         public PaymentStatus Status { get; set; }
+        
+        public int AppUserId { get; set; }
 
 
         public ICollection<Purchase> Purchases { get; set; }
+        public AppUser AppUser { get; set; }
+
+        // 26 Kasım 1:04:00
     }
 }

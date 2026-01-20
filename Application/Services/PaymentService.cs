@@ -44,6 +44,7 @@ namespace Application.Services
                 Payment payment = _mapper.Map<Payment>(entity);
                 await _unitOfWork.Payments.AddAsync(payment);
                 await _unitOfWork.CompleteAsync();
+                entity.Id = payment.Id;
                 await _auditLogService.AddAsync(new AuditLog {  RecordId = payment.Id.ToString(), TableName = "Payments", Type = LogType.Insert });
                 return Result<PaymentDTO>.Ok(entity, "Payment created successfully.");
 

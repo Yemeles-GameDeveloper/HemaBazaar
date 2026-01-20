@@ -1,4 +1,4 @@
-using Application.ViewModels;
+﻿using Application.ViewModels;
 using HemaBazaar.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -6,7 +6,6 @@ using Iyzipay;
 using Iyzipay.Model;
 using Iyzipay.Request;
 using Options = Iyzipay.Options;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Application.DTOs;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -130,6 +129,7 @@ namespace HemaBazaar.MVC.Controllers
 
             if (string.Equals(checkoutInitialize.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
+
                 ViewBag.CheckoutFormContent = checkoutInitialize.CheckoutFormContent;
 
                 return View(model);
@@ -155,9 +155,11 @@ namespace HemaBazaar.MVC.Controllers
                 Token = token,
             };
 
-            var checkoutFrom = await CheckoutForm.Retrieve(request, options);
+           
 
-            if (string.Equals(checkoutFrom.Status, "success", StringComparison.OrdinalIgnoreCase))
+            var checkoutForm = await CheckoutForm.Retrieve(request, options);
+
+            if (string.Equals(checkoutForm.Status, "success", StringComparison.OrdinalIgnoreCase))
             {
                 return RedirectToAction("SuccessPayment");
             }
@@ -174,22 +176,26 @@ namespace HemaBazaar.MVC.Controllers
             {
                 AppUserId = user.Id,
                 Amount = carts.Data.Sum(x => x.TotalPrice),
-                Status = PaymentStatus.Success
+                Status = PaymentStatus.Success,
+                TransactionId = Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture),
+                PaymentDay = DateTime.Now
             };
             var paymentResult = await paymentService.AddAsync(payment);
 
-            if (paymentResult.IsSuccess)
+            if (paymentResult.Success)
             {
                 // Create Purchase records
                 IEnumerable<PurchaseDTO> purchases = carts.Data.Select(cart => new PurchaseDTO
                 {
                     AppUserId = user.Id,
+                    UserName = user.UserName,
+                    ItemTitle = cart.Title ?? string.Empty,
                     ItemId = cart.ItemId,
                     PaymentId = paymentResult.Data.Id,
                     PurchaseDate = DateTime.Now
                 });
                 var purchaseResult = await purchaseService.AddRangeAsync(purchases);
-                if (purchaseResult.IsSuccess)
+                if (purchaseResult.Success)
                 {
                     // Deactivate carts
                     foreach (var cart in carts.Data)
@@ -200,6 +206,8 @@ namespace HemaBazaar.MVC.Controllers
                 }
             }
             return View();
+
+             //26 Kasım 1:55:00 den devam et
         }
 
         public IActionResult FailPayment()

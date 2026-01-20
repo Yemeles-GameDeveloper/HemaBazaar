@@ -167,9 +167,14 @@ namespace Application.Services
         {
             try
             {
+                Cart? cart = (await _unitOfWork.Carts.FindAsync(x => x.Id == entity.Id, OrderType.ASC, true))
+                    .FirstOrDefault();
+                if (cart == null)
+                {
+                    return Result<CartDTO>.Failure("Cart not found.");
+                }
 
-
-                Cart cart = _mapper.Map<Cart>(entity);
+                
 
                  _unitOfWork.Carts.Remove(cart);
 

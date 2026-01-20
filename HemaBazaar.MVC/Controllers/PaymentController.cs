@@ -1,4 +1,4 @@
-﻿using Application.ViewModels;
+using Application.ViewModels;
 using HemaBazaar.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,6 +11,7 @@ using Application.DTOs;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Domain.Entities;
+using Domain.Enums;
 using Application.Interfaces;
 using Application.Common;
 using System.Globalization;
@@ -21,15 +22,17 @@ namespace HemaBazaar.MVC.Controllers
     {
         IOptions<IyzicoOptions> _iyzicoOptions;
         ICartService cartService;
+        IPaymentService paymentService;
+        IPurchaseService purchaseService;
         UserManager<AppUser> _userManager;
         CartDTO cartDTO;
-        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService)
+        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, IPaymentService paymentService, IPurchaseService purchaseService)
         {
             _iyzicoOptions = iyzicoOptions;
-
             _userManager = userManager;
             this.cartService = cartService;
-            
+            this.paymentService = paymentService;
+            this.purchaseService = purchaseService;
         }
         public IActionResult Index()
         {
@@ -158,8 +161,41 @@ namespace HemaBazaar.MVC.Controllers
             return RedirectToAction("FailPayment");
 
         }
-        public IActionResult SuccessPayment()
+        public async Task<IActionResult> SuccessPayment()
         {
+            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, tracking: false, includes: ["Item", "Item.Category"]);
+
+            // Create Payment record
+            PaymentDTO payment = new PaymentDTO
+            {
+                AppUserId = user.Id,
+                Amount = carts.Data.Sum(x => x.TotalPrice),
+                Status = PaymentStatus.Success
+            };
+            var paymentResult = await paymentService.AddAsync(payment);
+
+            if (paymentResult.IsSuccess)
+            {
+                // Create Purchase records
+                IEnumerable<PurchaseDTO> purchases = carts.Data.Select(cart => new PurchaseDTO
+                {
+                    AppUserId = user.Id,
+                    ItemId = cart.ItemId,
+                    PaymentId = paymentResult.Data.Id,
+                    PurchaseDate = DateTime.Now
+                });
+                var purchaseResult = await purchaseService.AddRangeAsync(purchases);
+                if (purchaseResult.IsSuccess)
+                {
+                    // Deactivate carts
+                    foreach (var cart in carts.Data)
+                    {
+                        cart.IsActive = false;
+                        await cartService.Update(cart);
+                    }
+                }
+            }
             return View();
         }
 

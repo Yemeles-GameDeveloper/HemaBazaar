@@ -71,22 +71,26 @@ namespace HemaBazaar.MVC.Controllers
        [HttpPost]
        public async Task<IActionResult> RemoveCart (int cartid)
        {
-            Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid);
-            if (!cart.Success || cart.Data == null)
-            {
-                return NotFound("Cart item could not be found.");
-            }
+            
+            
+                Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid);
+                if (!cart.Success || cart.Data == null)
+                {
+                    return NotFound("Cart item could not be found.");
+                }
 
 
-            Result<CartDTO> removeResult = await _cartService.Remove(cart.Data);
-            if (removeResult.Success)
-            {
-                return Ok("Item removed from the cart successfully.");
-            }
-            else
-            {
-                return BadRequest("Item could not be removed from the cart");
-            }
+                Result<CartDTO> removeResult = await _cartService.Remove(cart.Data);
+                if (removeResult.Success)
+                {
+                    return Ok("Item removed from the cart successfully.");
+                }
+                else
+                {
+                    return BadRequest("Item could not be removed from the cart");
+                }
+            
+            
 
         }
 

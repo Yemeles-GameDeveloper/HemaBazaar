@@ -256,6 +256,8 @@ namespace Application.Services
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Payments", Type = LogType.Error, Action = e.Message });
                 return Result<IEnumerable<PaymentDTO>>.Failure("Payments could not be deleted.");
             }
+
+            //26 Kasım 1:24:00 devam et.
         }
     }
 }

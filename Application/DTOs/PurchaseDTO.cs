@@ -18,12 +18,10 @@ namespace Application.DTOs
         public int ItemId { get; set; }
         public int PaymentId { get; set; }
 
-
         public int TransactionId { get; set; }
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
         public PaymentStatus Status { get; set; }
-        public int MyProperty { get; set; }
-        public decimal Price { get; set; }
+
 
 
 

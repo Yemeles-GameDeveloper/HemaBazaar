@@ -57,6 +57,9 @@ namespace Application.Mappings
             CreateMap<Purchase, PurchaseDTO>()
                 .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
                 .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title))
+                .ForMember(x => x.TransactionId, opt => opt.MapFrom(x => x.Payment.TransactionId))
+                .ForMember(x => x.Amount, opt => opt.MapFrom(x => x.Payment.Amount))
+                .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Payment.Status))
                 .ReverseMap();
 
 

@@ -16,6 +16,8 @@ namespace Application.DTOs
         public PaymentStatus Status { get; set; }
         public int AppUserId { get; set; }
 
+        
+
 
     }
 }

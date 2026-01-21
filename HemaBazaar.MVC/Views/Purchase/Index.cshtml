@@ -1,0 +1,97 @@
+﻿﻿@{
+ViewData["Title"] = "Purchases";
+}
+@model IEnumerable<PurchaseDTO>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title">Purchases</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-default" style="margin-bottom: 30px;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Recent Orders</h4>
+                    </div>
+                    <div class="panel-body" style="padding: 0;">
+                        <div class="table-responsive">
+                            <table class="table table-striped" style="margin-bottom: 0;">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th>Date</th>
+                                        <th>Items</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(var item in Model )
+                                    {
+                                        <tr>
+                                            <td>@item.TransactionId</td>
+                                            <td>@item.PurchaseDate</td>
+                                            <td>@item.ItemTitle</td>
+                                            <td>@item.Price</td>
+                                            <td><span class="label label-default">@item.Status</span></td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Order Timeline</h4>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-unstyled" style="margin-bottom: 0;">
+                            <li style="margin-bottom: 12px;">
+                                <strong>Aug 12</strong> — #HB-2041 delivered to 1734 Stonecoal Road.
+                            </li>
+                            <li style="margin-bottom: 12px;">
+                                <strong>Aug 03</strong> — #HB-2039 shipped via Express Courier.
+                            </li>
+                            <li>
+                                <strong>Jul 28</strong> — #HB-2033 payment confirmed, preparing items.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="panel panel-default" style="margin-bottom: 30px;">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Purchase Summary</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p><strong>Total Orders:</strong> 6</p>
+                        <p><strong>Lifetime Spend:</strong> $1,042.50</p>
+                        <p><strong>Average Order:</strong> $173.75</p>
+                        <a href="#" class="primary-btn" style="margin-top: 10px; display: inline-block;">Download Invoices</a>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Need Help?</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Questions about an order or a refund? Our support team is ready to help.</p>
+                        <a href="#" class="primary-btn">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -207,7 +207,7 @@ namespace HemaBazaar.MVC.Controllers
             }
             return View();
 
-             //26 Kasım 1:55:00 den devam et
+             
         }
 
         public IActionResult FailPayment()

@@ -27,7 +27,7 @@ namespace HemaBazaar.MVC.Controllers
         {
             AppUser user = await _userManager.GetUserAsync(User);
 
-          Result<IEnumerable<PurchaseDTO>> result = await _purchaseService.GetAllAsync(x => x.AppUserId == user.Id && x.IsActive, includes:["Item","Item.Category","Payment"]);
+          Result<IEnumerable<PurchaseDTO>> result = await _purchaseService.GetAllAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item"]);
 
             return View(result.Data);
         }

@@ -12,11 +12,15 @@ namespace Domain.Entities
         public int ItemId { get; set; }
         public int PaymentId { get; set; }
         public DateTime PurchaseDate { get; set; } = DateTime.Now;
+        public int CartId { get; set; }
 
 
         public AppUser AppUser { get; set; }
         public Item Item { get; set; }
         public Payment Payment { get; set; }
+        
+        public Cart Cart { get; set; }
+
 
 
 

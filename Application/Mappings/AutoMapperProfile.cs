@@ -58,10 +58,11 @@ namespace Application.Mappings
                 .ForMember(x => x.UserName, opt => opt.MapFrom(x => x.AppUser.UserName))
                 .ForMember(x => x.ItemTitle, opt => opt.MapFrom(x => x.Item.Title))
                 .ForMember(x => x.TransactionId, opt => opt.MapFrom(x => x.Payment.TransactionId))
-                .ForMember(x => x.Amount, opt => opt.MapFrom(x => x.Payment.Amount))
+                .ForMember(x => x.Amount, opt => opt.MapFrom(x => x.Cart.Quantity))
                 .ForMember(x => x.Status, opt => opt.MapFrom(x => x.Payment.Status));
 
             CreateMap<PurchaseDTO, Purchase>();
+                
 
             CreateMap<AppUser, RegisterViewModel>().ReverseMap();
             CreateMap<AppUser, LoginViewModel>().ReverseMap();

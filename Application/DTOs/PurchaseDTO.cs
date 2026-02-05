@@ -21,6 +21,7 @@ namespace Application.DTOs
         public int TransactionId { get; set; }
         public decimal Amount { get; set; }
         public PaymentStatus Status { get; set; }
+        public int CartId { get; set; }
 
 
 

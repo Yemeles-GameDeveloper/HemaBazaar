@@ -192,7 +192,8 @@ namespace HemaBazaar.MVC.Controllers
                     ItemTitle = cart.Title ?? string.Empty,
                     ItemId = cart.ItemId,
                     PaymentId = paymentResult.Data.Id,
-                    PurchaseDate = DateTime.Now
+                    PurchaseDate = DateTime.Now,
+                    CartId = cart.Id
                 });
                 var purchaseResult = await purchaseService.AddRangeAsync(purchases);
                 if (purchaseResult.Success)

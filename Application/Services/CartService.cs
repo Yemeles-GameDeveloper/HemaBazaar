@@ -231,7 +231,7 @@ namespace Application.Services
 
                 _unitOfWork.Carts.Update(cart);
 
-                cart.IsActive = true;
+                //cart.IsActive = true;
 
                 await _unitOfWork.CompleteAsync();
 

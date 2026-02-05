@@ -16,5 +16,7 @@ namespace Domain.Entities
         
         public AppUser? AppUser { get; set; }
         public Item Item { get; set; }
+
+        public ICollection<Purchase> Purchases { get; set; }
     }
 }

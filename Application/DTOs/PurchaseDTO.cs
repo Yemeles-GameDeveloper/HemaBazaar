@@ -17,9 +17,10 @@ namespace Application.DTOs
         public bool IsActive { get; set; }
         public int ItemId { get; set; }
         public int PaymentId { get; set; }
+        
 
-        public int TransactionId { get; set; }
-        public decimal Amount { get; set; }
+        public string TransactionId { get; set; }
+        public int Amount { get; set; }
         public PaymentStatus Status { get; set; }
         public int CartId { get; set; }
 

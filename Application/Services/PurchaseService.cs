@@ -106,8 +106,8 @@ namespace Application.Services
             }
             catch (Exception e)
             {
-                await _auditLogService.AddAsync(new AuditLog { TableName = "Purchases", Type = LogType.Error, Action = e.Message });
-                return Result<IEnumerable<PurchaseDTO>>.Failure("Purchase got failed.");
+                await _auditLogService.AddAsync(new AuditLog { TableName = "Purchases", Type = LogType.Error, Action = e.Message + " | " + e.InnerException?.Message });
+                return Result<IEnumerable<PurchaseDTO>>.Failure($"Purchase got failed: {e.Message} | Inner: {e.InnerException?.Message}");
             }
         }
 

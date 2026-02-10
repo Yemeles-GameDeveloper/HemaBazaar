@@ -55,6 +55,8 @@ namespace Infrastructure.Repositories
             if(!tracking)
                 query = query.AsNoTracking();
 
+            // Ignore query filters for included navigation properties
+            query = query.IgnoreQueryFilters();
 
             if (filter!=null)
                 query = query.Where(filter);

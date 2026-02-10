@@ -122,7 +122,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}"
+
+    );
+
 app.Run();
 
-// 25 Kasım 2:35:00 dan devam et.
+//27 Kasım 0:06:00 devam et.
+
+
 

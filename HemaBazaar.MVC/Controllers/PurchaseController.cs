@@ -27,7 +27,20 @@ namespace HemaBazaar.MVC.Controllers
         {
             AppUser user = await _userManager.GetUserAsync(User);
 
-          Result<IEnumerable<PurchaseDTO>> result = await _purchaseService.GetAllAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item","Cart"]);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            Result<IEnumerable<PurchaseDTO>> result = await _purchaseService.GetAllAsync(
+                x => x.AppUserId == user.Id && x.IsActive, 
+                tracking: false, 
+                includes: ["Item", "Cart", "Payment", "AppUser"]);
+
+            if (!result.Success || result.Data == null)
+            {
+                return View(new List<PurchaseDTO>());
+            }
 
             return View(result.Data);
         }

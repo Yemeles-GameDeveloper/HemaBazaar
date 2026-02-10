@@ -49,8 +49,11 @@ namespace Infrastructure.Data
                                                     // ----------------------
 
             // Global query filter (IsActive)
+            // Exclude Cart from global filter so we can view purchase history with inactive carts
             var entities = builder.Model.GetEntityTypes()
-                .Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType));
+                .Where(t => typeof(BaseEntity).IsAssignableFrom(t.ClrType) 
+                    && t.ClrType != typeof(Cart) 
+                    && t.ClrType != typeof(Payment));
 
             foreach (var entity in entities)
             {

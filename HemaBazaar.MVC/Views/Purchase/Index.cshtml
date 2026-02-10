@@ -38,7 +38,7 @@ ViewData["Title"] = "Purchases";
                                         <tr>
                                             <td>@item.TransactionId</td>
                                             <td>@item.UserName</td>
-                                            <td>@item.PurchaseDate</td>
+                                            <td>@item.PurchaseDate.ToString("MMM dd, yyyy")</td>
                                             <td>@item.ItemTitle</td>
                                             <td>@item.Amount</td>
                                             <td>@item.Status</td>
@@ -58,15 +58,12 @@ ViewData["Title"] = "Purchases";
                     </div>
                     <div class="panel-body">
                         <ul class="list-unstyled" style="margin-bottom: 0;">
-                            <li style="margin-bottom: 12px;">
-                                <strong>Aug 12</strong> — #HB-2041 delivered to 1734 Stonecoal Road.
-                            </li>
-                            <li style="margin-bottom: 12px;">
-                                <strong>Aug 03</strong> — #HB-2039 shipped via Express Courier.
-                            </li>
-                            <li>
-                                <strong>Jul 28</strong> — #HB-2033 payment confirmed, preparing items.
-                            </li>
+                            @foreach(var item in Model.OrderByDescending(x => x.PurchaseDate).Take(3))
+                            {
+                                <li style="margin-bottom: 12px;">
+                                    <strong>@item.PurchaseDate.ToString("MMM dd")</strong> — #@item.TransactionId delivered to 1734 Stonecoal Road.
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -78,9 +75,9 @@ ViewData["Title"] = "Purchases";
                         <h4 class="panel-title">Purchase Summary</h4>
                     </div>
                     <div class="panel-body">
-                        <p><strong>Total Orders:</strong> 6</p>
-                        <p><strong>Lifetime Spend:</strong> $1,042.50</p>
-                        <p><strong>Average Order:</strong> $173.75</p>
+                        <p><strong>Total Orders:</strong> @Model.Count()</p>
+                        <p><strong>Lifetime Spend:</strong> $@Model.Sum(x => x.Amount).ToString("N2")</p>
+                        <p><strong>Average Order:</strong> $@(Model.Any() ? (Model.Sum(x => x.Amount) / Model.Count()).ToString("N2") : "0.00")</p>
                         <a href="#" class="primary-btn" style="margin-top: 10px; display: inline-block;">Download Invoices</a>
                     </div>
                 </div>

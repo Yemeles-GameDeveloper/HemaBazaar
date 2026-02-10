@@ -282,6 +282,6 @@ namespace Application.Services
             }
         }
 
-        //25 Kasım 1:14:00dan devam et.
+        
     }
 }

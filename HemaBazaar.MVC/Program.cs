@@ -117,21 +117,30 @@ app.UseAuthorization();
 
 app.MapHub<VisitorHub>("/visitorHub");
 
+app.MapControllerRoute(
+     name: "areas",
+     pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}"
+   );
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapAreaControllerRoute(
-    name: "Admin",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}"
+//app.MapAreaControllerRoute(
+//    name: "Admin",
+//    areaName: "Admin",
+//    pattern: "{area=Admin}/{controller=Dashboard}/{action=Index}/{id?}"
 
-    );
+//    );
+
+
+// 27 Kasım 0:35:00 dan devam et.
+   
 
 app.Run();
 
-//27 Kasım 0:06:00 devam et.
+
 
 
 

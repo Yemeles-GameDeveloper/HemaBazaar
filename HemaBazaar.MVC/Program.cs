@@ -37,6 +37,16 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<AutoMapperProfile>();
 });
 
+
+builder.Services.AddMemoryCache();
+builder.Services.AddOutputCache(opt=>
+{
+    opt.AddBasePolicy(pol =>
+    {
+        pol.Expire(TimeSpan.FromSeconds(50));
+    });
+});
+
 builder.Services.AddServices();
 
 builder.Services.AddAuthentication();
@@ -115,6 +125,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseOutputCache();
+
 app.MapHub<VisitorHub>("/visitorHub");
 
 //app.MapAreaControllerRoute(
@@ -137,7 +149,7 @@ app.MapControllerRoute(
 
 
 
-// 27 Kasım 0:35:00 dan devam et.
+
    
 
 app.Run();

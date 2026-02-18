@@ -53,7 +53,10 @@ namespace Application.Mappings
             CreateMap<CartDTO, Cart>();
 
 
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Category, CategoryDTO>()
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.CategoryId));
 
             CreateMap<CustomOrder, CustomOrderDTO>()
                 .ForMember(x => x.CategoryName, opt => opt.MapFrom(x => x.Category.CategoryName))
@@ -68,8 +71,11 @@ namespace Application.Mappings
             .ForMember(x => x.CategoryName,
             opt => opt.MapFrom(src => src.Category != null
                 ? src.Category.CategoryName
-                : string.Empty)) // veya "Unknown", artık ne istersen
-             .ReverseMap();
+                : string.Empty)); // veya "Unknown", artık ne istersen
+                                  //.ForMember(x=> x.CategoryId, opt => opt.MapFrom(x=> x.CategoryId))
+            CreateMap<ItemDTO, Item>()
+                .ForMember(x => x.Category, opt => opt.Ignore());
+
 
 
             CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();

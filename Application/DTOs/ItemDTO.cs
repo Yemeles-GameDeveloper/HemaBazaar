@@ -14,6 +14,9 @@ namespace Application.DTOs
         public string Content { get; set; }
         public decimal Price { get; set; }
         public string CategoryName { get; set; }
+        public int CategoryId { get; set; }
+        public bool IsActive { get; set; }
+
 
 
     }

@@ -27,8 +27,8 @@ namespace Application.ValidationRules
             RuleFor(x => x.Content)
                 .NotEmpty().WithMessage("İçerik kısmı boş olamaz");
 
-            RuleFor(x => x.CategoryName)
-                .NotEmpty().WithMessage("Ürünün mutlaka kategorisi olmak zorundadır.");
+            RuleFor(x => x.CategoryId)
+                .GreaterThan(0).WithMessage("Ürünün mutlaka kategorisi olmak zorundadır.");
              
                 
         }

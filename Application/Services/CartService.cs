@@ -133,7 +133,7 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<CartDTO?>> GetByIdAsync(int id)
+        public async Task<Result<CartDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {

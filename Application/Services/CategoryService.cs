@@ -131,13 +131,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<CategoryDTO?>> GetByIdAsync(int id)
+        public async Task<Result<CategoryDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
 
 
-                CategoryDTO category = _mapper.Map<CategoryDTO>(await _unitOfWork.Categories.GetByIdAsync(id));
+                CategoryDTO category = _mapper.Map<CategoryDTO>(await _unitOfWork.Categories.GetByIdAsync(id,tracking));
 
 
 
@@ -157,13 +157,19 @@ namespace Application.Services
         {
             try
             {
+                // Get the tracked entity from database first
+                Category trackedCategory = await _unitOfWork.Categories.GetByIdAsync(entity.CategoryId, tracking: true);
+                
+                if (trackedCategory == null)
+                {
+                    return Result<CategoryDTO>.Failure("Category not found.");
+                }
 
+                // Now call Remove on the tracked entity
+                _unitOfWork.Categories.Remove(trackedCategory);
+                await _unitOfWork.CompleteAsync();
 
-                Category category = _mapper.Map<Category>(entity);
-
-                _unitOfWork.Categories.Remove(category);
-
-                await _auditLogService.AddAsync(new AuditLog { TableName = "Categories", Type = LogType.Delete });
+                await _auditLogService.AddAsync(new AuditLog { RecordId = trackedCategory.Id.ToString(), TableName = "Categories", Type = LogType.Delete });
 
                 return Result<CategoryDTO>.Ok(entity, "Category deleted successfully.");
 
@@ -171,7 +177,7 @@ namespace Application.Services
             catch (Exception e)
             {
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Categories", Type = LogType.Error, Action = e.Message });
-                return Result<CategoryDTO>.Failure("Category cannot deleted.");
+                return Result<CategoryDTO>.Failure("Category cannot be deleted.");
             }
         }
 
@@ -211,6 +217,7 @@ namespace Application.Services
                 Category category = _mapper.Map<Category>(entity);
 
                 _unitOfWork.Categories.Update(category);
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Categories", Type = LogType.Update });
 
@@ -241,6 +248,7 @@ namespace Application.Services
                 IEnumerable<Category> categories = _mapper.Map<IEnumerable<Category>>(entities);
 
                 _unitOfWork.Categories.UpdateRange(categories);
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Categories", Type = LogType.Update });
 
@@ -250,7 +258,7 @@ namespace Application.Services
             catch (Exception e)
             {
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Categories", Type = LogType.Error, Action = e.Message });
-                return Result<IEnumerable<CategoryDTO>>.Failure("Categories could not be deleted.");
+                return Result<IEnumerable<CategoryDTO>>.Failure("Categories could not be updated.");
             }
         }
     }

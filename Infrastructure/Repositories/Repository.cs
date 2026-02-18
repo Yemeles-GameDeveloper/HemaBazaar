@@ -78,10 +78,10 @@ namespace Infrastructure.Repositories
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities) => await dbSet.AddRangeAsync(entities);
 
-        public async Task<TEntity?> GetByIdAsync(int id)
+        public async Task<TEntity?> GetByIdAsync(int id, bool tracking = true)
         {
             
-           return  dbSet.AsNoTracking().FirstOrDefault(x=>x.Id == id);
+           return tracking ? await dbSet.FindAsync(id):  dbSet.AsNoTracking().FirstOrDefault(x=>x.Id == id);
         }
         
         public void Remove(TEntity entity)

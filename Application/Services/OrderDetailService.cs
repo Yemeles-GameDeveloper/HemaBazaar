@@ -131,13 +131,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<OrderDetailDTO?>> GetByIdAsync(int id)
+        public async Task<Result<OrderDetailDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
 
 
-                OrderDetailDTO orderDetail = _mapper.Map<OrderDetailDTO>(await _unitOfWork.OrderDetails.GetByIdAsync(id));
+                OrderDetailDTO orderDetail = _mapper.Map<OrderDetailDTO>(await _unitOfWork.OrderDetails.GetByIdAsync(id,tracking));
 
 
 

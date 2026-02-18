@@ -81,11 +81,11 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<AuditLog?>> GetByIdAsync(int id)
+        public async Task<Result<AuditLog?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
-                AuditLog result = await _unitOfWork.AuditLogs.GetByIdAsync(id);
+                AuditLog result = await _unitOfWork.AuditLogs.GetByIdAsync(id,tracking);
 
                 return Result<AuditLog>.Ok(result);
 

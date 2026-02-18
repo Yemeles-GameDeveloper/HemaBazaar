@@ -73,7 +73,7 @@ namespace HemaBazaar.MVC.Controllers
        {
             
             
-                Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid);
+                Result<CartDTO> cart = await _cartService.GetByIdAsync(cartid,false);
                 if (!cart.Success || cart.Data == null)
                 {
                     return NotFound("Cart item could not be found.");

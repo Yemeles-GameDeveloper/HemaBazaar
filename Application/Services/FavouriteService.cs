@@ -129,13 +129,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<FavouriteDTO?>> GetByIdAsync(int id)
+        public async Task<Result<FavouriteDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
 
 
-                FavouriteDTO favourite = _mapper.Map<FavouriteDTO>(await _unitOfWork.Favourites.GetByIdAsync(id));
+                FavouriteDTO favourite = _mapper.Map<FavouriteDTO>(await _unitOfWork.Favourites.GetByIdAsync(id,tracking));
 
 
 

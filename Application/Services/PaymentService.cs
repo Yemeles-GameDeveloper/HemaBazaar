@@ -132,13 +132,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<PaymentDTO?>> GetByIdAsync(int id)
+        public async Task<Result<PaymentDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
 
 
-                PaymentDTO payment = _mapper.Map<PaymentDTO>(await _unitOfWork.Payments.GetByIdAsync(id));
+                PaymentDTO payment = _mapper.Map<PaymentDTO>(await _unitOfWork.Payments.GetByIdAsync(id,tracking));
 
 
 

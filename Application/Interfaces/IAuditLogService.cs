@@ -14,7 +14,7 @@ namespace Application.Interfaces
     {
         Task<Result<AuditLog>> AddAsync(AuditLog entity);
         Task<Result<IEnumerable<AuditLog>>> AddRangeAsync(IEnumerable<AuditLog> entities);
-        Task<Result<AuditLog?>> GetByIdAsync(int id);
+        Task<Result<AuditLog?>> GetByIdAsync(int id, bool tracking = true);
         Task<Result<IEnumerable<AuditLog>>> GetAllAsync(Expression<Func<AuditLog, bool>> filter = null, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes);
         Task<Result<IEnumerable<AuditLog>>> FindAsync(Expression<Func<AuditLog, bool>> filter, OrderType orderType = OrderType.ASC, bool tracking = true, params string[] includes);
     }

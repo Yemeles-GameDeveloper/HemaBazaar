@@ -43,6 +43,9 @@ namespace Application.Services
                 }
 
                 Item item = _mapper.Map<Item>(entity);
+                item.CreatedDate = DateTime.Now;
+                item.IsActive = true;
+                
                 await _unitOfWork.Items.AddAsync(item);
                 await _unitOfWork.CompleteAsync();
                 await _auditLogService.AddAsync(new AuditLog { RecordId = item.Id.ToString(), TableName = "Items", Type = LogType.Insert });
@@ -132,13 +135,13 @@ namespace Application.Services
             }
         }
 
-        public async Task<Result<ItemDTO?>> GetByIdAsync(int id)
+        public async Task<Result<ItemDTO?>> GetByIdAsync(int id, bool tracking = true)
         {
             try
             {
 
 
-                ItemDTO item = _mapper.Map<ItemDTO>(await _unitOfWork.Items.GetByIdAsync(id));
+                ItemDTO item = _mapper.Map<ItemDTO>(await _unitOfWork.Items.GetByIdAsync(id,tracking));
 
 
 
@@ -158,13 +161,17 @@ namespace Application.Services
         {
             try
             {
-
-
-                Item item = _mapper.Map<Item>(entity);
-
+                // Hard delete: Remove from database
+                Item item = await _unitOfWork.Items.GetByIdAsync(entity.Id);
+                if (item == null)
+                {
+                    return Result<ItemDTO>.Failure("Item not found.");
+                }
+                
                 _unitOfWork.Items.Remove(item);
+                await _unitOfWork.CompleteAsync();
 
-                await _auditLogService.AddAsync(new AuditLog { TableName = "Items", Type = LogType.Delete });
+                await _auditLogService.AddAsync(new AuditLog { RecordId = item.Id.ToString(), TableName = "Items", Type = LogType.Delete });
 
                 return Result<ItemDTO>.Ok(entity, "Item deleted successfully.");
 
@@ -185,6 +192,7 @@ namespace Application.Services
                 IEnumerable<Item> items = _mapper.Map<IEnumerable<Item>>(entities);
 
                 _unitOfWork.Items.RemoveRange(items);
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Items", Type = LogType.Delete });
 
@@ -209,11 +217,25 @@ namespace Application.Services
                     throw new ApplicationException($"Validasyon Hatası: {errorMessages}");
                 }
 
-                Item item = _mapper.Map<Item>(entity);
+                // Get the existing item from database
+                Item existingItem = await _unitOfWork.Items.GetByIdAsync(entity.Id);
+                if (existingItem == null)
+                {
+                    return Result<ItemDTO>.Failure("Item not found.");
+                }
 
-                _unitOfWork.Items.Update(item);
+                // Update only the properties that should be changed
+                existingItem.Title = entity.Title;
+                existingItem.Description = entity.Description;
+                existingItem.Content = entity.Content;
+                existingItem.Price = entity.Price;
+                existingItem.CategoryId = entity.CategoryId;
+                existingItem.UpdatedDate = DateTime.Now;
 
-                await _auditLogService.AddAsync(new AuditLog { TableName = "Items", Type = LogType.Update });
+                _unitOfWork.Items.Update(existingItem);
+                await _unitOfWork.CompleteAsync();
+
+                await _auditLogService.AddAsync(new AuditLog { RecordId = existingItem.Id.ToString(), TableName = "Items", Type = LogType.Update });
 
                 return Result<ItemDTO>.Ok(entity, "Item updated successfully.");
 
@@ -242,6 +264,7 @@ namespace Application.Services
                 IEnumerable<Item> items = _mapper.Map<IEnumerable<Item>>(entities);
 
                 _unitOfWork.Items.UpdateRange(items);
+                await _unitOfWork.CompleteAsync();
 
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Items", Type = LogType.Update });
 
@@ -251,7 +274,7 @@ namespace Application.Services
             catch (Exception e)
             {
                 await _auditLogService.AddAsync(new AuditLog { TableName = "Items", Type = LogType.Error, Action = e.Message });
-                return Result<IEnumerable<ItemDTO>>.Failure("Items could not be deleted.");
+                return Result<IEnumerable<ItemDTO>>.Failure("Items could not be updated.");
             }
         }
     }

@@ -69,7 +69,7 @@ namespace HemaBazaar.MVC.Controllers
         }
 
 
-        // 1 Aralık 0:43:00 dan devam et.
+        
 
     }
 }

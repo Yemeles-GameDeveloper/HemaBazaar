@@ -7,6 +7,7 @@ using Domain.Interfaces;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using HemaBazaar.MVC.Hubs;
+using HemaBazaar.MVC.Middlewares;
 using HemaBazaar.MVC.Models;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -101,7 +102,12 @@ builder.Services
 builder.Services.AddSignalR();
 
 
-builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection("IyzicoOptions"));
+    builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection("IyzicoOptions"));
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/Error/Unauthorized";
+});
 
 
 
@@ -117,6 +123,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseMiddleware<CustomErrorMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

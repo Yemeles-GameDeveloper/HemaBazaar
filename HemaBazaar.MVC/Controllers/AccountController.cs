@@ -107,6 +107,8 @@ namespace HemaBazaar.MVC.Controllers
 
             if (result.Succeeded)
             {
+               IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "UserApp");
+               
 
                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -149,7 +151,7 @@ namespace HemaBazaar.MVC.Controllers
             return BadRequest();
             
         }
-
+        [Authorize]
         public  async Task<IActionResult> Logout()
         {
            await _signInManager.SignOutAsync();
@@ -240,9 +242,9 @@ namespace HemaBazaar.MVC.Controllers
 
             return View();
         }
+
         [Authorize]
-        [HttpGet]
-       
+        [HttpGet]       
         public async Task<IActionResult> Profile()
         {
             AppUser user = await _userManager.GetUserAsync(User);
@@ -252,6 +254,7 @@ namespace HemaBazaar.MVC.Controllers
             ProfileUpdateViewModel model = _mapper.Map<ProfileUpdateViewModel>(user);
             return View(model);
         }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Profile(ProfileUpdateViewModel model)

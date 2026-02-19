@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Forbidden";
+}
+
+<section class="section" style="padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="hb-state-card">
+                    <div class="hb-state-card__head">
+                        <span class="hb-state-card__eyebrow">HemaBazaar</span>
+                        <h1>403 - Forbidden</h1>
+                    </div>
+
+                    <div class="hb-state-card__body">
+                        <div class="hb-state-card__code">403</div>
+                        <p>
+                            You are signed in, but you do not have permission to access this resource.
+                            Please go back or contact support if you think this is a mistake.
+                        </p>
+
+                        <div class="hb-state-card__actions">
+                            <a asp-controller="Home" asp-action="Index" class="primary-btn">
+                                <i class="fa fa-home"></i> Back to Homepage
+                            </a>
+                            <a asp-controller="Account" asp-action="Profile" class="primary-btn primary-btn--dark">
+                                <i class="fa fa-user"></i> Go to Profile
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<partial name="_ErrorStateStyles" />

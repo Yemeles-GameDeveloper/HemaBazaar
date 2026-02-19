@@ -36,6 +36,13 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(builder); // <-- en üste al (Identity için)
 
+            //Rol oluşturmak için.
+            builder.Entity<AppRole>().HasData
+                (
+                  new AppRole {Id = 1, Name = "Admin", NormalizedName ="ADMIN", ConcurrencyStamp = Guid.NewGuid().ToString()},
+                  new AppRole {Id = 2, Name = "UserApp", NormalizedName = "USERAPP",ConcurrencyStamp = Guid.NewGuid().ToString()}
+                );
+
             // Konfigürasyonları uygula
             var configurationAssembly = Assembly.GetExecutingAssembly();
             builder.ApplyConfigurationsFromAssembly(configurationAssembly);
@@ -45,7 +52,14 @@ namespace Infrastructure.Data
                 .HasOne(p => p.AppUser)
                 .WithMany(u => u.Payments)
                 .HasForeignKey(p => p.AppUserId)
-                .OnDelete(DeleteBehavior.NoAction); // SQL Server için en sağlıklısı
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // Prevent multiple cascade paths: AppUser->Cart->Purchase AND AppUser->Purchase
+            builder.Entity<Purchase>()
+                .HasOne(p => p.Cart)
+                .WithMany(c => c.Purchases)
+                .HasForeignKey(p => p.CartId)
+                .OnDelete(DeleteBehavior.NoAction);
                                                     // ----------------------
 
             // Global query filter (IsActive)

@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Unauthorized";
+}
+
+<section class="section" style="padding: 80px 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="hb-state-card">
+                    <div class="hb-state-card__head">
+                        <span class="hb-state-card__eyebrow">HemaBazaar</span>
+                        <h1>401 - Unauthorized</h1>
+                    </div>
+
+                    <div class="hb-state-card__body">
+                        <div class="hb-state-card__code">401</div>
+                        <p>
+                            You are not authorized to access this page. Please sign in with an account
+                            that has permission, or return to a safe page.
+                        </p>
+
+                        <div class="hb-state-card__actions">
+                            <a asp-controller="Account" asp-action="Login" class="primary-btn">
+                                <i class="fa fa-sign-in"></i> Go to Login
+                            </a>
+                            <a asp-controller="Home" asp-action="Index" class="primary-btn primary-btn--dark">
+                                <i class="fa fa-home"></i> Back to Homepage
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hb-state-card {
+        border: 1px solid #E4E7ED;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(46, 54, 69, .08);
+        background: #fff;
+    }
+
+    .hb-state-card__head {
+        background: #1E1F29;
+        color: #fff;
+        padding: 24px 30px;
+        border-bottom: 3px solid #D10024;
+    }
+
+    .hb-state-card__eyebrow {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        opacity: .85;
+    }
+
+    .hb-state-card__head h1 {
+        margin: 8px 0 0;
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1.15;
+        color: #fff;
+    }
+
+    .hb-state-card__body {
+        padding: 40px 30px 34px;
+        text-align: center;
+    }
+
+    .hb-state-card__code {
+        font-size: 88px;
+        font-weight: 700;
+        color: #D10024;
+        line-height: 1;
+        margin-bottom: 12px;
+    }
+
+    .hb-state-card__body p {
+        font-size: 16px;
+        color: #2B2D42;
+        margin-bottom: 24px;
+    }
+
+    .hb-state-card__actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+        .hb-state-card__actions .primary-btn {
+            padding: 12px 22px;
+        }
+
+        .hb-state-card__actions .primary-btn--dark {
+            background: #15161D;
+        }
+</style>

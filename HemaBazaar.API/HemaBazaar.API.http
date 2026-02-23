@@ -1,0 +1,6 @@
+@HemaBazaar.API_HostAddress = http://localhost:5083
+
+GET {{HemaBazaar.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -6,6 +6,7 @@ using HemaBazaar.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Identity.Client;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -13,7 +14,7 @@ namespace HemaBazaar.MVC.Controllers
 {
     public class HomeController : Controller
     {
-       
+
         private readonly ILogger<HomeController> _logger;
 
         IItemService itemService;
@@ -45,31 +46,38 @@ namespace HemaBazaar.MVC.Controllers
 
             //var result = await itemService.GetAllAsync(null, OrderType.ASC,true, "Category");
 
-            
+
             //var list = (result.Data ?? Enumerable.Empty<ItemDTO>()).ToList();
             //var count = list.Count;
 
 
 
-            Result<IEnumerable<ItemDTO>> items;
-
-            if(!_memoryCache.TryGetValue("items",out  items))
-            {
-                items = await itemService.GetAllAsync(includes: "Category");
-
-                var cacheOptions = new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(50));
-                _memoryCache.Set("items", items,cacheOptions);
-            }
 
 
-            return View(items.Data);
+            //Result<IEnumerable<ItemDTO>> items;
+
+            //if (!_memoryCache.TryGetValue("items", out items))
+            //{
+            //    items = await itemService.GetAllAsync(includes: "Category");
+
+            //    var cacheOptions = new MemoryCacheEntryOptions()
+            //        .SetAbsoluteExpiration(TimeSpan.FromSeconds(50));
+            //    _memoryCache.Set("items", items, cacheOptions);
+            //}
+
+
+            //return View(items.Data);
 
             //list
+
+
+            HttpClient client = new HttpClient();
+            IEnumerable<ItemDTO> data = await client.GetFromJsonAsync<IEnumerable<ItemDTO>>("https://localhost:7293/api/Item");
+            return View(data);
+
+
+            // 1 Aralık 2:40:00 dan devam et.
+
         }
-
-
-        
-
     }
 }

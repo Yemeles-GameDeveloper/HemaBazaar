@@ -2,7 +2,6 @@
 using Application.DTOs;
 using Application.Interfaces;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,6 +12,7 @@ namespace HemaBazaar.MVC.Controllers
     {
         ICartService _cartService;
         UserManager<AppUser> _userManager;
+
         public CartController(ICartService cartService, UserManager<AppUser> userManager)
         {
             _cartService = cartService;
@@ -29,44 +29,21 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> AddCart(int itemId, int quantity)
         {
             if (!(User?.Identity?.IsAuthenticated ?? false))
-            {
                 return Unauthorized("Please log in to add items to your cart.");
-            }
 
             AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null)
-            {
                 return Unauthorized("User account could not be found.");
-            }
 
-            if (quantity < 1)
-            {
-                return BadRequest("Quantity must be at least 1.");
-            }
+            using HttpClient httpClient = new HttpClient();
+            HttpResponseMessage result = await httpClient.PostAsync(
+                $"https://localhost:7293/api/Cart/add?itemId={itemId}&quantity={quantity}&userId={user.Id}",
+                null);
 
-            Result<IEnumerable<CartDTO>> result = await _cartService.FindAsync(x => x.AppUser.Id == user.Id && x.ItemId == itemId && x.IsActive,tracking:false);
-            Result<CartDTO> cartResult = new();
-            if (result.Data.Any())
-            {
-               CartDTO cart = result.Data.FirstOrDefault();
-                cart.Quantity++;
-               cartResult = await _cartService.Update(cart);
-
-            }
-            else
-            {
-                CartDTO cartDTO = new CartDTO();
-                cartDTO.AppUserId = user.Id;
-                cartDTO.ItemId = itemId;
-                cartDTO.Quantity = quantity;
-                 cartResult = await _cartService.AddAsync(cartDTO);
-            }
-           
-            if (cartResult.Success)
+            if (result.IsSuccessStatusCode)
                 return Ok("Item added to cart successfully.");
             else
-                return BadRequest("Item could not be added to cart");
-            
+                return BadRequest("Item could not be added to cart.");
         }
        [HttpPost]
        public async Task<IActionResult> RemoveCart (int cartid)

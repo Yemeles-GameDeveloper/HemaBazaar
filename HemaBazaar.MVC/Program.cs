@@ -8,10 +8,13 @@ using FluentValidation.AspNetCore;
 using HemaBazaar.MVC.Hubs;
 using HemaBazaar.MVC.Middlewares;
 using HemaBazaar.MVC.Models;
+using HemaBazaar.MVC.Services;
 using Infrastructure.Data;
 using Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
+using System.Text.Json;
 
 
 
@@ -47,8 +50,6 @@ builder.Services.AddOutputCache(opt=>
 });
 
 builder.Services.AddServices();
-
-builder.Services.AddAuthentication();
 
 //builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Add services to the container.
@@ -99,15 +100,40 @@ builder.Services
 
 builder.Services.AddSignalR();
 
+var redisConfig = builder.Configuration.GetSection("Redis");
+
+builder.Services.AddStackExchangeRedisCache(opt =>
+{
+    opt.Configuration = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1,syncTimeout=1";
+    opt.InstanceName = redisConfig["InstanceName"];
+});
+
+builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
+{
+    var config = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1,syncTimeout=1";
+    return ConnectionMultiplexer.Connect(config);
+});
+
+builder.Services.AddSingleton(new JsonSerializerOptions
+{
+    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    WriteIndented = false
+});
+
+builder.Services.AddScoped(typeof(RedisCacheService<>));
 
     builder.Services.Configure<IyzicoOptions>(builder.Configuration.GetSection("IyzicoOptions"));
+
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped(typeof(TokenServices));
+builder.Services.AddScoped(typeof(ApiClient));
+builder.Services.AddSession();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.AccessDeniedPath = "/Error/Unauthorized";
 });
-
-
 
 
 var app = builder.Build();
@@ -127,6 +153,7 @@ app.UseMiddleware<CustomErrorMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -151,12 +178,6 @@ app.MapControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
-
-
-
-   
 
 app.Run();
 

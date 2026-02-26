@@ -4,6 +4,9 @@ using Application.Mappings;
 using Application.ValidationRules;
 using Domain.Entities;
 using FluentValidation.AspNetCore;
+using HemaBazaar.API.Middlewares;
+using HemaBazaar.API.Models;
+using HemaBazaar.API.Services;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -35,6 +38,9 @@ builder.Services.AddDbContext<HemaBazaarLogDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarLogDB"));
 });
 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddScoped<IJwtService, JwtService>();
+
 builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<AutoMapperProfile>();
@@ -48,8 +54,6 @@ builder.Services
         opt.Password.RequireDigit = true;
         opt.Password.RequiredLength = 6;
         opt.Password.RequireUppercase = true;
-
-        //Register'da bu kontrolleri eklemeyi unutma.
 
 
         opt.SignIn.RequireConfirmedEmail = true;
@@ -65,7 +69,7 @@ builder.Services
     .AddErrorDescriber<EnglishIdentityErrorDescriber>()
     .AddDefaultTokenProviders();
 
-// Add services to the container.
+
 
 builder.Services.AddControllers().AddFluentValidation(fv =>
 {
@@ -74,7 +78,7 @@ builder.Services.AddControllers().AddFluentValidation(fv =>
     fv.AutomaticValidationEnabled = true;
 });
 
-// JWT Authentication
+
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 builder.Services.AddAuthentication(options =>
 {
@@ -95,7 +99,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -142,6 +149,7 @@ app.UseCors("AllowReactApp");
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<JwtCookieMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

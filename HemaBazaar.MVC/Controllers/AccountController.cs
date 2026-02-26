@@ -3,6 +3,7 @@ using Application.ViewModels;
 using AutoMapper;
 using Domain.Entities;
 using HemaBazaar.MVC.Models;
+using HemaBazaar.MVC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +17,23 @@ namespace HemaBazaar.MVC.Controllers
         SignInManager<AppUser> _signInManager;
         IMapper _mapper;
         IConfiguration _config;
+        TokenServices _tokenServices;
+        IHttpClientFactory _httpClientFactory;
 
-
-        public AccountController(UserManager<AppUser> userManager, IMapper mapper, SignInManager<AppUser> signInManager, IConfiguration config)
+        public AccountController(
+            UserManager<AppUser> userManager,
+            IMapper mapper,
+            SignInManager<AppUser> signInManager,
+            IConfiguration config,
+            TokenServices tokenServices,
+            IHttpClientFactory httpClientFactory)
         {
             _userManager = userManager;
             _mapper = mapper;
             _signInManager = signInManager;
             _config = config;
+            _tokenServices = tokenServices;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
@@ -43,7 +53,11 @@ namespace HemaBazaar.MVC.Controllers
                 model.UserName, model.Password, model.RememberMe, lockoutOnFailure: true);
 
             if (result.Succeeded)
+            {
+                // Fetch JWT from API and store in session so ApiClient can use it.
+                await FetchAndStoreApiTokenAsync(model.UserName, model.Password);
                 return RedirectToAction("Index", "Home");
+            }
 
             if (result.IsLockedOut)
             {
@@ -152,10 +166,38 @@ namespace HemaBazaar.MVC.Controllers
             
         }
         [Authorize]
-        public  async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout()
         {
-           await _signInManager.SignOutAsync();
+            _tokenServices.ClearToken();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        /// <summary>
+        /// Calls the API login endpoint to obtain a JWT and stores it in the session.
+        /// Failures are silently swallowed so the MVC Identity login still succeeds.
+        /// </summary>
+        private async Task FetchAndStoreApiTokenAsync(string username, string password)
+        {
+            try
+            {
+                var apiBaseUrl = _config["ApiBaseUrl"] ?? "https://localhost:7293";
+                var client = _httpClientFactory.CreateClient();
+                var response = await client.PostAsJsonAsync(
+                    $"{apiBaseUrl}/api/Auth/login",
+                    new { Username = username, Password = password });
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var tokenResponse = await response.Content.ReadFromJsonAsync<JwtTokenResponseModel>();
+                    if (tokenResponse?.Token is not null)
+                        _tokenServices.StoreToken(tokenResponse.Token);
+                }
+            }
+            catch
+            {
+                // API may not be running; MVC Identity auth still works independently.
+            }
         }
 
         [HttpGet]

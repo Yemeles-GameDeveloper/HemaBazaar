@@ -1,5 +1,6 @@
 ﻿using Application.ViewModels;
 using HemaBazaar.MVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Iyzipay;
@@ -20,6 +21,7 @@ using System.Linq;
 
 namespace HemaBazaar.MVC.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         IOptions<IyzicoOptions> _iyzicoOptions;
@@ -44,8 +46,18 @@ namespace HemaBazaar.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Pay()
         {
-           AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
-          Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive,tracking:false, includes: ["Item", "Item.Category"] );
+            if (!(User?.Identity?.IsAuthenticated ?? false))
+                return Challenge();
+
+            string? userName = User.Identity?.Name;
+            if (string.IsNullOrWhiteSpace(userName))
+                return Challenge();
+
+            AppUser? user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+                return Unauthorized("User account could not be found.");
+
+            Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive,tracking:false, includes: ["Item", "Item.Category"] );
 
             CheckoutViewModel model = new CheckoutViewModel();
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
@@ -57,7 +69,17 @@ namespace HemaBazaar.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Pay(CheckoutViewModel model)
         {
-            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (!(User?.Identity?.IsAuthenticated ?? false))
+                return Challenge();
+
+            string? userName = User.Identity?.Name;
+            if (string.IsNullOrWhiteSpace(userName))
+                return Challenge();
+
+            AppUser? user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+                return Unauthorized("User account could not be found.");
+
             Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, includes: ["Item", "Item.Category"]);
             model.PaidPrice = carts.Data.Sum(x => x.TotalPrice);
             model.Price = carts.Data.Sum(x => x.TotalPrice);
@@ -168,7 +190,17 @@ namespace HemaBazaar.MVC.Controllers
         }
         public async Task<IActionResult> SuccessPayment()
         {
-            AppUser user = await _userManager.FindByNameAsync(User.Identity.Name);
+            if (!(User?.Identity?.IsAuthenticated ?? false))
+                return Challenge();
+
+            string? userName = User.Identity?.Name;
+            if (string.IsNullOrWhiteSpace(userName))
+                return Challenge();
+
+            AppUser? user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+                return Unauthorized("User account could not be found.");
+
             Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x => x.AppUserId == user.Id && x.IsActive, tracking: false, includes: ["Item", "Item.Category"]);
 
             // Create Payment record

@@ -22,10 +22,20 @@ namespace HemaBazaar.MVC.Services
         public Task<string?> GetValidTokenAsync(ClaimsPrincipal user)
         {
             var httpContext = _contextAccessor.HttpContext!;
-            var token = httpContext.Session.GetString("access_token");
 
+            // 1) Primary source: session
+            var token = httpContext.Session.GetString("access_token");
             if (IsTokenValid(token))
                 return Task.FromResult<string?>(token);
+
+            // 2) Fallback source: request cookie
+            var cookieToken = httpContext.Request.Cookies["access_token"];
+            if (IsTokenValid(cookieToken))
+            {
+                // Self-heal: restore session token when cookie is valid.
+                httpContext.Session.SetString("access_token", cookieToken!);
+                return Task.FromResult<string?>(cookieToken);
+            }
 
             // Token is expired or missing — caller must redirect to login.
             return Task.FromResult<string?>(null);
@@ -49,17 +59,25 @@ namespace HemaBazaar.MVC.Services
 
         public bool IsTokenValid(string? token)
         {
-            if (string.IsNullOrEmpty(token))
+            try
+            {
+                if (string.IsNullOrEmpty(token))
+                    return false;
+
+                var handler = new JwtSecurityTokenHandler();
+
+                if (!handler.CanReadToken(token))
+                    return false;
+
+                var jwt = handler.ReadJwtToken(token);
+
+                return jwt.ValidTo > DateTime.UtcNow;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
                 return false;
-
-            var handler = new JwtSecurityTokenHandler();
-
-            if (!handler.CanReadToken(token))
-                return false;
-
-            var jwt = handler.ReadJwtToken(token);
-
-            return jwt.ValidTo > DateTime.UtcNow;
+            }
         }
     }
 }

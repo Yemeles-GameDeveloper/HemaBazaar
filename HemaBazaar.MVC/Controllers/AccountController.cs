@@ -56,6 +56,7 @@ namespace HemaBazaar.MVC.Controllers
             {
                 // Fetch JWT from API and store in session so ApiClient can use it.
                 await FetchAndStoreApiTokenAsync(model.UserName, model.Password);
+                await HttpContext.Session.CommitAsync();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -169,6 +170,7 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> Logout()
         {
             _tokenServices.ClearToken();
+            Response.Cookies.Delete("access_token");
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
@@ -189,9 +191,55 @@ namespace HemaBazaar.MVC.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var tokenResponse = await response.Content.ReadFromJsonAsync<JwtTokenResponseModel>();
-                    if (tokenResponse?.Token is not null)
+                    // Primary source: token returned in JSON body.
+                    var tokenResponse = await response.Content.ReadFromJsonAsync<JwtTokenResponseModel>(
+                        new System.Text.Json.JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                    if (!string.IsNullOrWhiteSpace(tokenResponse?.Token))
+                    {
                         _tokenServices.StoreToken(tokenResponse.Token);
+                        Response.Cookies.Append("access_token", tokenResponse.Token, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = Request.IsHttps,
+                            SameSite = SameSiteMode.Lax,
+                            Expires = tokenResponse.ExpireDate
+                        });
+                        return;
+                    }
+
+                    // Fallback source: access_token cookie set by API login response.
+                    if (response.Headers.TryGetValues("Set-Cookie", out var setCookieValues))
+                    {
+                        foreach (var setCookie in setCookieValues)
+                        {
+                            const string cookiePrefix = "access_token=";
+                            var startIndex = setCookie.IndexOf(cookiePrefix, StringComparison.OrdinalIgnoreCase);
+                            if (startIndex < 0)
+                                continue;
+
+                            startIndex += cookiePrefix.Length;
+                            var endIndex = setCookie.IndexOf(';', startIndex);
+                            var cookieToken = endIndex > startIndex
+                                ? setCookie.Substring(startIndex, endIndex - startIndex)
+                                : setCookie.Substring(startIndex);
+
+                            if (!string.IsNullOrWhiteSpace(cookieToken))
+                            {
+                                _tokenServices.StoreToken(cookieToken);
+                                Response.Cookies.Append("access_token", cookieToken, new CookieOptions
+                                {
+                                    HttpOnly = true,
+                                    Secure = Request.IsHttps,
+                                    SameSite = SameSiteMode.Lax,
+                                    Expires = DateTimeOffset.UtcNow.AddMinutes(60)
+                                });
+                                return;
+                            }
+                        }
+                    }
                 }
             }
             catch

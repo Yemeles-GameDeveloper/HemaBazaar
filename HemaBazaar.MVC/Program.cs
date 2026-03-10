@@ -128,7 +128,16 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(typeof(TokenServices));
 builder.Services.AddScoped(typeof(ApiClient));
-builder.Services.AddSession();
+builder.Services.AddScoped<MvcJwtTokenService>();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromHours(2);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

@@ -2,6 +2,7 @@ using Domain.Entities;
 using HemaBazaar.API.Models;
 using HemaBazaar.API.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -116,6 +117,31 @@ namespace HemaBazaar.API.Controllers
             return Unauthorized("Username or Password is not correct.");
         }
 
-        //2 Kas?m 3:13:00dan devam.
+        [Authorize]
+        [HttpPost("token-from-user")]
+        public async Task<IActionResult> TokenFromUser()
+        {
+            var userName = User?.Identity?.Name;
+            if (string.IsNullOrWhiteSpace(userName))
+                return Unauthorized("User is not authenticated.");
+
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null)
+                return Unauthorized("User account could not be found.");
+
+            string token = _jwtService.CreateToken(user.Id.ToString(), user.Email);
+
+            Response.Cookies.Append("access_token", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(60)
+            });
+
+            return Ok(new { token = token, ExpireDate = DateTime.Now.AddMinutes(60) });
+        }
+
+        
     }
 }

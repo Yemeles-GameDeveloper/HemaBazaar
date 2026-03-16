@@ -104,13 +104,13 @@ var redisConfig = builder.Configuration.GetSection("Redis");
 
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
-    opt.Configuration = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1,syncTimeout=1";
+    opt.Configuration = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=5000,syncTimeout=5000";
     opt.InstanceName = redisConfig["InstanceName"];
 });
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
 {
-    var config = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1,syncTimeout=1";
+    var config = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=5000,syncTimeout=5000";
     return ConnectionMultiplexer.Connect(config);
 });
 

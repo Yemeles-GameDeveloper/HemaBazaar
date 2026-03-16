@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CategoryDTO>
+
+<li class="nav-categories-dropdown">
+    <a href="#">Categories <i class="fa fa-angle-down"></i></a>
+    <ul class="nav-categories-menu">
+        @foreach(var category in Model)
+        {
+            <li><a href="#">@category.CategoryName</a></li>
+        }
+
+    </ul>
+</li>

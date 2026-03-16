@@ -79,5 +79,7 @@ namespace HemaBazaar.MVC.Services
                 return false;
             }
         }
+
+        // 4 Kasım 0:51:00
     }
 }

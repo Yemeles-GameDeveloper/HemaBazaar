@@ -168,5 +168,9 @@ namespace HemaBazaar.MVC.Services
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<TResponse>();
         }
+
+
+
+        //3 Aralık 1:38:00dan devam et.
     }
 }

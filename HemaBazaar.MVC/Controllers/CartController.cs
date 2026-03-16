@@ -57,11 +57,19 @@ namespace HemaBazaar.MVC.Controllers
         public async Task<IActionResult> AddCart(int itemId, int quantity)
         {
             if (!(User?.Identity?.IsAuthenticated ?? false))
-                return Unauthorized("Please log in to add items to your cart.");
+            {
+                var loginUrl = Url.Action("Login", "Account", new { returnUrl = Request.Path + Request.QueryString }) ?? "/Account/Login";
+                Response.Headers["X-Redirect-To"] = loginUrl;
+                return Unauthorized(new { redirectTo = loginUrl, message = "Please login to add items to cart." });
+            }
 
             string? userName = User.Identity?.Name;
             if (string.IsNullOrWhiteSpace(userName))
-                return Unauthorized("Please log in to add items to your cart.");
+            {
+                var loginUrl = Url.Action("Login", "Account", new { returnUrl = Request.Path + Request.QueryString }) ?? "/Account/Login";
+                Response.Headers["X-Redirect-To"] = loginUrl;
+                return Unauthorized(new { redirectTo = loginUrl, message = "Please login to add items to cart." });
+            }
 
             AppUser? user = await _userManager.FindByNameAsync(userName);
             if (user == null)

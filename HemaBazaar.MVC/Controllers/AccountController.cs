@@ -56,7 +56,6 @@ namespace HemaBazaar.MVC.Controllers
             {
                 // Fetch JWT from API and store in session so ApiClient can use it.
                 await FetchAndStoreApiTokenAsync(model.UserName, model.Password);
-                await HttpContext.Session.CommitAsync();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -171,7 +170,16 @@ namespace HemaBazaar.MVC.Controllers
         {
             _tokenServices.ClearToken();
             Response.Cookies.Delete("access_token");
-            await _signInManager.SignOutAsync();
+
+            try
+            {
+                await _signInManager.SignOutAsync();
+            }
+            catch
+            {
+                // Fast-fail safe logout path when session/redis is slow or unavailable.
+            }
+
             return RedirectToAction("Index", "Home");
         }
 

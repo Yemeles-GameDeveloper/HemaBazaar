@@ -20,21 +20,23 @@ namespace HemaBazaar.MVC.Controllers
         private readonly ILogger<HomeController> _logger;
 
         IItemService itemService;
+        ICategoryService categoryService;
 
-        IMemoryCache _memoryCache;
-        IDistributedCache _distributedCache;
+        //IMemoryCache _memoryCache;
+        //IDistributedCache _distributedCache;
         RedisCacheService<IEnumerable<ItemDTO>> _itemCache;
 
         ApiClient _apiClient;
 
-        public HomeController(ILogger<HomeController> logger, IItemService itemService, IMemoryCache memoryCache, IDistributedCache distributedCache, RedisCacheService<IEnumerable<ItemDTO>> itemCache, ApiClient apiClient)
+        public HomeController(ILogger<HomeController> logger, IItemService itemService, /*IMemoryCache memoryCache, IDistributedCache distributedCache,*/ RedisCacheService<IEnumerable<ItemDTO>> itemCache, ApiClient apiClient, ICategoryService categoryService)
         {
             _logger = logger;
             this.itemService = itemService;
-            _memoryCache = memoryCache;
-            _distributedCache = distributedCache;
+            //_memoryCache = memoryCache;
+            //_distributedCache = distributedCache;
             this._itemCache = itemCache;
             _apiClient = apiClient;
+            this.categoryService = categoryService;
         }
         //[ResponseCache(Duration = 50, Location = ResponseCacheLocation.Client)]
         [OutputCache(Duration = 60)]
@@ -90,8 +92,15 @@ namespace HemaBazaar.MVC.Controllers
                 TimeSpan.FromMinutes(5)
                 );
 
-            
-            return View(data);
+
+           Result<IEnumerable<CategoryDTO>> categories = await categoryService.GetAllAsync();
+            ItemCategoryListModel model = new ItemCategoryListModel();
+            model.ItemList = data;
+            model.CategoryList = categories.Data;
+
+
+
+            return View(model);
 
 
    

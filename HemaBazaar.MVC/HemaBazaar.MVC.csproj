@@ -8,9 +8,14 @@
 
   <ItemGroup>
    
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
+   
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+   
     <PackageReference Include="Iyzipay" Version="2.1.67" />
 	<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+	<PackageReference Include="RabbitMQ.Client" Version="7.2.1" />
 	<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
 	<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.22" />
    
@@ -30,6 +35,12 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\wkhtmltopdf\wkhtmltox.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

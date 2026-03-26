@@ -2,6 +2,7 @@
 using Application.Extentions;
 using Application.Mappings;
 using Application.ValidationRules;
+using DinkToPdf.Contracts;
 using Domain.Entities;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -15,13 +16,30 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using System.Text.Json;
-
+using DinkToPdf;
+using System.Runtime.InteropServices;
 
 
 
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+var wkhtmlDir = Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "wkhtmltopdf");
+var wkhtmlCandidates = new[]
+{
+    Path.Combine(wkhtmlDir, "libwkhtmltox.dll"),
+    Path.Combine(wkhtmlDir, "wkhtmltox.dll")
+};
+
+foreach (var candidate in wkhtmlCandidates)
+{
+    if (File.Exists(candidate))
+    {
+        NativeLibrary.Load(candidate);
+        break;
+    }
+}
 
 builder.Services.AddDbContext<HemaBazaarDBContext>( options =>
 {
@@ -32,6 +50,10 @@ builder.Services.AddDbContext<HemaBazaarLogDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HemaBazaarLogDB"));
 });
+
+
+builder.Services.AddSingleton<IConverter>(sp=>
+new SynchronizedConverter(new PdfTools()));
 
 
 builder.Services.AddAutoMapper(cfg =>
@@ -53,6 +75,9 @@ builder.Services.AddServices();
 
 //builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 // Add services to the container.
+
+builder.Services.AddScoped<RabbitMqProducerService>();
+builder.Services.AddHostedService<RabbitMqConsumerService>();
 
 builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
 {
@@ -90,8 +115,6 @@ builder.Services
     .AddErrorDescriber<EnglishIdentityErrorDescriber>()
     .AddDefaultTokenProviders();
 
-    builder.Services.AddControllersWithViews();
-
     builder.Services.AddFluentValidationAutoValidation()
                 .AddFluentValidationClientsideAdapters();
 
@@ -104,14 +127,17 @@ var redisConfig = builder.Configuration.GetSection("Redis");
 
 builder.Services.AddStackExchangeRedisCache(opt =>
 {
-    opt.Configuration = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=5000,syncTimeout=5000";
+    opt.Configuration = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1000,syncTimeout=1000";
     opt.InstanceName = redisConfig["InstanceName"];
 });
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(opt =>
 {
-    var config = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=5000,syncTimeout=5000";
-    return ConnectionMultiplexer.Connect(config);
+    var config = $"{redisConfig["Host"]}:{redisConfig["Port"]},abortConnect=false,connectTimeout=1000,syncTimeout=1000";
+    var options = ConfigurationOptions.Parse(config);
+    options.AbortOnConnectFail = false;
+    options.ConnectRetry = 1;
+    return ConnectionMultiplexer.Connect(options);
 });
 
 builder.Services.AddSingleton(new JsonSerializerOptions
@@ -147,7 +173,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
-await DataSeed.SeedAsync(app.Services);
+if (app.Environment.IsDevelopment())
+{
+    await DataSeed.SeedAsync(app.Services);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -162,6 +191,8 @@ app.UseMiddleware<CustomErrorMiddleware>();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
+
 app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
@@ -171,12 +202,7 @@ app.UseOutputCache();
 
 app.MapHub<VisitorHub>("/visitorHub");
 
-//app.MapAreaControllerRoute(
-//    name: "Admin",
-//    areaName: "Admin",
-//    pattern: "{area=Admin}/{controller=Dashboard}/{action=Index}/{id?}"
 
-//    );
 
 app.MapControllerRoute(
      name: "areas",

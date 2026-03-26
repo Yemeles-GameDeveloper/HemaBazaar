@@ -1,4 +1,6 @@
-- [ ] Add ViewBag.Categories assignment in HomeController.Index
-- [ ] Pass typed categories model to _SearchBar partial in _Layout.cshtml
-- [ ] Make _SearchBar null-safe while iterating categories
-- [ ] Verify build/runtime no longer throws model mismatch for _SearchBar
+# RabbitMQ Billing Flow Fix TODO
+
+- [ ] Update RabbitMqProducerService for durable queue + persistent publish + better logs
+- [ ] Update RabbitMqConsumerService for manual ack/nack and safe processing
+- [ ] Update PaymentController to handle RabbitMQ publish failures safely
+- [ ] Build HemaBazaar.MVC to validate changes

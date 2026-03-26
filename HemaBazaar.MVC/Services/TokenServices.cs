@@ -80,6 +80,6 @@ namespace HemaBazaar.MVC.Services
             }
         }
 
-        // 4 Kasım 0:51:00
+        
     }
 }

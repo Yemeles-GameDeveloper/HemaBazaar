@@ -18,6 +18,8 @@ using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HemaBazaar.MVC.Services;
+using Microsoft.Extensions.Logging;
 
 namespace HemaBazaar.MVC.Controllers
 {
@@ -30,13 +32,19 @@ namespace HemaBazaar.MVC.Controllers
         IPurchaseService purchaseService;
         UserManager<AppUser> _userManager;
         CartDTO cartDTO;
-        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, IPaymentService paymentService, IPurchaseService purchaseService)
+
+        RabbitMqProducerService producerService;
+        private readonly ILogger<PaymentController> _logger;
+
+        public PaymentController(IOptions<IyzicoOptions> iyzicoOptions, UserManager<AppUser> userManager, ICartService cartService, IPaymentService paymentService, IPurchaseService purchaseService, RabbitMqProducerService producerService, ILogger<PaymentController> logger)
         {
             _iyzicoOptions = iyzicoOptions;
             _userManager = userManager;
             this.cartService = cartService;
             this.paymentService = paymentService;
             this.purchaseService = purchaseService;
+            this.producerService = producerService;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -55,7 +63,10 @@ namespace HemaBazaar.MVC.Controllers
 
             AppUser? user = await _userManager.FindByNameAsync(userName);
             if (user == null)
-                return Unauthorized("User account could not be found.");
+            {
+                TempData["PaymentError"] = "Authenticated user could not be found at SuccessPayment.";
+                return RedirectToAction("FailPayment");
+            }
 
             Result<IEnumerable<CartDTO>> carts = await cartService.FindAsync(x=>x.AppUserId == user.Id && x.IsActive,tracking:false, includes: ["Item", "Item.Category"] );
 
@@ -95,7 +106,7 @@ namespace HemaBazaar.MVC.Controllers
             var request = new CreateCheckoutFormInitializeRequest
             {
                 Locale = Locale.TR.ToString(),
-                ConversationId = Guid.NewGuid().ToString(),
+                ConversationId = user.Id.ToString(),
                 Price = model.Price.ToString("0.00", CultureInfo.InvariantCulture),
                 PaidPrice = model.PaidPrice.ToString("0.00", CultureInfo.InvariantCulture),
                 Currency = Currency.TRY.ToString(),
@@ -118,6 +129,9 @@ namespace HemaBazaar.MVC.Controllers
                 City = model.City,
                 Country = model.Country
             };
+
+            HttpContext.Session.SetString("BillingEmail", model.Email ?? string.Empty);
+            TempData["BillingEmail"] = model.Email ?? string.Empty;
 
             request.ShippingAddress = new Address
             {
@@ -147,23 +161,37 @@ namespace HemaBazaar.MVC.Controllers
         
  
 
-             var checkoutInitialize = await CheckoutFormInitialize.Create(request,options);
+            var checkoutInitialize = await CheckoutFormInitialize.Create(request, options);
 
-            if (string.Equals(checkoutInitialize.Status, "success", StringComparison.OrdinalIgnoreCase))
+            string status = (checkoutInitialize?.Status ?? string.Empty).Trim();
+            bool isSuccess = string.Equals(status, "success", StringComparison.OrdinalIgnoreCase)
+                             || checkoutInitialize?.StatusCode == 200;
+
+            if (isSuccess && !string.IsNullOrWhiteSpace(checkoutInitialize?.CheckoutFormContent))
             {
-
                 ViewBag.CheckoutFormContent = checkoutInitialize.CheckoutFormContent;
-
                 return View(model);
             }
-            ViewBag.Error = checkoutInitialize.ErrorMessage;
+
+            ViewBag.Error = checkoutInitialize is null
+                ? "Checkout initialization returned null response."
+                : $"{checkoutInitialize.ErrorMessage ?? "Checkout initialization failed."} (Status: {checkoutInitialize.Status}, StatusCode: {checkoutInitialize.StatusCode})";
+
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Callback()
         {
             var token = Request.Form["token"].ToString();
+
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                TempData["PaymentError"] = "Payment callback token was empty.";
+                _logger.LogWarning("Payment callback token is empty.");
+                return RedirectToAction("FailPayment");
+            }
 
             var options = new Options()
             {
@@ -181,15 +209,72 @@ namespace HemaBazaar.MVC.Controllers
 
             var checkoutForm = await CheckoutForm.Retrieve(request, options);
 
-            if (string.Equals(checkoutForm.Status, "success", StringComparison.OrdinalIgnoreCase))
+            // Iyzipay CheckoutForm in this package version may not expose Buyer directly.
+            // Keep callback-safe fallback logic without using checkoutForm.Buyer.
+            string? callbackBillingEmail = null;
+
+            if (checkoutForm?.PaymentItems != null)
             {
+                foreach (var paymentItem in checkoutForm.PaymentItems)
+                {
+                    // If a future Iyzipay package/version adds accessible email-like fields,
+                    // this block can be extended. For now, keep compile-safe behavior.
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(callbackBillingEmail))
+            {
+                HttpContext.Session.SetString("BillingEmail", callbackBillingEmail);
+                TempData["BillingEmail"] = callbackBillingEmail;
+                _logger.LogInformation("Billing email captured from callback provider response: {BillingEmail}", callbackBillingEmail);
+            }
+
+            string status = (checkoutForm?.Status ?? string.Empty).Trim();
+            string paymentStatus = (checkoutForm?.PaymentStatus ?? string.Empty).Trim();
+            string errorCode = (checkoutForm?.ErrorCode ?? string.Empty).Trim();
+            string errorMessage = (checkoutForm?.ErrorMessage ?? string.Empty).Trim();
+            string conversationId = (checkoutForm?.ConversationId ?? string.Empty).Trim();
+
+            TempData["PaymentDebug"] =
+                $"Status={status} | PaymentStatus={paymentStatus} | ErrorCode={errorCode} | ErrorMessage={errorMessage} | ConversationId={conversationId} | Token={token}";
+
+            _logger.LogInformation(
+                "Iyzipay callback result. Status: {Status}, PaymentStatus: {PaymentStatus}, ErrorCode: {ErrorCode}, ErrorMessage: {ErrorMessage}, ConversationId: {ConversationId}, Token: {Token}",
+                status,
+                paymentStatus,
+                errorCode,
+                errorMessage,
+                conversationId,
+                token
+            );
+
+            bool isStatusSuccess = string.Equals(status, "success", StringComparison.OrdinalIgnoreCase);
+            bool isPaymentSuccess = string.Equals(paymentStatus, "SUCCESS", StringComparison.OrdinalIgnoreCase)
+                                    || string.Equals(paymentStatus, "success", StringComparison.OrdinalIgnoreCase);
+
+            if (isStatusSuccess && isPaymentSuccess)
+
+            {
+                TempData["PaymentSuccess"] = true;
+                TempData["PaymentToken"] = token;
                 return RedirectToAction("SuccessPayment");
             }
+
+            TempData["PaymentError"] = string.IsNullOrWhiteSpace(errorMessage)
+                ? $"Payment provider returned unsuccessful status. Status={status}, PaymentStatus={paymentStatus}, ErrorCode={errorCode}"
+                : errorMessage;
+
             return RedirectToAction("FailPayment");
 
         }
         public async Task<IActionResult> SuccessPayment()
         {
+            if (!(TempData["PaymentSuccess"] as bool? ?? false))
+            {
+                TempData["PaymentError"] = "Payment success callback marker was not found.";
+                return RedirectToAction("FailPayment");
+            }
+
             if (!(User?.Identity?.IsAuthenticated ?? false))
                 return Challenge();
 
@@ -231,15 +316,61 @@ namespace HemaBazaar.MVC.Controllers
                 var purchaseResult = await purchaseService.AddRangeAsync(purchases);
                 if (purchaseResult.Success)
                 {
-                    // Deactivate carts
+                    var billingEmail = HttpContext.Session.GetString("BillingEmail");
+                    var emailSource = "session";
+
+                    if (string.IsNullOrWhiteSpace(billingEmail))
+                    {
+                        billingEmail = TempData.Peek("BillingEmail")?.ToString();
+                        emailSource = "tempdata";
+                    }
+                    if (string.IsNullOrWhiteSpace(billingEmail))
+                    {
+                        billingEmail = user.Email;
+                        emailSource = "account-fallback";
+                    }
+
+                    _logger.LogInformation("Invoice recipient email selected: {BillingEmail} (Source: {Source}, UserEmail: {UserEmail})", billingEmail, emailSource, user.Email);
+
+                    InvoiceViewModel invoiceModel = new InvoiceViewModel
+                    {
+                        CustomerAddress = user.Address ?? "Ankara/Yenimahalle",
+                        CustomerMail = billingEmail,
+                        CustomerName = user.FullName ?? "Ad Soyad",
+                        InvoiceDate = DateTime.Now,
+                        InvoiceNumber = $"INV-{DateTime.Now:yyyyMMddHHmmss}",
+                    };
+
                     foreach (var cart in carts.Data)
                     {
+                        invoiceModel.Items.Add(new InvoiceItem
+                        {
+                            Title = cart.Title ?? string.Empty,
+                            Description = cart.Description ?? string.Empty,
+                            Quantity = cart.Quantity,
+                            UnitPrice = cart.Price
+                        });
+
                         cart.IsActive = false;
                         await cartService.Update(cart);
                     }
+
+                    try
+                    {
+                        await producerService.SendMessageAsync(invoiceModel);
+                        HttpContext.Session.Remove("BillingEmail");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Failed to publish invoice to RabbitMQ for user {UserId}, payment {PaymentId}", user.Id, paymentResult.Data.Id);
+                    }
+
+                    return View();
                 }
             }
-            return View();
+
+            TempData["PaymentError"] = "Payment was captured but post-payment operations failed.";
+            return RedirectToAction("FailPayment");
 
              
         }

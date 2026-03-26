@@ -203,14 +203,17 @@
                                 <li>
                                     <a asp-controller="Account" asp-action="Profile">Profile</a>
                                 </li>
-                                <li>
-                                    <a asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                                </li>
+                                @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                                    </li>
+                                }
                                 <li>
                                     <a asp-controller="Account" asp-action="Settings">Settings</a>
                                 </li>
                                 <li>
-                                    <a asp-controller="Purchase" asp-action="Index">Purchases</a>
+                                    <a asp-area="" asp-controller="Purchase" asp-action="Index">Purchases</a>
                                 </li>
                                 <li>
                                     <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline;">

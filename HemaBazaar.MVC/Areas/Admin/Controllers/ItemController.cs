@@ -99,6 +99,6 @@ namespace HemaBazaar.MVC.Areas.Admin.Controllers
             return Json(new { success = result.Success, message = result.Message });
         }
 
-        //27 Kasım 2:41:00 dan devam et.
+        
     }
 }

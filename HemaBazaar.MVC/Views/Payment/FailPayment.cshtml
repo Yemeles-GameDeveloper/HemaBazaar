@@ -20,6 +20,20 @@
                         <div>Contact support or retry the payment.</div>
                     </div>
                 </div>
+
+                @if (TempData["PaymentError"] != null || TempData["PaymentDebug"] != null)
+                {
+                    <div class="alert alert-danger" style="margin-top:15px; text-align:left;">
+                        @if (TempData["PaymentError"] != null)
+                        {
+                            <div><strong>Reason:</strong> @TempData["PaymentError"]</div>
+                        }
+                        @if (TempData["PaymentDebug"] != null)
+                        {
+                            <div style="margin-top:8px;"><strong>Debug:</strong> @TempData["PaymentDebug"]</div>
+                        }
+                    </div>
+                }
                 <div style="margin-top:20px;">
                     <a class="primary-btn" href="@Url.Action("Pay", "Payment")" style="margin-right:10px;">Retry Payment</a>
                     <a class="btn btn-default" href="@Url.Action("Index", "Home")">Back to Home</a>
